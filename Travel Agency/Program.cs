@@ -22,7 +22,7 @@ namespace Travel_Agency
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
-        public class Blog
+        public class Client
         {
             public int BlogId { get; set; }
             public string Name { get; set; }
@@ -30,7 +30,7 @@ namespace Travel_Agency
             public virtual List<Post> Posts { get; set; }
         }
 
-        public class Post
+        public class Order
         {
             public int PostId { get; set; }
             public string Title { get; set; }
@@ -39,6 +39,25 @@ namespace Travel_Agency
             public int BlogId { get; set; }
             public virtual Blog Blog { get; set; }
         }
+        public class Offer
+        {
+            public int PostId { get; set; }
+            public string Title { get; set; }
+            public string Content { get; set; }
+
+            public int BlogId { get; set; }
+            public virtual Blog Blog { get; set; }
+        }
+        public class Worker
+        {
+            public int PostId { get; set; }
+            public string Title { get; set; }
+            public string Content { get; set; }
+
+            public int BlogId { get; set; }
+            public virtual Blog Blog { get; set; }
+        }
+
 
         public class BloggingContext : DbContext
         {

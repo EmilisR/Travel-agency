@@ -4,8 +4,11 @@ using System.Linq;
 namespace Travel_Agency
 {
     [Serializable]
-    class Client : User
+    class Client
     {
+        public DateTime RegisterDate { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
         private static int _howManyClients = 0;
         public string Email { get; set; }
         public string MobileNumber { get; set; }

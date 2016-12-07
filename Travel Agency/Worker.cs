@@ -5,8 +5,11 @@ using System.Linq;
 namespace Travel_Agency
 {
     [Serializable]
-    class Worker : User
+    class Worker
     {
+        public DateTime RegisterDate { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
         public List<int> OrdersNumbers { get; set; }
         public int WorkingHoursPerWeek { get; set; }
         public double StartingSalary { get; set; }
