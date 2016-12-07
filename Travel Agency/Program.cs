@@ -49,12 +49,12 @@ namespace Travel_Agency
         }
         public class Offer
         {
-            public int PostId { get; set; }
-            public string Title { get; set; }
-            public string Content { get; set; }
-
-            public int BlogId { get; set; }
-            public virtual Blog Blog { get; set; }
+            public int OfferNumber { get; private set; }
+            public string TravelDestination { get; set; }
+            public string Feeding { get; set; }
+            public int Price { get; set; }
+            public int TravelTime { get; set; }
+            public string HotelRanking { get; set; }
         }
         public class Worker
         {

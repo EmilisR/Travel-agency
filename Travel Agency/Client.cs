@@ -31,8 +31,7 @@ namespace Travel_Agency
                 loggerFile.WriteToLog(this, RegisterDate, "Created client", Email);
             if (loggerMail != null)
             {
-                if (EmailSend != null)
-                    EmailSend(this, new EmailSendEventArgs(Email, "Created client", RegisterDate, loggerMail));
+                    EmailSend?.Invoke(this, new EmailSendEventArgs(Email, "Created client", RegisterDate, loggerMail));
             }
         }
 
