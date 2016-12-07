@@ -36,12 +36,16 @@ namespace Travel_Agency
 
         public class Order
         {
-            public int PostId { get; set; }
-            public string Title { get; set; }
-            public string Content { get; set; }
+            public virtual Offer TravelOffer { get; set; }
+            public virtual Client OrderClient { get; set; }
+            public virtual Worker ServiceWorker { get; set; }
+            public DateTime OrderRegisterDate { get; set; }
+            public DateTime TravelStartDate { get; set; }
+            public int OrderNumber { get; private set; }
+            public int OrderPrice { get; set; }
+            public int OrderClientsAmount { get; set; }
 
-            public int BlogId { get; set; }
-            public virtual Blog Blog { get; set; }
+            public static event MainForm.EmailSendEventHandler<Order> EmailSend;
         }
         public class Offer
         {

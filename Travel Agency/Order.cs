@@ -11,7 +11,6 @@ namespace Travel_Agency
         public Worker ServiceWorker { get; set; }
         public DateTime OrderRegisterDate { get; set; }
         public DateTime TravelStartDate { get; set; }
-        private static int _howManyOrders;
         public int OrderNumber { get; private set; }
         public int OrderPrice { get; set; }
         public int OrderClientsAmount { get; set; }
@@ -25,7 +24,6 @@ namespace Travel_Agency
             OrderClient = client;
             OrderRegisterDate = DateTime.Now;
             TravelStartDate = travelStartDate;
-            _howManyOrders++;
             OrderNumber = Program.allOrders.OrderByDescending(x => x.Key).FirstOrDefault().Key + 1;
             OrderClientsAmount = orderClientsAmount;
             OrderPrice = offer.Price * orderClientsAmount;
@@ -36,13 +34,8 @@ namespace Travel_Agency
                 loggerFile.WriteToLog(this, OrderRegisterDate, "Created order", OrderClient.Email);
             if (loggerMail != null)
             {
-                if (EmailSend != null)
-                    EmailSend(this, new EmailSendEventArgs(OrderClient.Email, "Created order", OrderRegisterDate, loggerMail));
+                EmailSend?.Invoke(this, new EmailSendEventArgs(OrderClient.Email, "Created order", OrderRegisterDate, loggerMail));
             }
-        }
-
-        public Order()
-        {
         }
 
         public void AddOrderPriceToBudget(int orderPrice)
