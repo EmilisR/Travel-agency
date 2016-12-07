@@ -71,10 +71,12 @@ namespace Travel_Agency
         }
 
 
-        public class BloggingContext : DbContext
+        public class TravelAgencyContext : DbContext
         {
-            public DbSet<Blog> Blogs { get; set; }
-            public DbSet<Post> Posts { get; set; }
+            public DbSet<Offer> Offers { get; set; }
+            public DbSet<Order> Orders { get; set; }
+            public DbSet<Client> Clients { get; set; }
+            public DbSet<Worker> Workers { get; set; }
         }
 
     }
