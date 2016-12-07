@@ -10,17 +10,15 @@ namespace Travel_Agency
         public DateTime RegisterDate { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        public List<int> OrdersNumbers { get; set; }
         public int WorkingHoursPerWeek { get; set; }
         public double StartingSalary { get; set; }
         public int StartingWorkingHoursPerWeek { get; set; }
         public string Position { get; set; }
         public double Salary { get; set; }
         public int WorkerNumber { get; set; }
-        private Lazy<List<Order>> _orders = new Lazy<List<Order>>();
+        private List<Order> _orders = new List<Order>();
         public Worker(string name, string lastName, string position, int salary, int workingHoursPerWeek, ILogger loggerBox, ILogger loggerFile)
         {
-            OrdersNumbers = new List<int>();
             Name = name;
             LastName = lastName;
             StartingSalary = salary;
@@ -38,38 +36,18 @@ namespace Travel_Agency
 
         public Worker()
         {
-            OrdersNumbers = new List<int>();
         }
 
         public void AssignOrderToWorker(Order order)
         {
-            OrdersNumbers.Add(order.OrderNumber);
-            if (_orders.IsValueCreated)
-            {
-                _orders.Value.Add(order);
-            }
-        }
-
-        public void ClearListOfOrders()
-        {
-            _orders.Value.Clear();
+            _orders.Add(order);
         }
 
         public void PaySalary()
         {
             Budget.ReduceFromBudget(Salary);
         }
-        public List<Order> GetWorkerOrdersList()
-        {
-            if (!_orders.IsValueCreated || _orders.Value.Count == 0)
-            {
-                foreach (int item in OrdersNumbers)
-                {
-                    _orders.Value.Add(Program.allOrders[item]);
-                }
-            }
-            return _orders.Value;
-        }
+
         public void RaiseSalary(int bonus)
         {
             Salary += bonus;
@@ -113,7 +91,7 @@ namespace Travel_Agency
 
         public override string ToString()
         {
-            return "Worker number: " + WorkerNumber + Environment.NewLine + "Name: " + Name + Environment.NewLine + "Last name: " + LastName + Environment.NewLine + "Position: " + Position + Environment.NewLine + "Salary: €" + Salary.ToString() + Environment.NewLine + "Working hours per week: " + WorkingHoursPerWeek.ToString() + Environment.NewLine + "Worker orders amount: " + OrdersNumbers.Count + Environment.NewLine + "Registered on: " + RegisterDate.ToShortDateString();
+            return "Worker number: " + WorkerNumber + Environment.NewLine + "Name: " + Name + Environment.NewLine + "Last name: " + LastName + Environment.NewLine + "Position: " + Position + Environment.NewLine + "Salary: €" + Salary.ToString() + Environment.NewLine + "Working hours per week: " + WorkingHoursPerWeek.ToString() + Environment.NewLine + "Worker orders amount: " + _orders.Count + Environment.NewLine + "Registered on: " + RegisterDate.ToShortDateString();
         }
     }
 }

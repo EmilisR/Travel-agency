@@ -36,10 +36,6 @@ namespace Travel_Agency
             }
         }
 
-        public Client()
-        {
-        }
-
         public override string ToString()
         {
             return "Client number: " + ClientNumber + Environment.NewLine + "Name: " + Name + Environment.NewLine + "Last name: " + LastName + Environment.NewLine + "E-mail: " + Email + Environment.NewLine + "Mobile number: " + MobileNumber + Environment.NewLine + "Registered on: " + RegisterDate.ToShortDateString();

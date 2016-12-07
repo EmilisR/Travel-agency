@@ -173,7 +173,6 @@
       <DependentUpon>ShowObject.cs</DependentUpon>
     </Compile>
     <Compile Include="TravelAgencyContext.cs" />
-    <Compile Include="User.cs" />
     <Compile Include="Worker.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
