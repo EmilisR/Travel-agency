@@ -16,7 +16,7 @@ namespace Travel_Agency
         public string Position { get; set; }
         public double Salary { get; set; }
         public int WorkerNumber { get; set; }
-        private List<Order> _orders = new List<Order>();
+        public virtual List<Order> WorkerOrders { get; set; }
         public Worker(string name, string lastName, string position, int salary, int workingHoursPerWeek, ILogger loggerBox, ILogger loggerFile)
         {
             Name = name;
@@ -40,7 +40,7 @@ namespace Travel_Agency
 
         public void AssignOrderToWorker(Order order)
         {
-            _orders.Add(order);
+            WorkerOrders.Add(order);
         }
 
         public void PaySalary()
@@ -91,7 +91,7 @@ namespace Travel_Agency
 
         public override string ToString()
         {
-            return "Worker number: " + WorkerNumber + Environment.NewLine + "Name: " + Name + Environment.NewLine + "Last name: " + LastName + Environment.NewLine + "Position: " + Position + Environment.NewLine + "Salary: €" + Salary.ToString() + Environment.NewLine + "Working hours per week: " + WorkingHoursPerWeek.ToString() + Environment.NewLine + "Worker orders amount: " + _orders.Count + Environment.NewLine + "Registered on: " + RegisterDate.ToShortDateString();
+            return "Worker number: " + WorkerNumber + Environment.NewLine + "Name: " + Name + Environment.NewLine + "Last name: " + LastName + Environment.NewLine + "Position: " + Position + Environment.NewLine + "Salary: €" + Salary.ToString() + Environment.NewLine + "Working hours per week: " + WorkingHoursPerWeek.ToString() + Environment.NewLine + "Worker orders amount: " + WorkerOrders.Count + Environment.NewLine + "Registered on: " + RegisterDate.ToShortDateString();
         }
     }
 }

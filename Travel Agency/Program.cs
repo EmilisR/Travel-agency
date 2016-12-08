@@ -27,7 +27,6 @@ namespace Travel_Agency
             public DateTime RegisterDate { get; set; }
             public string Name { get; set; }
             public string LastName { get; set; }
-            private static int _howManyClients = 0;
             public string Email { get; set; }
             public string MobileNumber { get; set; }
             public int ClientNumber { get; private set; }
@@ -67,7 +66,7 @@ namespace Travel_Agency
             public string Position { get; set; }
             public double Salary { get; set; }
             public int WorkerNumber { get; set; }
-            private List<Order> _orders = new List<Order>();
+            public virtual List<Order> WorkerOrders { get; set; }
         }
 
 
