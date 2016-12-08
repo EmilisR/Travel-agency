@@ -46,7 +46,6 @@
             this.budgetBalance = new System.Windows.Forms.Label();
             this.sendEmailButton = new System.Windows.Forms.Button();
             this.payOutSalaryButton = new System.Windows.Forms.Button();
-            this.changeWorkerShiftButton = new System.Windows.Forms.Button();
             this.changeWorkerPositionButton = new System.Windows.Forms.Button();
             this.raiseCutSalaryButton = new System.Windows.Forms.Button();
             this.showWorkerOrdersbutton = new System.Windows.Forms.Button();
@@ -89,7 +88,7 @@
             this.clientsQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.clientsQuantity.Location = new System.Drawing.Point(282, 79);
             this.clientsQuantity.Name = "clientsQuantity";
-            this.clientsQuantity.Size = new System.Drawing.Size(2, 15);
+            this.clientsQuantity.Size = new System.Drawing.Size(2, 34);
             this.clientsQuantity.TabIndex = 4;
             // 
             // offersQuantity
@@ -99,7 +98,7 @@
             this.offersQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.offersQuantity.Location = new System.Drawing.Point(282, 21);
             this.offersQuantity.Name = "offersQuantity";
-            this.offersQuantity.Size = new System.Drawing.Size(2, 15);
+            this.offersQuantity.Size = new System.Drawing.Size(2, 34);
             this.offersQuantity.TabIndex = 5;
             // 
             // ordersQuantity
@@ -109,7 +108,7 @@
             this.ordersQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ordersQuantity.Location = new System.Drawing.Point(282, 50);
             this.ordersQuantity.Name = "ordersQuantity";
-            this.ordersQuantity.Size = new System.Drawing.Size(2, 15);
+            this.ordersQuantity.Size = new System.Drawing.Size(2, 34);
             this.ordersQuantity.TabIndex = 6;
             // 
             // addOffer
@@ -159,7 +158,7 @@
             this.activeOrders.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.activeOrders.Location = new System.Drawing.Point(282, 137);
             this.activeOrders.Name = "activeOrders";
-            this.activeOrders.Size = new System.Drawing.Size(2, 15);
+            this.activeOrders.Size = new System.Drawing.Size(2, 34);
             this.activeOrders.TabIndex = 11;
             // 
             // nearestReturnsButton
@@ -189,7 +188,7 @@
             this.workersQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.workersQuantity.Location = new System.Drawing.Point(282, 108);
             this.workersQuantity.Name = "workersQuantity";
-            this.workersQuantity.Size = new System.Drawing.Size(2, 15);
+            this.workersQuantity.Size = new System.Drawing.Size(2, 34);
             this.workersQuantity.TabIndex = 13;
             // 
             // budgetBalance
@@ -197,7 +196,7 @@
             this.budgetBalance.AutoSize = true;
             this.budgetBalance.Location = new System.Drawing.Point(282, 162);
             this.budgetBalance.Name = "budgetBalance";
-            this.budgetBalance.Size = new System.Drawing.Size(0, 13);
+            this.budgetBalance.Size = new System.Drawing.Size(0, 32);
             this.budgetBalance.TabIndex = 14;
             // 
             // sendEmailButton
@@ -220,21 +219,11 @@
             this.payOutSalaryButton.UseVisualStyleBackColor = true;
             this.payOutSalaryButton.Click += new System.EventHandler(this.PayOutSalaryButton_Click);
             // 
-            // changeWorkerShiftButton
-            // 
-            this.changeWorkerShiftButton.Location = new System.Drawing.Point(12, 220);
-            this.changeWorkerShiftButton.Name = "changeWorkerShiftButton";
-            this.changeWorkerShiftButton.Size = new System.Drawing.Size(264, 23);
-            this.changeWorkerShiftButton.TabIndex = 17;
-            this.changeWorkerShiftButton.Text = "Change worker\'s establishment";
-            this.changeWorkerShiftButton.UseVisualStyleBackColor = true;
-            this.changeWorkerShiftButton.Click += new System.EventHandler(this.ChangeWorkerShiftButton_Click);
-            // 
             // changeWorkerPositionButton
             // 
-            this.changeWorkerPositionButton.Location = new System.Drawing.Point(12, 249);
+            this.changeWorkerPositionButton.Location = new System.Drawing.Point(12, 295);
             this.changeWorkerPositionButton.Name = "changeWorkerPositionButton";
-            this.changeWorkerPositionButton.Size = new System.Drawing.Size(264, 23);
+            this.changeWorkerPositionButton.Size = new System.Drawing.Size(378, 70);
             this.changeWorkerPositionButton.TabIndex = 18;
             this.changeWorkerPositionButton.Text = "Change worker\'s position";
             this.changeWorkerPositionButton.UseVisualStyleBackColor = true;
@@ -242,9 +231,9 @@
             // 
             // raiseCutSalaryButton
             // 
-            this.raiseCutSalaryButton.Location = new System.Drawing.Point(12, 277);
+            this.raiseCutSalaryButton.Location = new System.Drawing.Point(12, 371);
             this.raiseCutSalaryButton.Name = "raiseCutSalaryButton";
-            this.raiseCutSalaryButton.Size = new System.Drawing.Size(264, 23);
+            this.raiseCutSalaryButton.Size = new System.Drawing.Size(372, 57);
             this.raiseCutSalaryButton.TabIndex = 19;
             this.raiseCutSalaryButton.Text = "Raise/cut salary";
             this.raiseCutSalaryButton.UseVisualStyleBackColor = true;
@@ -252,9 +241,9 @@
             // 
             // showWorkerOrdersbutton
             // 
-            this.showWorkerOrdersbutton.Location = new System.Drawing.Point(12, 306);
+            this.showWorkerOrdersbutton.Location = new System.Drawing.Point(12, 434);
             this.showWorkerOrdersbutton.Name = "showWorkerOrdersbutton";
-            this.showWorkerOrdersbutton.Size = new System.Drawing.Size(264, 23);
+            this.showWorkerOrdersbutton.Size = new System.Drawing.Size(386, 49);
             this.showWorkerOrdersbutton.TabIndex = 20;
             this.showWorkerOrdersbutton.Text = "Show worker\'s orders";
             this.showWorkerOrdersbutton.UseVisualStyleBackColor = true;
@@ -262,13 +251,12 @@
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(421, 351);
+            this.ClientSize = new System.Drawing.Size(1000, 556);
             this.Controls.Add(this.showWorkerOrdersbutton);
             this.Controls.Add(this.raiseCutSalaryButton);
             this.Controls.Add(this.changeWorkerPositionButton);
-            this.Controls.Add(this.changeWorkerShiftButton);
             this.Controls.Add(this.payOutSalaryButton);
             this.Controls.Add(this.sendEmailButton);
             this.Controls.Add(this.budgetBalance);
@@ -319,7 +307,6 @@
         private System.Windows.Forms.Label budgetBalance;
         private System.Windows.Forms.Button sendEmailButton;
         private System.Windows.Forms.Button payOutSalaryButton;
-        private System.Windows.Forms.Button changeWorkerShiftButton;
         private System.Windows.Forms.Button changeWorkerPositionButton;
         private System.Windows.Forms.Button raiseCutSalaryButton;
         private System.Windows.Forms.Button showWorkerOrdersbutton;

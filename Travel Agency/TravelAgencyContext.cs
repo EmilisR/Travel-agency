@@ -29,7 +29,7 @@ namespace Travel_Agency
         public virtual DbSet<Worker> Workers { get; set; }
     }
 
-    public class Client
+    public partial class Client
     {
         public DateTime RegisterDate { get; set; }
         public string Name { get; set; }
@@ -38,10 +38,9 @@ namespace Travel_Agency
         public string MobileNumber { get; set; }
         [Key]
         public int ClientNumber { get; set; }
-        public static event MainForm.EmailSendEventHandler<Client> EmailSend;
     }
 
-    public class Order
+    public partial class Order
     {
         public virtual Offer TravelOffer { get; set; }
         public virtual Client OrderClient { get; set; }
@@ -52,10 +51,8 @@ namespace Travel_Agency
         public int OrderNumber { get; private set; }
         public int OrderPrice { get; set; }
         public int OrderClientsAmount { get; set; }
-
-        public static event MainForm.EmailSendEventHandler<Order> EmailSend;
     }
-    public class Offer
+    public partial class Offer
     {
         [Key]
         public int OfferNumber { get; private set; }
@@ -65,7 +62,7 @@ namespace Travel_Agency
         public int TravelTime { get; set; }
         public string HotelRanking { get; set; }
     }
-    public class Worker
+    public partial class Worker
     {
         public DateTime RegisterDate { get; set; }
         public string Name { get; set; }

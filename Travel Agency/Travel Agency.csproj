@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -130,6 +130,7 @@
     <Compile Include="ChangeShiftForm.Designer.cs">
       <DependentUpon>ChangeShiftForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Client.cs" />
     <Compile Include="EmailInvoiceSender.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="EmailSendEventArgs.cs" />
@@ -153,6 +154,8 @@
     <Compile Include="NearestDeparturesForm.Designer.cs">
       <DependentUpon>NearestDeparturesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Offer.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="RaiseCutSalaryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,7 +184,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Worker.cs" />
     <Compile Include="WrongDataFileException.cs" />
+    <Compile Include="_Travel_Agency_TravelAgencyContextDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_Travel_Agency_TravelAgencyContextDataSet.xsd</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddClientForm.resx">
       <DependentUpon>AddClientForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -244,6 +253,17 @@
     <None Include="User.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="_Travel_Agency_TravelAgencyContextDataSet.xsc">
+      <DependentUpon>_Travel_Agency_TravelAgencyContextDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="_Travel_Agency_TravelAgencyContextDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>_Travel_Agency_TravelAgencyContextDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="_Travel_Agency_TravelAgencyContextDataSet.xss">
+      <DependentUpon>_Travel_Agency_TravelAgencyContextDataSet.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\countries.txt" />
@@ -265,6 +285,15 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Travel_Agency.TravelAgencyContext.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Travel_Agency.TravelAgencyContext_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>Travel_Agency.TravelAgencyContext.mdf</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

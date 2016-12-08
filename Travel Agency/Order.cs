@@ -1,20 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Travel_Agency
 {
-    [Serializable]
-    class Order : IComparable<Order>
+    public partial class Order : IComparable<Order>
     {
-        public Offer TravelOffer { get; set; }
-        public Client OrderClient { get; set; }
-        public Worker ServiceWorker { get; set; }
-        public DateTime OrderRegisterDate { get; set; }
-        public DateTime TravelStartDate { get; set; }
-        public int OrderNumber { get; private set; }
-        public int OrderPrice { get; set; }
-        public int OrderClientsAmount { get; set; }
-
         public static event MainForm.EmailSendEventHandler<Order> EmailSend;
 
         public Order(Offer offer, Client client, Worker worker, int orderClientsAmount, DateTime travelStartDate, ILogger loggerBox, ILogger loggerFile, ILogger loggerMail)

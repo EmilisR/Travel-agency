@@ -1,28 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Travel_Agency
 {
-    [Serializable]
-    class Worker
+    public partial class Worker
     {
-        public DateTime RegisterDate { get; set; }
-        public string Name { get; set; }
-        public string LastName { get; set; }
-        public int WorkingHoursPerWeek { get; set; }
-        public double StartingSalary { get; set; }
-        public int StartingWorkingHoursPerWeek { get; set; }
-        public string Position { get; set; }
-        public double Salary { get; set; }
-        public int WorkerNumber { get; set; }
-        public virtual List<Order> WorkerOrders { get; set; }
         public Worker(string name, string lastName, string position, int salary, int workingHoursPerWeek, ILogger loggerBox, ILogger loggerFile)
         {
             Name = name;
             LastName = lastName;
-            StartingSalary = salary;
-            StartingWorkingHoursPerWeek = workingHoursPerWeek;
             WorkingHoursPerWeek = workingHoursPerWeek;
             Salary = salary;
             Position = position;
@@ -32,10 +21,6 @@ namespace Travel_Agency
                 loggerBox.WriteToLog(this, RegisterDate, "Created worker");
             if (loggerFile != null)
                 loggerFile.WriteToLog(this, RegisterDate, "Created worker");
-        }
-
-        public Worker()
-        {
         }
 
         public void AssignOrderToWorker(Order order)
@@ -51,42 +36,11 @@ namespace Travel_Agency
         public void RaiseSalary(int bonus)
         {
             Salary += bonus;
-            StartingSalary = Salary;
         }
 
         public void CutSalary(int penalty)
         {
             Salary -= penalty;
-            StartingSalary = Salary;
-        }
-
-        public bool ChangeEstablishment(double postValue)
-        {
-            if (postValue == 0.25)
-            {
-                WorkingHoursPerWeek = StartingWorkingHoursPerWeek / 4;
-                Salary = StartingSalary / 4;
-                return true;
-            }
-            if (postValue == 0.5)
-            {
-                WorkingHoursPerWeek = StartingWorkingHoursPerWeek / 2;
-                Salary = StartingSalary / 2;
-                return true;
-            }
-            if (postValue == 0.75)
-            {
-                WorkingHoursPerWeek = StartingWorkingHoursPerWeek / 4 * 3;
-                Salary = StartingSalary / 4 * 3;
-                return true;
-            }
-            if (postValue == 1)
-            {
-                WorkingHoursPerWeek = StartingWorkingHoursPerWeek;
-                Salary = StartingSalary;
-                return true;
-            }
-            else return false;
         }
 
         public override string ToString()

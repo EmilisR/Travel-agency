@@ -258,50 +258,28 @@ namespace Travel_Agency
             await SetLabelsAwait();
         }
 
-        private void ChangeWorkerShiftButton_Click(object sender, EventArgs e)
-        {
-            lock (Program.allWorkers)
-            {
-                if (Program.allWorkers.Count > 0)
-                {
-                    List<string> list = Program.allWorkers.Values.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                    ChangeShiftForm changeShiftForm = new ChangeShiftForm(new BindingSource(list, null));
-                    changeShiftForm.establishmentComboBox.Items.AddRange(new object[] {
-                    "Full time",
-                    "3/4 time",
-                    "1/2 time",
-                    "1/4 time"});
-                    changeShiftForm.ShowDialog();
-                }
-                else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
         private void ChangeWorkerPositionButton_Click(object sender, EventArgs e)
         {
-            lock (Program.allWorkers)
+            if (Program.allWorkers.Count > 0)
             {
-                if (Program.allWorkers.Count > 0)
-                {
-                    List<string> list = Program.allWorkers.Values.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                    ChangeShiftForm changeShiftForm = new ChangeShiftForm(new BindingSource(list, null));
-                    AddWorkerForm addWorker = new AddWorkerForm();
-                    changeShiftForm.establishmentComboBox.Items.AddRange(new object[] {
-                    "Operations manager",
-                    "Quality control, safety, environmental manager",
-                    "Accountant, bookkeeper, controller",
-                    "Office manager",
-                    "Receptionist",
-                    "Foreperson, supervisor, lead person",
-                    "Marketing manager",
-                    "Purchasing manager",
-                    "Shipping and receiving person or manager",
-                    "Professional staff"});
-                    changeShiftForm.establishmentLabel.Text = "Position: ";
-                    changeShiftForm.ShowDialog();
-                }
-                else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                List<string> list = Program.allWorkers.Values.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                ChangeShiftForm changeShiftForm = new ChangeShiftForm(new BindingSource(list, null));
+                AddWorkerForm addWorker = new AddWorkerForm();
+                changeShiftForm.establishmentComboBox.Items.AddRange(new object[] {
+                "Operations manager",
+                "Quality control, safety, environmental manager",
+                "Accountant, bookkeeper, controller",
+                "Office manager",
+                "Receptionist",
+                "Foreperson, supervisor, lead person",
+                "Marketing manager",
+                "Purchasing manager",
+                "Shipping and receiving person or manager",
+                "Professional staff"});
+                changeShiftForm.establishmentLabel.Text = "Position: ";
+                changeShiftForm.ShowDialog();
             }
+            else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void RaiseCutSalaryButton_Click(object sender, EventArgs e)
