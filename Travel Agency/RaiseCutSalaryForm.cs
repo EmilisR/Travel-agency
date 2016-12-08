@@ -35,7 +35,7 @@ namespace Travel_Agency
             {
                 Worker worker = Program.allWorkers[Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First())];
                 double oldSalary = worker.Salary;
-                worker.RaiseSalary(moneyTrackBar.Value);
+                //worker.RaiseSalary(moneyTrackBar.Value);
                 MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Dispose();
             }
@@ -70,7 +70,7 @@ namespace Travel_Agency
                 }
                 else
                 {
-                    worker.CutSalary(moneyTrackBar.Value);
+                    //worker.CutSalary(moneyTrackBar.Value);
                     MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Dispose();
                 }

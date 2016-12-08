@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Data.Entity;
+using System.Linq;
 
 namespace Travel_Agency
 {
@@ -18,65 +19,35 @@ namespace Travel_Agency
         
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
-        }
-        public class Client
-        {
-            public DateTime RegisterDate { get; set; }
-            public string Name { get; set; }
-            public string LastName { get; set; }
-            public string Email { get; set; }
-            public string MobileNumber { get; set; }
-            public int ClientNumber { get; private set; }
-            public static event MainForm.EmailSendEventHandler<Client> EmailSend;
-        }
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            //Application.Run(new MainForm());
+            using (var db = new TravelAgencyContext())
+            {
+                // Create and save a new Blog 
+                Console.Write("Enter a name for a new Blog: ");
+                var name = Console.ReadLine();
 
-        public class Order
-        {
-            public virtual Offer TravelOffer { get; set; }
-            public virtual Client OrderClient { get; set; }
-            public virtual Worker ServiceWorker { get; set; }
-            public DateTime OrderRegisterDate { get; set; }
-            public DateTime TravelStartDate { get; set; }
-            public int OrderNumber { get; private set; }
-            public int OrderPrice { get; set; }
-            public int OrderClientsAmount { get; set; }
+                var client = new Client { Name = name, ClientNumber = 1, Email = "emilis@ruzveltas.lt", LastName = "Ruzveltas", MobileNumber = "+37064373827", RegisterDate = DateTime.Now  };
+                db.Clients.Add(client);
+                db.SaveChanges();
 
-            public static event MainForm.EmailSendEventHandler<Order> EmailSend;
-        }
-        public class Offer
-        {
-            public int OfferNumber { get; private set; }
-            public string TravelDestination { get; set; }
-            public string Feeding { get; set; }
-            public int Price { get; set; }
-            public int TravelTime { get; set; }
-            public string HotelRanking { get; set; }
-        }
-        public class Worker
-        {
-            public DateTime RegisterDate { get; set; }
-            public string Name { get; set; }
-            public string LastName { get; set; }
-            public int WorkingHoursPerWeek { get; set; }
-            public double StartingSalary { get; set; }
-            public int StartingWorkingHoursPerWeek { get; set; }
-            public string Position { get; set; }
-            public double Salary { get; set; }
-            public int WorkerNumber { get; set; }
-            public virtual List<Order> WorkerOrders { get; set; }
-        }
+                // Display all Blogs from the database 
+                var query = from b in db.Clients
+                            orderby b.Name
+                            select b;
 
+                Console.WriteLine("All blogs in the database:");
+                foreach (var item in query)
+                {
+                    Console.WriteLine(item.Name + " " + item.MobileNumber);
+                }
 
-        public class TravelAgencyContext : DbContext
-        {
-            public DbSet<Offer> Offers { get; set; }
-            public DbSet<Order> Orders { get; set; }
-            public DbSet<Client> Clients { get; set; }
-            public DbSet<Worker> Workers { get; set; }
+                Console.WriteLine("Press any key to exit...");
+                Console.ReadKey();
+            }
         }
+        
 
     }
 }

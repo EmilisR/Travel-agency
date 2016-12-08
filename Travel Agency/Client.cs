@@ -9,7 +9,6 @@ namespace Travel_Agency
         public DateTime RegisterDate { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        private static int _howManyClients = 0;
         public string Email { get; set; }
         public string MobileNumber { get; set; }
         public int ClientNumber { get; private set; }
@@ -23,7 +22,6 @@ namespace Travel_Agency
             Email = email;
             MobileNumber = mobileNumber;
             RegisterDate = DateTime.Now;
-            _howManyClients++;
             ClientNumber = Program.allClients.OrderByDescending(x => x.Key).FirstOrDefault().Key + 1;
             if (loggerBox != null)
                 loggerBox.WriteToLog(this, RegisterDate, "Created client", Email);

@@ -125,7 +125,7 @@ namespace Travel_Agency
         {
             foreach (Worker worker in Program.allWorkers.Values)
             {
-                worker.ClearListOfOrders();
+                //worker.ClearListOfOrders();
             }
             SaveObjectsTask(Program.allClients.Values.ToList(), FileInput.ClientsFilePath, "clients").RunSynchronously();
             SaveObjectsTask(Program.allOffers.Values.ToList(), FileInput.OffersFilePath, "offers").RunSynchronously();
@@ -228,12 +228,12 @@ namespace Travel_Agency
             if (Budget.Balance - worker.Salary > Convert.ToDouble(FileInput.ReadSetting("Limit of bankrupt", "App.config")))
             {
                 MessageBox.Show("Paid out €" + worker.Salary + " to " + worker.Name + " " + worker.LastName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                worker.PaySalary();
+                //worker.PaySalary();
                 sender.Dispose();
             }
             else
             {
-                worker.PaySalary();
+                //worker.PaySalary();
                 sender.Dispose();
             }
             

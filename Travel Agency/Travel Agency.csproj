@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4DC14F40-2E12-4188-99F0-FDD44E2FF271}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Travel_Agency</RootNamespace>
     <AssemblyName>Travel Agency</AssemblyName>
@@ -46,6 +46,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="emailInvoiceFormat, Version=1.0.5548.21118, Culture=neutral, processorArchitecture=MSIL">
@@ -127,7 +130,6 @@
     <Compile Include="ChangeShiftForm.Designer.cs">
       <DependentUpon>ChangeShiftForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Client.cs" />
     <Compile Include="EmailInvoiceSender.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="EmailSendEventArgs.cs" />
@@ -151,8 +153,6 @@
     <Compile Include="NearestDeparturesForm.Designer.cs">
       <DependentUpon>NearestDeparturesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Offer.cs" />
-    <Compile Include="Order.cs" />
     <Compile Include="RaiseCutSalaryForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,7 +173,6 @@
       <DependentUpon>ShowObject.cs</DependentUpon>
     </Compile>
     <Compile Include="TravelAgencyContext.cs" />
-    <Compile Include="Worker.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

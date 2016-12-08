@@ -67,19 +67,19 @@ namespace Travel_Agency
                     int previuosWorkingHours = worker.WorkingHoursPerWeek;
                     if (establishmentComboBox.SelectedItem.ToString() == "Full time")
                     {
-                        worker.ChangeEstablishment(1);
+                        //worker.ChangeEstablishment(1);
                     }
                     if (establishmentComboBox.SelectedItem.ToString() == "1/2 time")
                     {
-                        worker.ChangeEstablishment(0.5);
+                        //worker.ChangeEstablishment(0.5);
                     }
                     if (establishmentComboBox.SelectedItem.ToString() == "3/4 time")
                     {
-                        worker.ChangeEstablishment(0.75);
+                        //worker.ChangeEstablishment(0.75);
                     }
                     if (establishmentComboBox.SelectedItem.ToString() == "1/4 time")
                     {
-                        worker.ChangeEstablishment(0.25);
+                        //worker.ChangeEstablishment(0.25);
                     }
                     MessageBox.Show("Previuos salary: €" + previuosSalary + ", new salary: €" + worker.Salary + "\nPreviuos working hours: " + previuosWorkingHours + ", new working hours: " + worker.WorkingHoursPerWeek, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Dispose();

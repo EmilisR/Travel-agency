@@ -97,7 +97,7 @@ namespace Travel_Agency
                     if (type == typeof(Worker))
                     {
                         Worker newObject = (Worker)formatter.Deserialize(sr);
-                        newObject.ClearListOfOrders();
+                        //newObject.ClearListOfOrders();
                         Program.allWorkers.Add(newObject.WorkerNumber, newObject);
                     }
                     if (type == typeof(Offer))

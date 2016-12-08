@@ -46,8 +46,8 @@ namespace Travel_Agency
                 else
                 {
                     Client.EmailSend += EmailSendHandler;
-                    Client client = new Client(nameBox.Text, lastNameBox.Text, emailBox.Text, telNumberBox.Text, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
-                    Program.allClients.Add(client.ClientNumber, client);
+                    //Client client = new Client(nameBox.Text, lastNameBox.Text, emailBox.Text, telNumberBox.Text, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
+                    //Program.allClients.Add(client.ClientNumber, client);
                     _mainForm.StartThreadQuantityUpdate();
                     Dispose();
                 }

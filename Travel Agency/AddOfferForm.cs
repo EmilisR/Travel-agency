@@ -76,8 +76,8 @@ namespace Travel_Agency
             }
             if (priceTrackBar.BackColor == Color.LightGreen && locationTextBox.BackColor == Color.LightGreen && rankingComboBox.BackColor == Color.LightGreen && feedingComboBox.BackColor == Color.LightGreen && countriesComboBox.BackColor == Color.LightGreen && daysTrackBar.BackColor == Color.LightGreen)
             {
-                Offer offer = new Offer(countriesComboBox.SelectedItem.ToString() + ", " + locationTextBox.Text, feedingComboBox.SelectedItem.ToString(), priceTrackBar.Value, daysTrackBar.Value, rankingComboBox.SelectedItem.ToString(), new LogFileWritter(), new ScreenObjectInfoWritter());
-                Program.allOffers.Add(offer.OfferNumber, offer);
+                //Offer offer = new Offer(countriesComboBox.SelectedItem.ToString() + ", " + locationTextBox.Text, feedingComboBox.SelectedItem.ToString(), priceTrackBar.Value, daysTrackBar.Value, rankingComboBox.SelectedItem.ToString(), new LogFileWritter(), new ScreenObjectInfoWritter());
+                //Program.allOffers.Add(offer.OfferNumber, offer);
                 _mainForm.StartThreadQuantityUpdate();
                 Dispose();
             }

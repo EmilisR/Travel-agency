@@ -1,8 +1,10 @@
 namespace Travel_Agency
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using System.ComponentModel.DataAnnotations;
 
     public class TravelAgencyContext : DbContext
     {
@@ -13,7 +15,7 @@ namespace Travel_Agency
         // If you wish to target a different database and/or database provider, modify the 'TravelAgencyContext' 
         // connection string in the application configuration file.
         public TravelAgencyContext()
-            : base("name=TravelAgencyContext")
+            : base(@"data source=(LocalDb)\MSSQLLocalDB;initial catalog=Travel_Agency.TravelAgencyContext;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework")
         {
         }
 
@@ -21,11 +23,58 @@ namespace Travel_Agency
         // on configuring and using a Code First model, see http://go.microsoft.com/fwlink/?LinkId=390109.
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
+        public virtual DbSet<Offer> Offers { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<Worker> Workers { get; set; }
     }
 
-    //public class MyEntity
-    //{
-    //    public int Id { get; set; }
-    //    public string Name { get; set; }
-    //}
+    public class Client
+    {
+        public DateTime RegisterDate { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string MobileNumber { get; set; }
+        [Key]
+        public int ClientNumber { get; set; }
+        public static event MainForm.EmailSendEventHandler<Client> EmailSend;
+    }
+
+    public class Order
+    {
+        public virtual Offer TravelOffer { get; set; }
+        public virtual Client OrderClient { get; set; }
+        public virtual Worker ServiceWorker { get; set; }
+        public DateTime OrderRegisterDate { get; set; }
+        public DateTime TravelStartDate { get; set; }
+        [Key]
+        public int OrderNumber { get; private set; }
+        public int OrderPrice { get; set; }
+        public int OrderClientsAmount { get; set; }
+
+        public static event MainForm.EmailSendEventHandler<Order> EmailSend;
+    }
+    public class Offer
+    {
+        [Key]
+        public int OfferNumber { get; private set; }
+        public string TravelDestination { get; set; }
+        public string Feeding { get; set; }
+        public int Price { get; set; }
+        public int TravelTime { get; set; }
+        public string HotelRanking { get; set; }
+    }
+    public class Worker
+    {
+        public DateTime RegisterDate { get; set; }
+        public string Name { get; set; }
+        public string LastName { get; set; }
+        public int WorkingHoursPerWeek { get; set; }
+        public string Position { get; set; }
+        public double Salary { get; set; }
+        [Key]
+        public int WorkerNumber { get; set; }
+        public virtual List<Order> WorkerOrders { get; set; }
+    }
 }

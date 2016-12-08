@@ -36,7 +36,7 @@ namespace Travel_Agency
                 }
                 else
                 {
-                    NearestDeparturesForm ordersView = new NearestDeparturesForm(true);
+                    /*NearestDeparturesForm ordersView = new NearestDeparturesForm(true);
                     Worker worker = Program.allWorkers[Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())];
                     List<Order> list = worker.GetWorkerOrdersList();
                     foreach (Order order in list)
@@ -56,7 +56,7 @@ namespace Travel_Agency
                         }
                     }
                     ordersView.ShowDialog();
-                    Dispose();
+                    Dispose();*/
                 }
             }
             else if (objectBox.SelectedIndex != -1)

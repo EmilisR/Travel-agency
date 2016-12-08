@@ -74,8 +74,8 @@ namespace Travel_Agency
             }
             if (nameTextBox.BackColor == Color.LightGreen && lastNameTextBox.BackColor == Color.LightGreen && positionComboBox.BackColor == Color.LightGreen && salaryTrackBar.BackColor == Color.LightGreen && workingHoursTrackBar.BackColor == Color.LightGreen)
             {
-                Worker worker = new Worker(nameTextBox.Text, lastNameTextBox.Text, positionComboBox.SelectedItem.ToString(), salaryTrackBar.Value, workingHoursTrackBar.Value, new LogFileWritter(), new ScreenObjectInfoWritter());
-                Program.allWorkers.Add(worker.WorkerNumber, worker);
+                //Worker worker = new Worker(nameTextBox.Text, lastNameTextBox.Text, positionComboBox.SelectedItem.ToString(), salaryTrackBar.Value, workingHoursTrackBar.Value, new LogFileWritter(), new ScreenObjectInfoWritter());
+                //Program.allWorkers.Add(worker.WorkerNumber, worker);
                 _mainForm.StartThreadQuantityUpdate();
                 Dispose();
             }

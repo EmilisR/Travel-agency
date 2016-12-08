@@ -91,9 +91,9 @@ namespace Travel_Agency
                             Client client = Program.allClients[Convert.ToInt32(clientsBox.SelectedItem.ToString().Split(' ').Last().Remove(clientsBox.SelectedItem.ToString().Split(' ').Last().Length - 1))];
                             Worker worker = Program.allWorkers[Convert.ToInt32(workerComboBox.SelectedItem.ToString().Split('.').First())];
                             Order.EmailSend += EmailSendHandler;
-                            Order order = new Order(offer, client, worker, travellersAmountTrackBar.Value, monthCalendar.SelectionStart, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
-                            worker.AssignOrderToWorker(order);
-                            Program.allOrders.Add(order.OrderNumber, order);
+                            //Order order = new Order(offer, client, worker, travellersAmountTrackBar.Value, monthCalendar.SelectionStart, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
+                            //worker.AssignOrderToWorker(order);
+                            //Program.allOrders.Add(order.OrderNumber, order);
                             _mainForm.StartThreadQuantityUpdate();
                             Dispose();
                         }

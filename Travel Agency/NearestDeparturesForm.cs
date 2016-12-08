@@ -39,7 +39,7 @@ namespace Travel_Agency
                     i++;
                 }
                 Array.Sort(orders);
-                foreach (Order order in orders)
+                /*foreach (Order order in orders)
                 {
                     if (order.IsActive())
                     {
@@ -54,7 +54,7 @@ namespace Travel_Agency
                         ListViewItem itm = new ListViewItem(arr);
                         nearestDeparturesListView.Items.Add(itm);
                     }
-                }
+                }*/
             }
         }
     }
