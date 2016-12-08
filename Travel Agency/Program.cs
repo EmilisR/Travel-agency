@@ -8,10 +8,6 @@ namespace Travel_Agency
 {
     static class Program
     {
-        public static Dictionary<int, Order> allOrders = new Dictionary<int, Order>();
-        public static Dictionary<int, Offer> allOffers = new Dictionary<int, Offer>();
-        public static Dictionary<int, Client> allClients = new Dictionary<int, Client>();
-        public static Dictionary<int, Worker> allWorkers = new Dictionary<int, Worker>();
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
