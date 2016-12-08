@@ -10,17 +10,20 @@ namespace Travel_Agency
     {
         public Worker(string name, string lastName, string position, int salary, int workingHoursPerWeek, ILogger loggerBox, ILogger loggerFile)
         {
-            Name = name;
-            LastName = lastName;
-            WorkingHoursPerWeek = workingHoursPerWeek;
-            Salary = salary;
-            Position = position;
-            RegisterDate = DateTime.Now;
-            WorkerNumber = Program.allWorkers.OrderByDescending(x => x.Key).FirstOrDefault().Key + 1;
-            if (loggerBox != null)
-                loggerBox.WriteToLog(this, RegisterDate, "Created worker");
-            if (loggerFile != null)
-                loggerFile.WriteToLog(this, RegisterDate, "Created worker");
+            using (var db = new TravelAgencyContext())
+            {
+                Name = name;
+                LastName = lastName;
+                WorkingHoursPerWeek = workingHoursPerWeek;
+                Salary = salary;
+                Position = position;
+                RegisterDate = DateTime.Now;
+                WorkerNumber = db.Workers.OrderByDescending(x => x.WorkerNumber).FirstOrDefault().Key + 1;
+                if (loggerBox != null)
+                    loggerBox.WriteToLog(this, RegisterDate, "Created worker");
+                if (loggerFile != null)
+                    loggerFile.WriteToLog(this, RegisterDate, "Created worker");
+            } 
         }
 
         public void AssignOrderToWorker(Order order)
