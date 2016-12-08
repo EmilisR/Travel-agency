@@ -23,8 +23,6 @@ namespace Travel_Agency
             loginForm.ShowDialog();
             Budget.Bankrupt += BankruptHandler;
             Font = new Font(FileInput.ReadSetting("Font name", "User.config"), Convert.ToInt32(FileInput.ReadSetting("Font size", "User.config")));
-            FileInput fileInput = new FileInput();
-            fileInput.ShowDialog();
             StartThreadQuantityUpdate();
         }
 
@@ -35,15 +33,18 @@ namespace Travel_Agency
 
         private async Task SetLabelsAwait()
         {
-            clientsQuantity.Text = (await GetLabelTextAsync(Program.allClients.Count, "Number of clients: "));
-            offersQuantity.Text = (await GetLabelTextAsync(Program.allOffers.Count, "Number of offers: "));
-            workersQuantity.Text = (await GetLabelTextAsync(Program.allWorkers.Count, "Number of workers: "));
-            ordersQuantity.Text = (await GetLabelTextAsync(Program.allOrders.Count, "Number of orders: "));
-            activeOrders.Text = (await GetLabelTextAsync(CheckActiveOrders(), "Active orders: "));
-            if (!Budget.IsBankrupt())
+            using (var db = new TravelAgencyContext())
             {
-                budgetBalance.BackColor = DefaultBackColor;
-                budgetBalance.Text = (await GetLabelTextAsync((int)Budget.Balance, "Budget balance: €"));
+                clientsQuantity.Text = (await GetLabelTextAsync(db.Clients.Count(), "Number of clients: "));
+                offersQuantity.Text = (await GetLabelTextAsync(db.Offers.Count(), "Number of offers: "));
+                workersQuantity.Text = (await GetLabelTextAsync(db.Workers.Count(), "Number of workers: "));
+                ordersQuantity.Text = (await GetLabelTextAsync(db.Orders.Count(), "Number of orders: "));
+                activeOrders.Text = (await GetLabelTextAsync(CheckActiveOrders(), "Active orders: "));
+                if (!Budget.IsBankrupt())
+                {
+                    budgetBalance.BackColor = DefaultBackColor;
+                    budgetBalance.Text = (await GetLabelTextAsync((int)Budget.Balance, "Budget balance: €"));
+                }
             }
         }
 
@@ -71,15 +72,18 @@ namespace Travel_Agency
 
         private int CheckActiveOrders()
         {
-            int activeOrders = 0;
-            if (Program.allOrders.Count > 0)
+            using (var db = new TravelAgencyContext())
             {
-                foreach (Order order in Program.allOrders.Values)
+                int activeOrders = 0;
+                if (db.Orders.Count() > 0)
                 {
-                    if (order.TravelStartDate > DateTime.Today) activeOrders++;
+                    foreach (Order order in db.Orders)
+                    {
+                        if (order.TravelStartDate > DateTime.Today) activeOrders++;
+                    }
                 }
+                return activeOrders;
             }
-            return activeOrders;
         }
 
         private Task SaveObjectsTask<T>(List<T> objects, string filePath, string tag)
@@ -103,11 +107,7 @@ namespace Travel_Agency
 
         private void GUI_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Thread saveObjectsThread = new Thread(Serialize);
-            saveObjectsThread.Start();
             new Thread(SaveBudgetValues).Start();
-            while (saveObjectsThread.ThreadState == System.Threading.ThreadState.Running){}
-            MessageBox.Show("Data successfully updated!", "Success",  MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void SaveBudgetValues()
@@ -119,18 +119,6 @@ namespace Travel_Agency
                 file.WriteLine(Budget.Outcome);
                 file.WriteLine(Budget.Profit);
             }
-        }
-
-        private void Serialize()
-        {
-            foreach (Worker worker in Program.allWorkers.Values)
-            {
-                //worker.ClearListOfOrders();
-            }
-            SaveObjectsTask(Program.allClients.Values.ToList(), FileInput.ClientsFilePath, "clients").RunSynchronously();
-            SaveObjectsTask(Program.allOffers.Values.ToList(), FileInput.OffersFilePath, "offers").RunSynchronously();
-            SaveObjectsTask(Program.allOrders.Values.ToList(), FileInput.OrdersFilePath, "orders").RunSynchronously();
-            SaveObjectsTask(Program.allWorkers.Values.ToList(), FileInput.WorkersFilePath, "workers").RunSynchronously();
         }
 
         private void AddWorker_Click(object sender, EventArgs e)
@@ -159,50 +147,62 @@ namespace Travel_Agency
 
         private void ShowOffersButton_Click(object sender, EventArgs e)
         {
-            if (Program.allOffers.Count > 0)
+            using (var db = new TravelAgencyContext())
             {
-                List<string> list = Program.allOffers.Values.Select(i => i.OfferNumber + ". " + i.TravelDestination + ", " + i.HotelRanking + ", " + i.Feeding + ", €" + i.Price).ToList();
-                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Offer), this);
-                showObject.Text = "Show offers";
-                showObject.ShowDialog();
+                if (db.Offers.Count() > 0)
+                {
+                    List<string> list = db.Offers.Select(i => i.OfferNumber + ". " + i.TravelDestination + ", " + i.HotelRanking + ", " + i.Feeding + ", €" + i.Price).ToList();
+                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Offer), this);
+                    showObject.Text = "Show offers";
+                    showObject.ShowDialog();
+                }
+                else MessageBox.Show("No offers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else MessageBox.Show("No offers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void ShowOrdersButton_Click(object sender, EventArgs e)
         {
-            if (Program.allOrders.Count > 0)
+            using (var db = new TravelAgencyContext())
             {
-                List<string> list = Program.allOrders.Values.Select(i => i.OrderNumber + ". " + i.OrderClient.Name + " " + i.OrderClient.LastName + " " + i.TravelOffer.TravelDestination).ToList();
-                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Order), this);
-                showObject.Text = "Show orders";
-                showObject.ShowDialog();
+                if (db.Orders.Count() > 0)
+                {
+                    List<string> list = db.Orders.Select(i => i.OrderNumber + ". " + i.OrderClient.Name + " " + i.OrderClient.LastName + " " + i.TravelOffer.TravelDestination).ToList();
+                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Order), this);
+                    showObject.Text = "Show orders";
+                    showObject.ShowDialog();
+                }
+                else MessageBox.Show("No orders!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else MessageBox.Show("No orders!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void ShowWorkersButton_Click(object sender, EventArgs e)
         {
-            if (Program.allWorkers.Count > 0)
+            using (var db = new TravelAgencyContext())
             {
-                List<string> list = Program.allWorkers.Values.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Worker), this);
-                showObject.Text = "Show workers";
-                showObject.ShowDialog();
+                if (db.Workers.Count() > 0)
+                {
+                    List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Worker), this);
+                    showObject.Text = "Show workers";
+                    showObject.ShowDialog();
+                }
+                else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void ShowClientsButton_Click(object sender, EventArgs e)
         {
-            if (Program.allClients.Count > 0)
+            using (var db = new TravelAgencyContext())
             {
-                List<string> list = Program.allClients.Values.Select(i => i.Name + " " + i.LastName + " [Client number: " + i.ClientNumber + "]").ToList();
-                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Client), this);
-                showObject.Text = "Show clients";
-                showObject.ShowDialog();
+                if (db.Clients.Count() > 0)
+                {
+                    List<string> list = db.Clients.Select(i => i.Name + " " + i.LastName + " [Client number: " + i.ClientNumber + "]").ToList();
+                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Client), this);
+                    showObject.Text = "Show clients";
+                    showObject.ShowDialog();
+                }
+                else MessageBox.Show("No clients!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else MessageBox.Show("No clients!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void NearestDeparturesButton_Click(object sender, EventArgs e)
@@ -224,28 +224,37 @@ namespace Travel_Agency
 
         public static void PayOutSalaryHandler(ShowObject sender, EventArgs e)
         {
-            Worker worker = Program.allWorkers[Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split('.').First())];
-            if (Budget.Balance - worker.Salary > Convert.ToDouble(FileInput.ReadSetting("Limit of bankrupt", "App.config")))
+            using (var db = new TravelAgencyContext())
             {
-                MessageBox.Show("Paid out €" + worker.Salary + " to " + worker.Name + " " + worker.LastName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                //worker.PaySalary();
-                sender.Dispose();
+                Worker worker = null;
+                var query = from w in db.Workers
+                             where w.WorkerNumber == Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split('.').First())
+                             select w;
+                foreach (var item in query)
+                {
+                    worker = item;
+                }
+                if (Budget.Balance - worker.Salary > Convert.ToDouble(FileInput.ReadSetting("Limit of bankrupt", "App.config")))
+                {
+                    MessageBox.Show("Paid out €" + worker.Salary + " to " + worker.Name + " " + worker.LastName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    worker.PaySalary();
+                    sender.Dispose();
+                }
+                else
+                {
+                    worker.PaySalary();
+                    sender.Dispose();
+                }
             }
-            else
-            {
-                //worker.PaySalary();
-                sender.Dispose();
-            }
-            
         }
 
-        private async void PayOutSalaryButton_Click(object sender, EventArgs e)
+        private void PayOutSalaryButton_Click(object sender, EventArgs e)
         {
-            lock(Program.allWorkers)
+            using (var db = new TravelAgencyContext())
             {
-                if (Program.allWorkers.Count > 0)
+                if (db.Workers.Count() > 0)
                 {
-                    List<string> list = Program.allWorkers.Values.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                    List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
                     ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Worker), this);
                     showObject.Text = "Pay out salary";
                     showObject.showButton.Text = "Pay out salary";
@@ -254,58 +263,67 @@ namespace Travel_Agency
                     showObject.ShowDialog();
                 }
                 else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            await SetLabelsAwait();
+            } 
         }
 
         private void ChangeWorkerPositionButton_Click(object sender, EventArgs e)
         {
-            if (Program.allWorkers.Count > 0)
+            using (var db = new TravelAgencyContext())
             {
-                List<string> list = Program.allWorkers.Values.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                ChangeShiftForm changeShiftForm = new ChangeShiftForm(new BindingSource(list, null));
-                AddWorkerForm addWorker = new AddWorkerForm();
-                changeShiftForm.establishmentComboBox.Items.AddRange(new object[] {
-                "Operations manager",
-                "Quality control, safety, environmental manager",
-                "Accountant, bookkeeper, controller",
-                "Office manager",
-                "Receptionist",
-                "Foreperson, supervisor, lead person",
-                "Marketing manager",
-                "Purchasing manager",
-                "Shipping and receiving person or manager",
-                "Professional staff"});
-                changeShiftForm.establishmentLabel.Text = "Position: ";
-                changeShiftForm.ShowDialog();
+                if (db.Workers.Count() > 0)
+                {
+                    List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                    ChangeShiftForm changeShiftForm = new ChangeShiftForm(new BindingSource(list, null));
+                    AddWorkerForm addWorker = new AddWorkerForm();
+                    changeShiftForm.establishmentComboBox.Items.AddRange(new object[] {
+                        "Operations manager",
+                        "Quality control, safety, environmental manager",
+                        "Accountant, bookkeeper, controller",
+                        "Office manager",
+                        "Receptionist",
+                        "Foreperson, supervisor, lead person",
+                        "Marketing manager",
+                        "Purchasing manager",
+                        "Shipping and receiving person or manager",
+                        "Professional staff"
+                    });
+                    changeShiftForm.establishmentLabel.Text = "Position: ";
+                    changeShiftForm.ShowDialog();
+                }
+                else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void RaiseCutSalaryButton_Click(object sender, EventArgs e)
         {
-            if (Program.allWorkers.Count > 0)
+            using (var db = new TravelAgencyContext())
             {
-                List<string> list = Program.allWorkers.Values.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                RaiseCutSalaryForm raiseCutSalaryForm = new RaiseCutSalaryForm(new BindingSource(list, null));
-                raiseCutSalaryForm.ShowDialog();
+                if (db.Workers.Count() > 0)
+                {
+                    List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                    RaiseCutSalaryForm raiseCutSalaryForm = new RaiseCutSalaryForm(new BindingSource(list, null));
+                    raiseCutSalaryForm.ShowDialog();
+                }
+                else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void ShowWorkerOrdersbutton_Click(object sender, EventArgs e)
         {
-            if (Program.allWorkers.Count > 0)
+            using (var db = new TravelAgencyContext())
             {
-                List<string> list = Program.allWorkers.Values.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Offer), this);
-                showObject.Text = "Show worker's orders";
-                showObject.showButton.Text = "Show worker's orders";
-                showObject.showButton.Size = new Size(240, 23);
-                showObject.deleteButton.Visible = false;
-                showObject.ShowDialog();
+                if (Program.allWorkers.Count > 0)
+                {
+                    List<string> list = Program.allWorkers.Values.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Offer), this);
+                    showObject.Text = "Show worker's orders";
+                    showObject.showButton.Text = "Show worker's orders";
+                    showObject.showButton.Size = new Size(240, 23);
+                    showObject.deleteButton.Visible = false;
+                    showObject.ShowDialog();
+                }
+                else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
