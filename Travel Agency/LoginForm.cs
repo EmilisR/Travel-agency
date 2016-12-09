@@ -36,7 +36,7 @@ namespace Travel_Agency
 
         private void LoginButton_Click(object sender, EventArgs e)
         {
-            if (ComputeHash(passwordBox.Text) == FileInput.ReadSetting("Admin pass hash", "App.config") && emailBox.Text == FileInput.ReadSetting("Admin email", "App.config"))
+            if (ComputeHash(passwordBox.Text) == Program.ReadSetting("Admin pass hash", "App.config") && emailBox.Text == Program.ReadSetting("Admin email", "App.config"))
             {
                 EmailSender.Password = ConvertToSecureString(passwordBox.Text);
                 Dispose();

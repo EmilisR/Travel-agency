@@ -28,130 +28,206 @@ namespace Travel_Agency
 
         public void ShowButton_Click(object sender, EventArgs e)
         {
-            if (type.Equals(typeof(Offer)))
+            using (var db = new TravelAgencyContext())
             {
-                if (objectBox.SelectedIndex == -1)
+                if (type.Equals(typeof(Offer)))
                 {
-                    objectBox.BackColor = Color.Salmon;
-                }
-                else
-                {
-                    /*NearestDeparturesForm ordersView = new NearestDeparturesForm(true);
-                    Worker worker = Program.allWorkers[Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())];
-                    List<Order> list = worker.GetWorkerOrdersList();
-                    foreach (Order order in list)
+                    if (objectBox.SelectedIndex == -1)
                     {
-                        if (order.IsActive())
+                        objectBox.BackColor = Color.Salmon;
+                    }
+                    else
+                    {
+                        NearestDeparturesForm ordersView = new NearestDeparturesForm(true);
+                        Worker worker = null;
+                        var query = from w in db.Workers
+                                    where w.WorkerNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
+                                    select w;
+                        foreach (var item in query)
                         {
-                            string[] arr = new string[7];
-                            arr[0] = order.OrderNumber.ToString();
-                            arr[1] = order.TravelOffer.TravelDestination;
-                            arr[2] = order.OrderClient.Name + " " + order.OrderClient.LastName;
-                            arr[3] = order.ServiceWorker.Name + " " + order.ServiceWorker.LastName;
-                            arr[4] = "€" + string.Format("{0:F2}", order.OrderPrice);
-                            arr[5] = order.OrderRegisterDate.ToShortDateString();
-                            arr[6] = order.TravelStartDate.ToShortDateString();
-                            ListViewItem itm = new ListViewItem(arr);
-                            ordersView.nearestDeparturesListView.Items.Add(itm);
+                            worker = item;
+                        }
+                        foreach (Order order in db.Orders)
+                        {
+                            if (order.IsActive())
+                            {
+                                string[] arr = new string[7];
+                                arr[0] = order.OrderNumber.ToString();
+                                arr[1] = order.TravelOffer.TravelDestination;
+                                arr[2] = order.OrderClient.Name + " " + order.OrderClient.LastName;
+                                arr[3] = order.ServiceWorker.Name + " " + order.ServiceWorker.LastName;
+                                arr[4] = "€" + string.Format("{0:F2}", order.OrderPrice);
+                                arr[5] = order.OrderRegisterDate.ToShortDateString();
+                                arr[6] = order.TravelStartDate.ToShortDateString();
+                                ListViewItem itm = new ListViewItem(arr);
+                                ordersView.nearestDeparturesListView.Items.Add(itm);
+                            }
+                        }
+                        ordersView.ShowDialog();
+                        Dispose();
+                    }
+                }
+                else if (objectBox.SelectedIndex != -1)
+                {
+                    if (!deleteButton.Visible && type.Equals(typeof(Order)))
+                    {
+                        Task task = new Task(() => SendInformationByEmailForm.SendEmailOrderHandler(this, null));
+                        task.RunSynchronously();
+                    }
+                    else if (!deleteButton.Visible && type.Equals(typeof(Client)))
+                    {
+                        Task task = new Task(() => SendInformationByEmailForm.SendEmailClientHandler(this, null));
+                        task.RunSynchronously();
+                    }
+                    else if (!deleteButton.Visible && type.Equals(typeof(Worker)))
+                    {
+                        MainForm.PayOutSalaryHandler(this, null);
+                    }
+                    else
+                    {
+                        if (type.Equals(typeof(Offer)))
+                        {
+                            Offer offer = null;
+                            var offerQuery = from o in db.Offers
+                                             where o.OfferNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
+                                             select o;
+                            foreach (var item in offerQuery)
+                            {
+                                offer = item;
+                            }
+                            MessageBox.Show(offer.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        if (type.Equals(typeof(Order)))
+                        {
+                            Order order = null;
+                            var orderQuery = from o in db.Orders
+                                             where o.OrderNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
+                                             select o;
+                            foreach (var item in orderQuery)
+                            {
+                                order = item;
+                            }
+                            MessageBox.Show(order.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        if (type.Equals(typeof(Client)))
+                        {
+                            Client client = null;
+                            var clientQuery = from c in db.Clients
+                                              where c.ClientNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1))
+                                              select c;
+                            foreach (var item in clientQuery)
+                            {
+                                client = item;
+                            }
+                            MessageBox.Show(client.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        if (type.Equals(typeof(Worker)))
+                        {
+                            Worker worker = null;
+                            var workerQuery = from w in db.Workers
+                                              where w.WorkerNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
+                                              select w;
+                            foreach (var item in workerQuery)
+                            {
+                                worker = item;
+                            }
+                            MessageBox.Show(worker.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
-                    ordersView.ShowDialog();
-                    Dispose();*/
                 }
+                else MessageBox.Show("Not selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if (objectBox.SelectedIndex != -1)
-            {
-                if (!deleteButton.Visible && type.Equals(typeof(Order)))
-                {
-                    Task task = new Task(() => SendInformationByEmailForm.SendEmailOrderHandler(this, null));
-                    task.RunSynchronously();
-                }
-                else if (!deleteButton.Visible && type.Equals(typeof(Client)))
-                {
-                    Task task = new Task(() => SendInformationByEmailForm.SendEmailClientHandler(this, null));
-                    task.RunSynchronously();
-                }
-                else if (!deleteButton.Visible && type.Equals(typeof(Worker)))
-                {
-                    MainForm.PayOutSalaryHandler(this, null);
-                }
-                else
-                {
-                    if (type.Equals(typeof(Offer)))
-                    {
-                        MessageBox.Show(Program.allOffers[Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())].ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    if (type.Equals(typeof(Order)))
-                    {
-                        MessageBox.Show(Program.allOrders[Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())].ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    if (type.Equals(typeof(Client)))
-                    {
-                        MessageBox.Show(Program.allClients[Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1))].ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    if (type.Equals(typeof(Worker)))
-                    {
-                        MessageBox.Show(Program.allWorkers[Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())].ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-            }
-            else MessageBox.Show("Not selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            if (objectBox.SelectedIndex != -1)
+            using (var db = new TravelAgencyContext())
             {
-                if (type.Equals(typeof(Offer)))
+                if (objectBox.SelectedIndex != -1)
                 {
-                    int size = Program.allOffers.Count;
-                    Program.allOffers.Remove(Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First()));
-                    if (Program.allOffers.Count + 1 == size)
+                    if (type.Equals(typeof(Offer)))
                     {
-                        MessageBox.Show("Offer was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        _mainForm.StartThreadQuantityUpdate();
-                        Dispose();
+                        int size = db.Offers.Count();
+                        Offer offer = null;
+                        var offerQuery = from o in db.Offers
+                                    where o.OfferNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
+                                    select o;
+                        foreach (var item in offerQuery)
+                        {
+                            offer = item;
+                        }
+                        db.Offers.Remove(offer);
+                        if (db.Offers.Count() + 1 == size)
+                        {
+                            MessageBox.Show("Offer was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            _mainForm.StartThreadQuantityUpdate();
+                            Dispose();
+                        }
+                        else MessageBox.Show("Offer was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    else MessageBox.Show("Offer was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                if (type.Equals(typeof(Order)))
-                {
-                    int size = Program.allOrders.Count;
-                    Program.allOrders.Remove(Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First()));
-                    if (Program.allOrders.Count + 1 == size)
+                    if (type.Equals(typeof(Order)))
                     {
-                        MessageBox.Show("Order was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        _mainForm.StartThreadQuantityUpdate();
-                        Dispose();
+                        int size = db.Orders.Count();
+                        Order order = null;
+                        var orderQuery = from o in db.Orders
+                                         where o.OrderNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
+                                         select o;
+                        foreach (var item in orderQuery)
+                        {
+                            order = item;
+                        }
+                        db.Orders.Remove(order);
+                        if (db.Orders.Count() + 1 == size)
+                        {
+                            MessageBox.Show("Order was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            _mainForm.StartThreadQuantityUpdate();
+                            Dispose();
+                        }
+                        else MessageBox.Show("Order was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    else MessageBox.Show("Order was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                if (type.Equals(typeof(Client)))
-                {
-                    int size = Program.allClients.Count;
-                    Program.allClients.Remove(Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1)));
-                    if (Program.allClients.Count + 1 == size)
+                    if (type.Equals(typeof(Client)))
                     {
-                        MessageBox.Show("Client was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        _mainForm.StartThreadQuantityUpdate();
-                        Dispose();
+                        int size = db.Clients.Count();
+                        Client client = null;
+                        var clientQuery = from c in db.Clients
+                                         where c.ClientNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1))
+                                          select c;
+                        foreach (var item in clientQuery)
+                        {
+                            client = item;
+                        }
+                        db.Clients.Remove(client);
+                        if (db.Clients.Count() + 1 == size)
+                        {
+                            MessageBox.Show("Client was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            _mainForm.StartThreadQuantityUpdate();
+                            Dispose();
+                        }
+                        else MessageBox.Show("Client was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    else MessageBox.Show("Client was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                if (type.Equals(typeof(Worker)))
-                {
-                    int size = Program.allWorkers.Count;
-                    Program.allWorkers.Remove(Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First()));
-                    if (Program.allWorkers.Count + 1 == size)
+                    if (type.Equals(typeof(Worker)))
                     {
-                        MessageBox.Show("Worker was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        _mainForm.StartThreadQuantityUpdate();
-                        Dispose();
+                        int size = db.Workers.Count();
+                        Worker worker = null;
+                        var workerQuery = from w in db.Workers
+                                          where w.WorkerNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
+                                          select w;
+                        foreach (var item in workerQuery)
+                        {
+                            worker = item;
+                        }
+                        db.Workers.Remove(worker);
+                        if (db.Workers.Count() + 1 == size)
+                        {
+                            MessageBox.Show("Worker was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            _mainForm.StartThreadQuantityUpdate();
+                            Dispose();
+                        }
+                        else MessageBox.Show("Worker was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    else MessageBox.Show("Worker was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                else MessageBox.Show("Not selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else MessageBox.Show("Not selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

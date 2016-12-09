@@ -22,7 +22,7 @@ namespace Travel_Agency
             LoginForm loginForm = new LoginForm();
             loginForm.ShowDialog();
             Budget.Bankrupt += BankruptHandler;
-            Font = new Font(FileInput.ReadSetting("Font name", "User.config"), Convert.ToInt32(FileInput.ReadSetting("Font size", "User.config")));
+            Font = new Font(Program.ReadSetting("Font name", "User.config"), Convert.ToInt32(Program.ReadSetting("Font size", "User.config")));
             StartThreadQuantityUpdate();
         }
 
@@ -112,7 +112,7 @@ namespace Travel_Agency
 
         private void SaveBudgetValues()
         {
-            using (StreamWriter file = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + FileInput.ReadSetting("Budget file source", "App.config"), false))
+            using (StreamWriter file = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + Program.ReadSetting("Budget file source", "App.config"), false))
             {
                 file.WriteLine(Budget.Balance);
                 file.WriteLine(Budget.Income);
@@ -234,7 +234,7 @@ namespace Travel_Agency
                 {
                     worker = item;
                 }
-                if (Budget.Balance - worker.Salary > Convert.ToDouble(FileInput.ReadSetting("Limit of bankrupt", "App.config")))
+                if (Budget.Balance - worker.Salary > Convert.ToDouble(Program.ReadSetting("Limit of bankrupt", "App.config")))
                 {
                     MessageBox.Show("Paid out €" + worker.Salary + " to " + worker.Name + " " + worker.LastName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     worker.PaySalary();

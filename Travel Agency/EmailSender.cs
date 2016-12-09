@@ -11,7 +11,7 @@ namespace Travel_Agency
         public static int SendIt<T>(T obj, string email, DateTime date, string eventMessage)
         {
             MailMessage msg = new MailMessage();
-            msg.From = new MailAddress(FileInput.ReadSetting("Admin email", "App.config"));
+            msg.From = new MailAddress(Program.ReadSetting("Admin email", "App.config"));
             msg.To.Add(email);
             msg.Subject = eventMessage + " on " + date.ToLongDateString();
             msg.Body = obj.ToString() + "\nMessage sent: " + DateTime.Now.ToString();
@@ -21,7 +21,7 @@ namespace Travel_Agency
             client.Port = 587;
             client.EnableSsl = true;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
-            client.Credentials = new NetworkCredential(FileInput.ReadSetting("Admin email", "App.config"), Password);
+            client.Credentials = new NetworkCredential(Program.ReadSetting("Admin email", "App.config"), Password);
             client.Timeout = 20000;
             try
             {
