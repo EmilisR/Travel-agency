@@ -15,64 +15,84 @@ namespace Travel_Agency
 
         private void RaiseButton_Click(object sender, EventArgs e)
         {
-            if (workersBox.SelectedIndex != -1)
+            using (var db = new TravelAgencyContext())
             {
-                workersBox.BackColor = Color.LightGreen;
-            }
-            else
-            {
-                workersBox.BackColor = Color.Salmon;
-            }
-            if (moneyTrackBar.Value > 0)
-            {
-                moneyTrackBar.BackColor = Color.LightGreen;
-            }
-            else
-            {
-                moneyTrackBar.BackColor = Color.Salmon;
-            }
-            if (workersBox.BackColor == Color.LightGreen && moneyTrackBar.BackColor == Color.LightGreen)
-            {
-                Worker worker = Program.allWorkers[Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First())];
-                double oldSalary = worker.Salary;
-                //worker.RaiseSalary(moneyTrackBar.Value);
-                MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Dispose();
+                if (workersBox.SelectedIndex != -1)
+                {
+                    workersBox.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    workersBox.BackColor = Color.Salmon;
+                }
+                if (moneyTrackBar.Value > 0)
+                {
+                    moneyTrackBar.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    moneyTrackBar.BackColor = Color.Salmon;
+                }
+                if (workersBox.BackColor == Color.LightGreen && moneyTrackBar.BackColor == Color.LightGreen)
+                {
+                    Worker worker = null;
+                    var workerQuery = from w in db.Workers
+                                where w.WorkerNumber == Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First())
+                                select w;
+                    foreach (var item in workerQuery)
+                    {
+                        worker = item;
+                    }
+                    double oldSalary = worker.Salary;
+                    worker.RaiseSalary(moneyTrackBar.Value);
+                    MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Dispose();
+                }
             }
         }
 
         private void CutButton_Click(object sender, EventArgs e)
         {
-            if (workersBox.SelectedIndex != -1)
+            using (var db = new TravelAgencyContext())
             {
-                workersBox.BackColor = Color.LightGreen;
-            }
-            else
-            {
-                workersBox.BackColor = Color.Salmon;
-            }
-            if (moneyTrackBar.Value > 0)
-            {
-                moneyTrackBar.BackColor = Color.LightGreen;
-            }
-            else
-            {
-                moneyTrackBar.BackColor = Color.Salmon;
-            }
-            if (workersBox.BackColor == Color.LightGreen && moneyTrackBar.BackColor == Color.LightGreen)
-            {
-                Worker worker = Program.allWorkers[Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First())];
-                double oldSalary = worker.Salary;
-                if (oldSalary - moneyTrackBar.Value < 0)
+                if (workersBox.SelectedIndex != -1)
                 {
-                    moneyTrackBar.BackColor = Color.Salmon;
-                    MessageBox.Show("Salary cannot be negative! Try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    workersBox.BackColor = Color.LightGreen;
                 }
                 else
                 {
-                    //worker.CutSalary(moneyTrackBar.Value);
-                    MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Dispose();
+                    workersBox.BackColor = Color.Salmon;
+                }
+                if (moneyTrackBar.Value > 0)
+                {
+                    moneyTrackBar.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    moneyTrackBar.BackColor = Color.Salmon;
+                }
+                if (workersBox.BackColor == Color.LightGreen && moneyTrackBar.BackColor == Color.LightGreen)
+                {
+                    Worker worker = null;
+                    var workerQuery = from w in db.Workers
+                                      where w.WorkerNumber == Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First())
+                                      select w;
+                    foreach (var item in workerQuery)
+                    {
+                        worker = item;
+                    }
+                    double oldSalary = worker.Salary;
+                    if (oldSalary - moneyTrackBar.Value < 0)
+                    {
+                        moneyTrackBar.BackColor = Color.Salmon;
+                        MessageBox.Show("Salary cannot be negative! Try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    else
+                    {
+                        worker.CutSalary(moneyTrackBar.Value);
+                        MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Dispose();
+                    }
                 }
             }
         }
