@@ -312,9 +312,9 @@ namespace Travel_Agency
         {
             using (var db = new TravelAgencyContext())
             {
-                if (Program.allWorkers.Count > 0)
+                if (db.Workers.Count() > 0)
                 {
-                    List<string> list = Program.allWorkers.Values.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                    List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
                     ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Offer), this);
                     showObject.Text = "Show worker's orders";
                     showObject.showButton.Text = "Show worker's orders";

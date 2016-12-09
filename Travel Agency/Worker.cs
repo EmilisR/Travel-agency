@@ -18,7 +18,7 @@ namespace Travel_Agency
                 Salary = salary;
                 Position = position;
                 RegisterDate = DateTime.Now;
-                WorkerNumber = db.Workers.OrderByDescending(x => x.WorkerNumber).FirstOrDefault().Key + 1;
+                WorkerNumber = db.Workers.OrderByDescending(x => x.WorkerNumber).FirstOrDefault().WorkerNumber + 1;
                 if (loggerBox != null)
                     loggerBox.WriteToLog(this, RegisterDate, "Created worker");
                 if (loggerFile != null)

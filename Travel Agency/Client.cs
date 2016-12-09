@@ -10,20 +10,23 @@ namespace Travel_Agency
     {
         public Client(string name, string lastName, string email, string mobileNumber, ILogger loggerBox = null, ILogger loggerFile = null, ILogger loggerMail = null)
         {
-            Name = name;
-            LastName = lastName;
-            Email = email;
-            MobileNumber = mobileNumber;
-            RegisterDate = DateTime.Now;
-            ClientNumber = Program.allClients.OrderByDescending(x => x.Key).FirstOrDefault().Key + 1;
-            if (loggerBox != null)
-                loggerBox.WriteToLog(this, RegisterDate, "Created client", Email);
-            if (loggerFile != null)
-                loggerFile.WriteToLog(this, RegisterDate, "Created client", Email);
-            if (loggerMail != null)
+            using (var db = new TravelAgencyContext())
             {
-                EmailSend?.Invoke(this, new EmailSendEventArgs(Email, "Created client", RegisterDate, loggerMail));
-            }
+                Name = name;
+                LastName = lastName;
+                Email = email;
+                MobileNumber = mobileNumber;
+                RegisterDate = DateTime.Now;
+                ClientNumber = db.Clients.OrderByDescending(x => x.ClientNumber).FirstOrDefault().ClientNumber + 1;
+                if (loggerBox != null)
+                    loggerBox.WriteToLog(this, RegisterDate, "Created client", Email);
+                if (loggerFile != null)
+                    loggerFile.WriteToLog(this, RegisterDate, "Created client", Email);
+                if (loggerMail != null)
+                {
+                    EmailSend?.Invoke(this, new EmailSendEventArgs(Email, "Created client", RegisterDate, loggerMail));
+                }
+            } 
         }
         public static event MainForm.EmailSendEventHandler<Client> EmailSend;
         public override string ToString()

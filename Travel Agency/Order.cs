@@ -12,22 +12,25 @@ namespace Travel_Agency
 
         public Order(Offer offer, Client client, Worker worker, int orderClientsAmount, DateTime travelStartDate, ILogger loggerBox, ILogger loggerFile, ILogger loggerMail)
         {
-            TravelOffer = offer;
-            ServiceWorker = worker;
-            OrderClient = client;
-            OrderRegisterDate = DateTime.Now;
-            TravelStartDate = travelStartDate;
-            OrderNumber = Program.allOrders.OrderByDescending(x => x.Key).FirstOrDefault().Key + 1;
-            OrderClientsAmount = orderClientsAmount;
-            OrderPrice = offer.Price * orderClientsAmount;
-            AddOrderPriceToBudget(OrderPrice);
-            if (loggerBox != null)
-                loggerBox.WriteToLog(this, OrderRegisterDate, "Created order", OrderClient.Email);
-            if (loggerFile != null)
-                loggerFile.WriteToLog(this, OrderRegisterDate, "Created order", OrderClient.Email);
-            if (loggerMail != null)
+            using (var db = new TravelAgencyContext())
             {
-                EmailSend?.Invoke(this, new EmailSendEventArgs(OrderClient.Email, "Created order", OrderRegisterDate, loggerMail));
+                TravelOffer = offer;
+                ServiceWorker = worker;
+                OrderClient = client;
+                OrderRegisterDate = DateTime.Now;
+                TravelStartDate = travelStartDate;
+                OrderNumber = db.Orders.OrderByDescending(x => x.OrderNumber).FirstOrDefault().OrderNumber + 1;
+                OrderClientsAmount = orderClientsAmount;
+                OrderPrice = offer.Price * orderClientsAmount;
+                AddOrderPriceToBudget(OrderPrice);
+                if (loggerBox != null)
+                    loggerBox.WriteToLog(this, OrderRegisterDate, "Created order", OrderClient.Email);
+                if (loggerFile != null)
+                    loggerFile.WriteToLog(this, OrderRegisterDate, "Created order", OrderClient.Email);
+                if (loggerMail != null)
+                {
+                    EmailSend?.Invoke(this, new EmailSendEventArgs(OrderClient.Email, "Created order", OrderRegisterDate, loggerMail));
+                }
             }
         }
 
