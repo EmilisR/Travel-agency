@@ -47,9 +47,9 @@ namespace Travel_Agency
                         }
                         string oldPosition = worker.Position;
                         worker.Position = establishmentComboBox.SelectedItem.ToString();
-                        MessageBox.Show("Old position: " + oldPosition + Environment.NewLine +  "New position: " + worker.Position, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Old position: " + oldPosition + Environment.NewLine + "New position: " + worker.Position, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Dispose();
-                    } 
+                    }
                 }
             }
         }
