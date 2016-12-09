@@ -15,7 +15,7 @@ namespace Travel_Agency
         // If you wish to target a different database and/or database provider, modify the 'TravelAgencyContext' 
         // connection string in the application configuration file.
         public TravelAgencyContext()
-            : base(@"data source=(LocalDb)\MSSQLLocalDB;initial catalog=Travel_Agency.TravelAgencyContext;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework")
+            : base(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\emili\Desktop\Travel_Agency.TravelAgencyContext.mdf;Integrated Security=True;Connect Timeout=30")
         {
         }
 

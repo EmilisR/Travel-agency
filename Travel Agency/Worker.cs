@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Travel_Agency
 {
     public partial class Worker
     {
+        public Worker() { }
         public Worker(string name, string lastName, string position, int salary, int workingHoursPerWeek, ILogger loggerBox, ILogger loggerFile)
         {
             using (var db = new TravelAgencyContext())
@@ -18,7 +20,13 @@ namespace Travel_Agency
                 Salary = salary;
                 Position = position;
                 RegisterDate = DateTime.Now;
-                WorkerNumber = db.Workers.OrderByDescending(x => x.WorkerNumber).FirstOrDefault().WorkerNumber + 1;
+                if (db.Workers.Count() > 0)
+                {
+                    MessageBox.Show(db.Workers.Count().ToString());
+                    WorkerNumber = (from w in db.Workers
+                                 select w.WorkerNumber).Max() + 1;
+                }
+                else WorkerNumber = 1;
                 if (loggerBox != null)
                     loggerBox.WriteToLog(this, RegisterDate, "Created worker");
                 if (loggerFile != null)
@@ -48,7 +56,7 @@ namespace Travel_Agency
 
         public override string ToString()
         {
-            return "Worker number: " + WorkerNumber + Environment.NewLine + "Name: " + Name + Environment.NewLine + "Last name: " + LastName + Environment.NewLine + "Position: " + Position + Environment.NewLine + "Salary: €" + Salary.ToString() + Environment.NewLine + "Working hours per week: " + WorkingHoursPerWeek.ToString() + Environment.NewLine + "Worker orders amount: " + WorkerOrders.Count + Environment.NewLine + "Registered on: " + RegisterDate.ToShortDateString();
+            return "Worker number: " + WorkerNumber + Environment.NewLine + "Name: " + Name + Environment.NewLine + "Last name: " + LastName + Environment.NewLine + "Position: " + Position + Environment.NewLine + "Salary: €" + Salary.ToString() + Environment.NewLine + "Working hours per week: " + WorkingHoursPerWeek.ToString() + Environment.NewLine + "Worker orders amount: " /*+ WorkerOrders.Count*/ + Environment.NewLine + "Registered on: " + RegisterDate.ToShortDateString();
         }
     }
 }

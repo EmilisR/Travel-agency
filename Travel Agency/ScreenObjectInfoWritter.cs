@@ -7,7 +7,7 @@ namespace Travel_Agency
     {
         public void WriteToLog<T>(T obj, DateTime date, string eventType, string email = "")
         {
-            MessageBox.Show(date.ToLongDateString() + ", " + date.ToShortTimeString() + "\nEvent: " + eventType + "\n" + obj.ToString(), "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(date.ToLongDateString() + ", " + date.ToShortTimeString() + Environment.NewLine + "Event: " + eventType + Environment.NewLine + obj.ToString(), "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

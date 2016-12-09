@@ -19,11 +19,11 @@ namespace Travel_Agency
         public MainForm()
         {
             InitializeComponent();
-            LoginForm loginForm = new LoginForm();
-            loginForm.ShowDialog();
+            //LoginForm loginForm = new LoginForm();
+            //loginForm.ShowDialog();
             Budget.Bankrupt += BankruptHandler;
             Font = new Font(Program.ReadSetting("Font name", "User.config"), Convert.ToInt32(Program.ReadSetting("Font size", "User.config")));
-            StartThreadQuantityUpdate();
+            //StartThreadQuantityUpdate();
         }
 
         public async void StartThreadQuantityUpdate()
@@ -177,17 +177,22 @@ namespace Travel_Agency
 
         private void ShowWorkersButton_Click(object sender, EventArgs e)
         {
+            int number;
             using (var db = new TravelAgencyContext())
-            {
-                if (db.Workers.Count() > 0)
+            { number = db.Workers.Count(); }
+                if (number > 0)
                 {
-                    List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                List<String> list;
+                using (var db = new TravelAgencyContext())
+                {
+                    list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                }
+                    
                     ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Worker), this);
                     showObject.Text = "Show workers";
                     showObject.ShowDialog();
                 }
                 else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
         private void ShowClientsButton_Click(object sender, EventArgs e)

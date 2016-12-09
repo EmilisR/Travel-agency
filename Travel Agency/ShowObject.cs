@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -124,13 +125,8 @@ namespace Travel_Agency
                         if (type.Equals(typeof(Worker)))
                         {
                             Worker worker = null;
-                            var workerQuery = from w in db.Workers
-                                              where w.WorkerNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
-                                              select w;
-                            foreach (var item in workerQuery)
-                            {
-                                worker = item;
-                            }
+                            int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                            worker = db.Workers.Where(x => x.WorkerNumber == number).First();
                             MessageBox.Show(worker.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }

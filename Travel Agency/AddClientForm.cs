@@ -50,6 +50,7 @@ namespace Travel_Agency
                         Client.EmailSend += EmailSendHandler;
                         Client client = new Client(nameBox.Text, lastNameBox.Text, emailBox.Text, telNumberBox.Text, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
                         db.Clients.Add(client);
+                        db.SaveChanges();
                         _mainForm.StartThreadQuantityUpdate();
                         Dispose();
                     }

@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4DC14F40-2E12-4188-99F0-FDD44E2FF271}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Travel_Agency</RootNamespace>
     <AssemblyName>Travel Agency</AssemblyName>
@@ -125,6 +125,7 @@
     <Compile Include="BankruptEventArgs.cs" />
     <Compile Include="Budget.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="DataTableExtensions.cs" />
     <Compile Include="EmailInvoiceSender.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="EmailSendEventArgs.cs" />
@@ -273,15 +274,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Travel_Agency.TravelAgencyContext.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Travel_Agency.TravelAgencyContext_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>Travel_Agency.TravelAgencyContext.mdf</DependentUpon>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

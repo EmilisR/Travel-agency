@@ -17,10 +17,10 @@ namespace Travel_Agency
         
         static void Main()
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new MainForm());
-            using (var db = new TravelAgencyContext())
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new MainForm());
+            /*using (var db = new TravelAgencyContext())
             {
                 // Create and save a new Blog 
                 Console.Write("Enter a name for a new Blog: ");
@@ -43,7 +43,7 @@ namespace Travel_Agency
 
                 Console.WriteLine("Press any key to exit...");
                 Console.ReadKey();
-            }
+            }*/
         }
         public static string ReadSetting(string key, string filePath)
         {

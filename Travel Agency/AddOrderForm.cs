@@ -117,6 +117,7 @@ namespace Travel_Agency
                                 Order order = new Order(offer, client, worker, travellersAmountTrackBar.Value, monthCalendar.SelectionStart, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
                                 worker.AssignOrderToWorker(order);
                                 db.Orders.Add(order);
+                                db.SaveChanges();
                                 _mainForm.StartThreadQuantityUpdate();
                                 Dispose();
                             }
