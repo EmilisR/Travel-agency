@@ -128,12 +128,6 @@
     <Compile Include="EmailInvoiceSender.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="EmailSendEventArgs.cs" />
-    <Compile Include="FileInput.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FileInput.Designer.cs">
-      <DependentUpon>FileInput.cs</DependentUpon>
-    </Compile>
     <Compile Include="ChangeShiftForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,9 +196,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddWorkerForm.resx">
       <DependentUpon>AddWorkerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FileInput.resx">
-      <DependentUpon>FileInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
