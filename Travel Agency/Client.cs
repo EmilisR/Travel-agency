@@ -8,6 +8,7 @@ namespace Travel_Agency
 {
     public partial class Client
     {
+        public Client() { }
         public Client(string name, string lastName, string email, string mobileNumber, ILogger loggerBox = null, ILogger loggerFile = null, ILogger loggerMail = null)
         {
             using (var db = new TravelAgencyContext())
@@ -17,7 +18,12 @@ namespace Travel_Agency
                 Email = email;
                 MobileNumber = mobileNumber;
                 RegisterDate = DateTime.Now;
-                ClientNumber = db.Clients.OrderByDescending(x => x.ClientNumber).FirstOrDefault().ClientNumber + 1;
+                if (db.Clients.Count() > 0)
+                {
+                    ClientNumber = (from c in db.Clients
+                                    select c.ClientNumber).Max() + 1;
+                }
+                else ClientNumber = 1;
                 if (loggerBox != null)
                     loggerBox.WriteToLog(this, RegisterDate, "Created client", Email);
                 if (loggerFile != null)

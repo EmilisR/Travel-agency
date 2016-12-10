@@ -8,7 +8,8 @@ namespace Travel_Agency
 {
     public partial class Offer
     {
-        public Offer(string travelDestination, string feeding, int price, int travelTime, string hotelRanking, ILogger loggerBox, ILogger loggerFile, int offerNumber = 0)
+        public Offer() { }
+        public Offer(string travelDestination, string feeding, int price, int travelTime, string hotelRanking, ILogger loggerBox, ILogger loggerFile)
         {
             using (var db = new TravelAgencyContext())
             {
@@ -17,14 +18,12 @@ namespace Travel_Agency
                 Price = price;
                 TravelTime = travelTime;
                 HotelRanking = hotelRanking;
-                if (offerNumber == 0)
+                if (db.Offers.Count() > 0)
                 {
-                    OfferNumber = db.Offers.OrderByDescending(x => x.OfferNumber).FirstOrDefault().OfferNumber + 1;
+                    OfferNumber = (from o in db.Offers
+                                    select o.OfferNumber).Max() + 1;
                 }
-                else
-                {
-                    OfferNumber = offerNumber;
-                }
+                else OfferNumber = 1;
                 if (loggerBox != null)
                     loggerBox.WriteToLog(this, DateTime.Now, "Created offer");
                 if (loggerFile != null)

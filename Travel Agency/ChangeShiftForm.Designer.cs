@@ -91,7 +91,6 @@
             this.Controls.Add(this.workerLabel);
             this.Controls.Add(this.establishmentComboBox);
             this.Controls.Add(this.workersBox);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ChangeShiftForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Change worker\'s establishment";

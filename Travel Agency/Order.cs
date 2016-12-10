@@ -10,6 +10,7 @@ namespace Travel_Agency
     {
         public static event MainForm.EmailSendEventHandler<Order> EmailSend;
 
+        public Order() { }
         public Order(Offer offer, Client client, Worker worker, int orderClientsAmount, DateTime travelStartDate, ILogger loggerBox, ILogger loggerFile, ILogger loggerMail)
         {
             using (var db = new TravelAgencyContext())
@@ -19,7 +20,12 @@ namespace Travel_Agency
                 OrderClient = client;
                 OrderRegisterDate = DateTime.Now;
                 TravelStartDate = travelStartDate;
-                OrderNumber = db.Orders.OrderByDescending(x => x.OrderNumber).FirstOrDefault().OrderNumber + 1;
+                if (db.Orders.Count() > 0)
+                {
+                    OrderNumber = (from o in db.Orders
+                                   select o.OrderNumber).Max() + 1;
+                }
+                else OrderNumber = 1;
                 OrderClientsAmount = orderClientsAmount;
                 OrderPrice = offer.Price * orderClientsAmount;
                 AddOrderPriceToBudget(OrderPrice);

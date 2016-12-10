@@ -36,13 +36,8 @@ namespace Travel_Agency
                 if (workersBox.BackColor == Color.LightGreen && moneyTrackBar.BackColor == Color.LightGreen)
                 {
                     Worker worker = null;
-                    var workerQuery = from w in db.Workers
-                                where w.WorkerNumber == Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First())
-                                select w;
-                    foreach (var item in workerQuery)
-                    {
-                        worker = item;
-                    }
+                    int number = Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First());
+                    worker = db.Workers.Where(x => x.WorkerNumber == number).First();
                     double oldSalary = worker.Salary;
                     worker.RaiseSalary(moneyTrackBar.Value);
                     MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -74,13 +69,8 @@ namespace Travel_Agency
                 if (workersBox.BackColor == Color.LightGreen && moneyTrackBar.BackColor == Color.LightGreen)
                 {
                     Worker worker = null;
-                    var workerQuery = from w in db.Workers
-                                      where w.WorkerNumber == Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First())
-                                      select w;
-                    foreach (var item in workerQuery)
-                    {
-                        worker = item;
-                    }
+                    int number = Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First());
+                    worker = db.Workers.Where(x => x.WorkerNumber == number).First();
                     double oldSalary = worker.Salary;
                     if (oldSalary - moneyTrackBar.Value < 0)
                     {

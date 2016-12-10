@@ -38,13 +38,8 @@ namespace Travel_Agency
                     using (var db = new TravelAgencyContext())
                     {
                         Worker worker = null;
-                        var query = from w in db.Workers
-                                    where w.WorkerNumber == Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First())
-                                    select w;
-                        foreach (var item in query)
-                        {
-                            worker = item;
-                        }
+                        int workerNumber = Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First());
+                        worker = db.Workers.Where(x => x.WorkerNumber == workerNumber).First();
                         string oldPosition = worker.Position;
                         worker.Position = establishmentComboBox.SelectedItem.ToString();
                         MessageBox.Show("Old position: " + oldPosition + Environment.NewLine + "New position: " + worker.Position, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

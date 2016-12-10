@@ -22,7 +22,6 @@ namespace Travel_Agency
                 RegisterDate = DateTime.Now;
                 if (db.Workers.Count() > 0)
                 {
-                    MessageBox.Show(db.Workers.Count().ToString());
                     WorkerNumber = (from w in db.Workers
                                  select w.WorkerNumber).Max() + 1;
                 }
@@ -56,7 +55,7 @@ namespace Travel_Agency
 
         public override string ToString()
         {
-            return "Worker number: " + WorkerNumber + Environment.NewLine + "Name: " + Name + Environment.NewLine + "Last name: " + LastName + Environment.NewLine + "Position: " + Position + Environment.NewLine + "Salary: €" + Salary.ToString() + Environment.NewLine + "Working hours per week: " + WorkingHoursPerWeek.ToString() + Environment.NewLine + "Worker orders amount: " /*+ WorkerOrders.Count*/ + Environment.NewLine + "Registered on: " + RegisterDate.ToShortDateString();
+                return "Worker number: " + WorkerNumber + Environment.NewLine + "Name: " + Name + Environment.NewLine + "Last name: " + LastName + Environment.NewLine + "Position: " + Position + Environment.NewLine + "Salary: €" + Salary.ToString() + Environment.NewLine + "Working hours per week: " + WorkingHoursPerWeek.ToString() + Environment.NewLine + "Worker orders amount: " + WorkerOrders.Count + Environment.NewLine + "Registered on: " + RegisterDate.ToShortDateString();
         }
     }
 }

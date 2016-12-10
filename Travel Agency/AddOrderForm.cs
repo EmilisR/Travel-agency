@@ -90,29 +90,17 @@ namespace Travel_Agency
                             using (var db = new TravelAgencyContext())
                             {
                                 Worker worker = null;
-                                var workerQuery = from w in db.Workers
-                                                  where w.WorkerNumber == Convert.ToInt32(workerComboBox.SelectedItem.ToString().Split('.').First())
-                                                  select w;
-                                foreach (var item in workerQuery)
-                                {
-                                    worker = item;
-                                }
+                                int workerNumber = Convert.ToInt32(workerComboBox.SelectedItem.ToString().Split('.').First());
+                                worker = db.Workers.Where(x => x.WorkerNumber == workerNumber).First();
+
                                 Offer offer = null;
-                                var offerQuery = from o in db.Offers
-                                                 where o.OfferNumber == Convert.ToInt32(offerBox.SelectedItem.ToString().Split('.').First())
-                                                 select o;
-                                foreach (var item in offerQuery)
-                                {
-                                    offer = item;
-                                }
+                                int offerNumber = Convert.ToInt32(offerBox.SelectedItem.ToString().Split('.').First());
+                                offer = db.Offers.Where(x => x.OfferNumber == offerNumber).First();
+
                                 Client client = null;
-                                var clientQuery = from c in db.Clients
-                                                  where c.ClientNumber == Convert.ToInt32(clientsBox.SelectedItem.ToString().Split(' ').Last().Remove(clientsBox.SelectedItem.ToString().Split(' ').Last().Length - 1))
-                                                  select c;
-                                foreach (var item in clientQuery)
-                                {
-                                    client = item;
-                                }
+                                int clientNumber = Convert.ToInt32(clientsBox.SelectedItem.ToString().Split(' ').Last().Remove(clientsBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
+                                client = db.Clients.Where(x => x.ClientNumber == clientNumber).First();
+
                                 Order.EmailSend += EmailSendHandler;
                                 Order order = new Order(offer, client, worker, travellersAmountTrackBar.Value, monthCalendar.SelectionStart, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
                                 worker.AssignOrderToWorker(order);

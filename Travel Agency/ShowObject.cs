@@ -41,13 +41,9 @@ namespace Travel_Agency
                     {
                         NearestDeparturesForm ordersView = new NearestDeparturesForm(true);
                         Worker worker = null;
-                        var query = from w in db.Workers
-                                    where w.WorkerNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
-                                    select w;
-                        foreach (var item in query)
-                        {
-                            worker = item;
-                        }
+                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                        worker = db.Workers.Where(x => x.WorkerNumber == number).First();
+                        
                         foreach (Order order in db.Orders)
                         {
                             if (order.IsActive())
