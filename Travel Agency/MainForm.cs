@@ -232,13 +232,9 @@ namespace Travel_Agency
             using (var db = new TravelAgencyContext())
             {
                 Worker worker = null;
-                var query = from w in db.Workers
-                             where w.WorkerNumber == Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split('.').First())
-                             select w;
-                foreach (var item in query)
-                {
-                    worker = item;
-                }
+                int number = Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split('.').First());
+                worker = db.Workers.Where(x => x.WorkerNumber == number).First();
+                
                 if (Budget.Balance - worker.Salary > Convert.ToDouble(Program.ReadSetting("Limit of bankrupt", "App.config")))
                 {
                     MessageBox.Show("Paid out €" + worker.Salary + " to " + worker.Name + " " + worker.LastName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

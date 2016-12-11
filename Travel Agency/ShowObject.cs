@@ -128,15 +128,13 @@ namespace Travel_Agency
                     if (type.Equals(typeof(Offer)))
                     {
                         int size = db.Offers.Count();
+
                         Offer offer = null;
-                        var offerQuery = from o in db.Offers
-                                    where o.OfferNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
-                                    select o;
-                        foreach (var item in offerQuery)
-                        {
-                            offer = item;
-                        }
+                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                        offer = db.Offers.Where(x => x.OfferNumber == number).First();
+
                         db.Offers.Remove(offer);
+                        db.SaveChanges();
                         if (db.Offers.Count() + 1 == size)
                         {
                             MessageBox.Show("Offer was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -148,15 +146,13 @@ namespace Travel_Agency
                     if (type.Equals(typeof(Order)))
                     {
                         int size = db.Orders.Count();
+
                         Order order = null;
-                        var orderQuery = from o in db.Orders
-                                         where o.OrderNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
-                                         select o;
-                        foreach (var item in orderQuery)
-                        {
-                            order = item;
-                        }
+                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                        order = db.Orders.Where(x => x.OrderNumber == number).First();
+
                         db.Orders.Remove(order);
+                        db.SaveChanges();
                         if (db.Orders.Count() + 1 == size)
                         {
                             MessageBox.Show("Order was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -168,15 +164,13 @@ namespace Travel_Agency
                     if (type.Equals(typeof(Client)))
                     {
                         int size = db.Clients.Count();
+
                         Client client = null;
-                        var clientQuery = from c in db.Clients
-                                         where c.ClientNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1))
-                                          select c;
-                        foreach (var item in clientQuery)
-                        {
-                            client = item;
-                        }
+                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
+                        client = db.Clients.Where(x => x.ClientNumber == number).First();
+
                         db.Clients.Remove(client);
+                        db.SaveChanges();
                         if (db.Clients.Count() + 1 == size)
                         {
                             MessageBox.Show("Client was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -188,15 +182,13 @@ namespace Travel_Agency
                     if (type.Equals(typeof(Worker)))
                     {
                         int size = db.Workers.Count();
+
                         Worker worker = null;
-                        var workerQuery = from w in db.Workers
-                                          where w.WorkerNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
-                                          select w;
-                        foreach (var item in workerQuery)
-                        {
-                            worker = item;
-                        }
+                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                        worker = db.Workers.Where(x => x.WorkerNumber == number).First();
+                        
                         db.Workers.Remove(worker);
+                        db.SaveChanges();
                         if (db.Workers.Count() + 1 == size)
                         {
                             MessageBox.Show("Worker was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
