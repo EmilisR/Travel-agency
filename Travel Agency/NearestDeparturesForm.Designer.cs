@@ -34,19 +34,21 @@
             // 
             // nearestDeparturesListView
             // 
-            this.nearestDeparturesListView.Location = new System.Drawing.Point(12, 12);
+            this.nearestDeparturesListView.Location = new System.Drawing.Point(28, 27);
+            this.nearestDeparturesListView.Margin = new System.Windows.Forms.Padding(7);
             this.nearestDeparturesListView.Name = "nearestDeparturesListView";
-            this.nearestDeparturesListView.Size = new System.Drawing.Size(669, 237);
+            this.nearestDeparturesListView.Size = new System.Drawing.Size(1637, 524);
             this.nearestDeparturesListView.TabIndex = 0;
             this.nearestDeparturesListView.UseCompatibleStateImageBehavior = false;
             // 
             // NearestDeparturesForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(693, 261);
+            this.ClientSize = new System.Drawing.Size(1790, 582);
             this.Controls.Add(this.nearestDeparturesListView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(7);
             this.MaximizeBox = false;
             this.Name = "NearestDeparturesForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

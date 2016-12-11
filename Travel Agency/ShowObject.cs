@@ -31,7 +31,7 @@ namespace Travel_Agency
         {
             using (var db = new TravelAgencyContext())
             {
-                if (type.Equals(typeof(Offer)))
+                if (type.Equals(typeof(Order)) && !deleteButton.Visible)
                 {
                     if (objectBox.SelectedIndex == -1)
                     {
@@ -40,26 +40,29 @@ namespace Travel_Agency
                     else
                     {
                         NearestDeparturesForm ordersView = new NearestDeparturesForm(true);
+                        
                         Worker worker = null;
                         int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
                         worker = db.Workers.Where(x => x.WorkerNumber == number).First();
-                        
-                        foreach (Order order in db.Orders)
+                        List<Order> list = db.Orders.Where(x => x.ServiceWorker.WorkerNumber == worker.WorkerNumber).ToList();
+                        foreach (Order order in list)
                         {
                             if (order.IsActive())
                             {
-                                string[] arr = new string[7];
+                                string[] arr = new string[8];
                                 arr[0] = order.OrderNumber.ToString();
                                 arr[1] = order.TravelOffer.TravelDestination;
-                                arr[2] = order.OrderClient.Name + " " + order.OrderClient.LastName;
-                                arr[3] = order.ServiceWorker.Name + " " + order.ServiceWorker.LastName;
+                                arr[2] = order.ServiceWorker.Name + " " + order.ServiceWorker.LastName;
+                                arr[3] = order.OrderClient.Name + " " + order.OrderClient.LastName;
                                 arr[4] = "€" + string.Format("{0:F2}", order.OrderPrice);
                                 arr[5] = order.OrderRegisterDate.ToShortDateString();
                                 arr[6] = order.TravelStartDate.ToShortDateString();
+                                arr[7] = order.OrderClientsAmount.ToString();
                                 ListViewItem itm = new ListViewItem(arr);
                                 ordersView.nearestDeparturesListView.Items.Add(itm);
                             }
                         }
+                        ordersView.Text = worker.Name + " " + worker.LastName + " orders";
                         ordersView.ShowDialog();
                         Dispose();
                     }
@@ -85,37 +88,22 @@ namespace Travel_Agency
                         if (type.Equals(typeof(Offer)))
                         {
                             Offer offer = null;
-                            var offerQuery = from o in db.Offers
-                                             where o.OfferNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
-                                             select o;
-                            foreach (var item in offerQuery)
-                            {
-                                offer = item;
-                            }
+                            int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                            offer = db.Offers.Where(x => x.OfferNumber == number).First();
                             MessageBox.Show(offer.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         if (type.Equals(typeof(Order)))
                         {
                             Order order = null;
-                            var orderQuery = from o in db.Orders
-                                             where o.OrderNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First())
-                                             select o;
-                            foreach (var item in orderQuery)
-                            {
-                                order = item;
-                            }
+                            int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                            order = db.Orders.Where(x => x.OrderNumber == number).First();
                             MessageBox.Show(order.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         if (type.Equals(typeof(Client)))
                         {
                             Client client = null;
-                            var clientQuery = from c in db.Clients
-                                              where c.ClientNumber == Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1))
-                                              select c;
-                            foreach (var item in clientQuery)
-                            {
-                                client = item;
-                            }
+                            int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
+                            client = db.Clients.Where(x => x.ClientNumber == number).First();
                             MessageBox.Show(client.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         if (type.Equals(typeof(Worker)))

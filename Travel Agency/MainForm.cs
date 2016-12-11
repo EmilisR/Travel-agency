@@ -320,7 +320,7 @@ namespace Travel_Agency
                 if (db.Workers.Count() > 0)
                 {
                     List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Offer), this);
+                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Order), this);
                     showObject.Text = "Show worker's orders";
                     showObject.showButton.Text = "Show worker's orders";
                     showObject.showButton.Size = new Size(240, 23);

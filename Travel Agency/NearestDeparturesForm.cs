@@ -32,6 +32,7 @@ namespace Travel_Agency
                 nearestDeparturesListView.Columns.Add("Price", 60);
                 nearestDeparturesListView.Columns.Add("Order created", 80);
                 nearestDeparturesListView.Columns.Add("Travel start date", 90);
+                nearestDeparturesListView.Columns.Add("Travelers", 90);
                 if (_isWorkerOrders == false)
                 {
                     Order[] orders = new Order[db.Orders.Count()];
@@ -42,6 +43,7 @@ namespace Travel_Agency
                         i++;
                     }
                     Array.Sort(orders);
+                    nearestDeparturesListView.Columns.RemoveAt(7);
                     foreach (Order order in orders)
                     {
                         if (order.IsActive())
