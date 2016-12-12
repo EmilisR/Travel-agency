@@ -372,7 +372,14 @@ namespace Travel_Agency
                         chart1.Series["Series1"].Points.DataBindXY(positions, positionCount);
                         break;
                     case 1:
-
+                        List<string> workers = new List<string>();
+                        List<double> salaries = new List<double>();
+                        foreach (Worker worker in db.Workers.Local.OrderByDescending(x => x.Salary).Take(5).ToList())
+                        {
+                            workers.Add(worker.Name + " " + worker.LastName);
+                            salaries.Add(db.Workers.Local.Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).Single().Salary);
+                        }
+                        chart2.Series["Series1"].Points.DataBindXY(workers, salaries);
                         break;
                 }
             }   

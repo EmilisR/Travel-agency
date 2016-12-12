@@ -40,6 +40,10 @@ namespace Travel_Agency
                     worker = db.Workers.Where(x => x.WorkerNumber == number).First();
                     double oldSalary = worker.Salary;
                     worker.RaiseSalary(moneyTrackBar.Value);
+                    db.Workers.Attach(worker);
+                    var entry = db.Entry(worker);
+                    entry.Property(x => x.Salary).IsModified = true;
+                    db.SaveChanges();
                     MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Dispose();
                 }
@@ -80,6 +84,10 @@ namespace Travel_Agency
                     else
                     {
                         worker.CutSalary(moneyTrackBar.Value);
+                        db.Workers.Attach(worker);
+                        var entry = db.Entry(worker);
+                        entry.Property(x => x.Salary).IsModified = true;
+                        db.SaveChanges();
                         MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Dispose();
                     }
