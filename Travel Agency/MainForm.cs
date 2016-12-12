@@ -338,13 +338,11 @@ namespace Travel_Agency
                 db.Workers.Load();
                 List<string> positions = new List<string>();
                 List<int> positionCount = new List<int>();
-                foreach (Worker worker in db.Workers.Local.ToList())
+                var empl = db.Workers.Local.GroupBy(emp => emp.Position);
+                foreach (var worker in empl)
                 {
-                    if (!positions.Contains(worker.Position))
-                    {
-                        positions.Add(worker.Position);
-                        positionCount.Add(db.Workers.Local.Where(x => x.Position == worker.Position).Count());
-                    }
+                    positions.Add(worker.Key);
+                    positionCount.Add(worker.Count());
                 }
                 chart1.Series[0].LegendText = "Number of workers";
                 chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
@@ -367,13 +365,11 @@ namespace Travel_Agency
                     case 0:
                         List<string> positions = new List<string>();
                         List<int> positionCount = new List<int>();
-                        foreach (Worker worker in db.Workers.Local.ToList())
+                        var empl = db.Workers.Local.GroupBy(emp => emp.Position);
+                        foreach(var worker in empl)
                         {
-                            if (!positions.Contains(worker.Position))
-                            {
-                                positions.Add(worker.Position);
-                                positionCount.Add(db.Workers.Local.Where(x => x.Position == worker.Position).Count());
-                            }
+                            positions.Add(worker.Key);
+                            positionCount.Add(worker.Count());
                         }
                         chart1.Series[0].LegendText = "Number of workers";
                         chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
