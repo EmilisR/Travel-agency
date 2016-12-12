@@ -411,6 +411,28 @@ namespace Travel_Agency
                         chart3.Series["Series1"].IsValueShownAsLabel = true;
                         chart3.Series["Series1"].Points.DataBindXY(workers, salaries);
                         break;
+                    case 3:
+                        List<Order> orders = db.Orders.ToList();
+                        List<Offer> offers = db.Offers.ToList();
+                        var join = orders.Join(offers,
+                                            ord => ord.TravelOffer.OfferNumber,
+                                            off => off.OfferNumber,
+                                            (ord, off) => new { ord.TravelStartDate, off.Price, ord.OrderClientsAmount}).GroupBy(grp => grp.TravelStartDate);
+                        List<string> dates = new List<string>();
+                        List<double> prices = new List<double>();
+                        foreach (var item in join)
+                        {
+                            dates.Add(item.Key.ToShortDateString());
+                            prices.Add(item.Select(price => price.Price * price.OrderClientsAmount).Sum());
+                        }
+                        chart4.Series[0].LegendText = "Total income for day in €";
+                        chart4.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+                        chart4.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+                        chart4.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+                        chart4.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+                        chart4.Series["Series1"].IsValueShownAsLabel = true;
+                        chart4.Series["Series1"].Points.DataBindXY(dates, prices);
+                        break;
                 }
             }   
         }
@@ -419,7 +441,7 @@ namespace Travel_Agency
             get
             {
                 CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+                cp.ExStyle |= 0x02000000;
                 return cp;
             }
         }

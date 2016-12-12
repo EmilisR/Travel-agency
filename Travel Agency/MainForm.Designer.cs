@@ -37,6 +37,9 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.addWorker = new System.Windows.Forms.Button();
             this.addClient = new System.Windows.Forms.Button();
@@ -70,6 +73,8 @@
             this.emailTab = new System.Windows.Forms.TabPage();
             this.minSalariesTab = new System.Windows.Forms.TabPage();
             this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.datesPricesTab = new System.Windows.Forms.TabPage();
+            this.chart4 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl.SuspendLayout();
             this.addDeleteTab.SuspendLayout();
             this.workerTab.SuspendLayout();
@@ -82,6 +87,8 @@
             this.emailTab.SuspendLayout();
             this.minSalariesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
+            this.datesPricesTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart4)).BeginInit();
             this.SuspendLayout();
             // 
             // addWorker
@@ -349,6 +356,7 @@
             this.chartsTab.Controls.Add(this.positionsTab);
             this.chartsTab.Controls.Add(this.maxSalariesTab);
             this.chartsTab.Controls.Add(this.minSalariesTab);
+            this.chartsTab.Controls.Add(this.datesPricesTab);
             this.chartsTab.Location = new System.Drawing.Point(12, 16);
             this.chartsTab.Name = "chartsTab";
             this.chartsTab.SelectedIndex = 0;
@@ -445,6 +453,31 @@
             this.chart3.Size = new System.Drawing.Size(555, 258);
             this.chart3.TabIndex = 17;
             // 
+            // datesPricesTab
+            // 
+            this.datesPricesTab.Controls.Add(this.chart4);
+            this.datesPricesTab.Location = new System.Drawing.Point(10, 47);
+            this.datesPricesTab.Name = "datesPricesTab";
+            this.datesPricesTab.Size = new System.Drawing.Size(567, 270);
+            this.datesPricesTab.TabIndex = 3;
+            this.datesPricesTab.Text = "Travel dates and prices";
+            this.datesPricesTab.UseVisualStyleBackColor = true;
+            // 
+            // chart4
+            // 
+            chartArea4.Name = "ChartArea1";
+            this.chart4.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart4.Legends.Add(legend4);
+            this.chart4.Location = new System.Drawing.Point(6, 6);
+            this.chart4.Name = "chart4";
+            series4.ChartArea = "ChartArea1";
+            series4.Legend = "Legend1";
+            series4.Name = "Series1";
+            this.chart4.Series.Add(series4);
+            this.chart4.Size = new System.Drawing.Size(555, 258);
+            this.chart4.TabIndex = 17;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 29F);
@@ -474,6 +507,8 @@
             this.emailTab.ResumeLayout(false);
             this.minSalariesTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).EndInit();
+            this.datesPricesTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart4)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -511,6 +546,8 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.TabPage minSalariesTab;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart3;
+        private System.Windows.Forms.TabPage datesPricesTab;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart4;
     }
 }
 
