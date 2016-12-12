@@ -55,7 +55,15 @@ namespace Travel_Agency
 
         public override string ToString()
         {
-                return "Worker number: " + WorkerNumber + Environment.NewLine + "Name: " + Name + Environment.NewLine + "Last name: " + LastName + Environment.NewLine + "Position: " + Position + Environment.NewLine + "Salary: €" + Salary.ToString() + Environment.NewLine + "Working hours per week: " + WorkingHoursPerWeek.ToString() + Environment.NewLine + "Worker orders amount: " + WorkerOrders.Count + Environment.NewLine + "Registered on: " + RegisterDate.ToShortDateString();
+            string workerOrdersAmount = WorkerOrders == null ? "0" : WorkerOrders.Count.ToString();
+                return "Worker number: " + WorkerNumber + Environment.NewLine + 
+                        "Name: " + Name + Environment.NewLine + 
+                        "Last name: " + LastName + Environment.NewLine + 
+                        "Position: " + Position + Environment.NewLine + 
+                        "Salary: €" + Salary.ToString() + Environment.NewLine + 
+                        "Working hours per week: " + WorkingHoursPerWeek.ToString() + Environment.NewLine + 
+                        "Worker orders amount: " + workerOrdersAmount + Environment.NewLine + 
+                        "Registered on: " + RegisterDate.ToShortDateString();
         }
     }
 }

@@ -28,6 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.addWorker = new System.Windows.Forms.Button();
             this.addClient = new System.Windows.Forms.Button();
@@ -54,11 +60,21 @@
             this.workerTab = new System.Windows.Forms.TabPage();
             this.statisticsTab = new System.Windows.Forms.TabPage();
             this.emailTab = new System.Windows.Forms.TabPage();
+            this.chartsTab = new System.Windows.Forms.TabControl();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.positionsTab = new System.Windows.Forms.TabPage();
             this.tabControl.SuspendLayout();
             this.addDeleteTab.SuspendLayout();
             this.workerTab.SuspendLayout();
             this.statisticsTab.SuspendLayout();
             this.emailTab.SuspendLayout();
+            this.chartsTab.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            this.positionsTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // addWorker
@@ -96,7 +112,7 @@
             this.clientsQuantity.AutoSize = true;
             this.clientsQuantity.BackColor = System.Drawing.SystemColors.Control;
             this.clientsQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.clientsQuantity.Location = new System.Drawing.Point(427, 123);
+            this.clientsQuantity.Location = new System.Drawing.Point(605, 96);
             this.clientsQuantity.Name = "clientsQuantity";
             this.clientsQuantity.Size = new System.Drawing.Size(2, 31);
             this.clientsQuantity.TabIndex = 4;
@@ -106,7 +122,7 @@
             this.offersQuantity.AutoSize = true;
             this.offersQuantity.BackColor = System.Drawing.SystemColors.Control;
             this.offersQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.offersQuantity.Location = new System.Drawing.Point(427, 65);
+            this.offersQuantity.Location = new System.Drawing.Point(605, 38);
             this.offersQuantity.Name = "offersQuantity";
             this.offersQuantity.Size = new System.Drawing.Size(2, 31);
             this.offersQuantity.TabIndex = 5;
@@ -116,7 +132,7 @@
             this.ordersQuantity.AutoSize = true;
             this.ordersQuantity.BackColor = System.Drawing.SystemColors.Control;
             this.ordersQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ordersQuantity.Location = new System.Drawing.Point(427, 94);
+            this.ordersQuantity.Location = new System.Drawing.Point(605, 67);
             this.ordersQuantity.Name = "ordersQuantity";
             this.ordersQuantity.Size = new System.Drawing.Size(2, 31);
             this.ordersQuantity.TabIndex = 6;
@@ -166,7 +182,7 @@
             this.activeOrders.AutoSize = true;
             this.activeOrders.BackColor = System.Drawing.SystemColors.Control;
             this.activeOrders.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.activeOrders.Location = new System.Drawing.Point(427, 181);
+            this.activeOrders.Location = new System.Drawing.Point(605, 154);
             this.activeOrders.Name = "activeOrders";
             this.activeOrders.Size = new System.Drawing.Size(2, 31);
             this.activeOrders.TabIndex = 11;
@@ -196,7 +212,7 @@
             this.workersQuantity.AutoSize = true;
             this.workersQuantity.BackColor = System.Drawing.SystemColors.Control;
             this.workersQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.workersQuantity.Location = new System.Drawing.Point(427, 152);
+            this.workersQuantity.Location = new System.Drawing.Point(605, 125);
             this.workersQuantity.Name = "workersQuantity";
             this.workersQuantity.Size = new System.Drawing.Size(2, 31);
             this.workersQuantity.TabIndex = 13;
@@ -204,7 +220,7 @@
             // budgetBalance
             // 
             this.budgetBalance.AutoSize = true;
-            this.budgetBalance.Location = new System.Drawing.Point(427, 206);
+            this.budgetBalance.Location = new System.Drawing.Point(605, 179);
             this.budgetBalance.Name = "budgetBalance";
             this.budgetBalance.Size = new System.Drawing.Size(0, 29);
             this.budgetBalance.TabIndex = 14;
@@ -270,6 +286,7 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(763, 403);
             this.tabControl.TabIndex = 21;
+            this.tabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             // 
             // addDeleteTab
             // 
@@ -306,6 +323,7 @@
             // 
             // statisticsTab
             // 
+            this.statisticsTab.Controls.Add(this.chartsTab);
             this.statisticsTab.Controls.Add(this.clientsQuantity);
             this.statisticsTab.Controls.Add(this.offersQuantity);
             this.statisticsTab.Controls.Add(this.budgetBalance);
@@ -329,6 +347,70 @@
             this.emailTab.Text = "Send e-mail";
             this.emailTab.UseVisualStyleBackColor = true;
             // 
+            // chartsTab
+            // 
+            this.chartsTab.Controls.Add(this.positionsTab);
+            this.chartsTab.Controls.Add(this.tabPage2);
+            this.chartsTab.Location = new System.Drawing.Point(12, 16);
+            this.chartsTab.Name = "chartsTab";
+            this.chartsTab.SelectedIndex = 0;
+            this.chartsTab.Size = new System.Drawing.Size(587, 327);
+            this.chartsTab.TabIndex = 15;
+            this.chartsTab.Selected += new System.Windows.Forms.TabControlEventHandler(this.chartsTab_Selected);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.chart2);
+            this.tabPage2.Location = new System.Drawing.Point(10, 47);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(567, 270);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // chart2
+            // 
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
+            this.chart2.Location = new System.Drawing.Point(6, 6);
+            this.chart2.Name = "chart2";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chart2.Series.Add(series2);
+            this.chart2.Size = new System.Drawing.Size(555, 258);
+            this.chart2.TabIndex = 17;
+            this.chart2.Text = "chart2";
+            // 
+            // chart1
+            // 
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
+            this.chart1.Location = new System.Drawing.Point(6, 6);
+            this.chart1.Name = "chart1";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chart1.Series.Add(series1);
+            this.chart1.Size = new System.Drawing.Size(555, 258);
+            this.chart1.TabIndex = 16;
+            // 
+            // positionsTab
+            // 
+            this.positionsTab.Controls.Add(this.chart1);
+            this.positionsTab.Location = new System.Drawing.Point(10, 47);
+            this.positionsTab.Name = "positionsTab";
+            this.positionsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.positionsTab.Size = new System.Drawing.Size(567, 270);
+            this.positionsTab.TabIndex = 0;
+            this.positionsTab.Text = "Positions";
+            this.positionsTab.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 29F);
@@ -351,6 +433,11 @@
             this.statisticsTab.ResumeLayout(false);
             this.statisticsTab.PerformLayout();
             this.emailTab.ResumeLayout(false);
+            this.chartsTab.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            this.positionsTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -381,6 +468,11 @@
         private System.Windows.Forms.TabPage workerTab;
         private System.Windows.Forms.TabPage statisticsTab;
         private System.Windows.Forms.TabPage emailTab;
+        private System.Windows.Forms.TabControl chartsTab;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private System.Windows.Forms.TabPage positionsTab;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
     }
 }
 

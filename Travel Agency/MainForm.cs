@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace Travel_Agency
 {
     public partial class MainForm : Form
     {
+        private bool isChartCreated { get; set; }
         public delegate void EmailSendEventHandler<T>(T sender, EmailSendEventArgs e);
         public MainForm()
         {
@@ -23,7 +26,8 @@ namespace Travel_Agency
             //loginForm.ShowDialog();
             Budget.Bankrupt += BankruptHandler;
             Font = new Font(Program.ReadSetting("Font name", "User.config"), Convert.ToInt32(Program.ReadSetting("Font size", "User.config")));
-            //StartThreadQuantityUpdate();
+            StartThreadQuantityUpdate();
+            isChartCreated = false;
         }
 
         public async void StartThreadQuantityUpdate()
@@ -180,19 +184,19 @@ namespace Travel_Agency
             int number;
             using (var db = new TravelAgencyContext())
             { number = db.Workers.Count(); }
-                if (number > 0)
-                {
+            if (number > 0)
+            {
                 List<String> list;
                 using (var db = new TravelAgencyContext())
                 {
                     list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
                 }
-                    
-                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Worker), this);
-                    showObject.Text = "Show workers";
-                    showObject.ShowDialog();
-                }
-                else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Worker), this);
+                showObject.Text = "Show workers";
+                showObject.ShowDialog();
+            }
+            else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void ShowClientsButton_Click(object sender, EventArgs e)
@@ -234,7 +238,7 @@ namespace Travel_Agency
                 Worker worker = null;
                 int number = Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split('.').First());
                 worker = db.Workers.Where(x => x.WorkerNumber == number).First();
-                
+
                 if (Budget.Balance - worker.Salary > Convert.ToDouble(Program.ReadSetting("Limit of bankrupt", "App.config")))
                 {
                     MessageBox.Show("Paid out €" + worker.Salary + " to " + worker.Name + " " + worker.LastName, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -264,7 +268,7 @@ namespace Travel_Agency
                     showObject.ShowDialog();
                 }
                 else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } 
+            }
         }
 
         private void ChangeWorkerPositionButton_Click(object sender, EventArgs e)
@@ -324,6 +328,62 @@ namespace Travel_Agency
                     showObject.ShowDialog();
                 }
                 else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void tabControl_Selected(object sender, TabControlEventArgs e)
+        {
+            using (var db = new TravelAgencyContext())
+            {
+                db.Workers.Load();
+                List<string> positions = new List<string>();
+                List<int> positionCount = new List<int>();
+                foreach (Worker worker in db.Workers.Local.ToList())
+                {
+                    if (!positions.Contains(worker.Position))
+                    {
+                        positions.Add(worker.Position);
+                        positionCount.Add(db.Workers.Local.Where(x => x.Position == worker.Position).Count());
+                    }
+                }
+                chart1.Series["Series1"].Points.DataBindXY(positions, positionCount);
+                StartThreadQuantityUpdate();
+            }
+        }
+
+        private void chartsTab_Selected(object sender, TabControlEventArgs e)
+        {
+            using (var db = new TravelAgencyContext())
+            {
+                db.Workers.Load();
+                switch (e.TabPageIndex)
+                {
+                    case 0:
+                        List<string> positions = new List<string>();
+                        List<int> positionCount = new List<int>();
+                        foreach (Worker worker in db.Workers.Local.ToList())
+                        {
+                            if (!positions.Contains(worker.Position))
+                            {
+                                positions.Add(worker.Position);
+                                positionCount.Add(db.Workers.Local.Where(x => x.Position == worker.Position).Count());
+                            }
+                        }
+                        chart1.Series["Series1"].Points.DataBindXY(positions, positionCount);
+                        break;
+                    case 1:
+
+                        break;
+                }
+            }   
+        }
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+                return cp;
             }
         }
     }
