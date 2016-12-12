@@ -346,6 +346,12 @@ namespace Travel_Agency
                         positionCount.Add(db.Workers.Local.Where(x => x.Position == worker.Position).Count());
                     }
                 }
+                chart1.Series[0].LegendText = "Number of workers";
+                chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+                chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+                chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+                chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+                chart1.Series["Series1"].IsValueShownAsLabel = true;
                 chart1.Series["Series1"].Points.DataBindXY(positions, positionCount);
                 StartThreadQuantityUpdate();
             }
@@ -369,6 +375,12 @@ namespace Travel_Agency
                                 positionCount.Add(db.Workers.Local.Where(x => x.Position == worker.Position).Count());
                             }
                         }
+                        chart1.Series[0].LegendText = "Number of workers";
+                        chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+                        chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+                        chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+                        chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+                        chart1.Series["Series1"].IsValueShownAsLabel = true;
                         chart1.Series["Series1"].Points.DataBindXY(positions, positionCount);
                         break;
                     case 1:
@@ -379,7 +391,29 @@ namespace Travel_Agency
                             workers.Add(worker.Name + " " + worker.LastName);
                             salaries.Add(db.Workers.Local.Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).Single().Salary);
                         }
+                        chart2.Series[0].LegendText = "Salary per month in €";
+                        chart2.Series["Series1"].IsValueShownAsLabel = true;
+                        chart2.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+                        chart2.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+                        chart2.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+                        chart2.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
                         chart2.Series["Series1"].Points.DataBindXY(workers, salaries);
+                        break;
+                    case 2:
+                        workers = new List<string>();
+                        salaries = new List<double>();
+                        foreach (Worker worker in db.Workers.Local.OrderByDescending(x => x.Salary).Skip(db.Workers.Local.Count - 5).ToList())
+                        {
+                            workers.Add(worker.Name + " " + worker.LastName);
+                            salaries.Add(db.Workers.Local.Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).Single().Salary);
+                        }
+                        chart3.Series[0].LegendText = "Salary per month in €";
+                        chart3.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+                        chart3.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+                        chart3.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+                        chart3.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+                        chart3.Series["Series1"].IsValueShownAsLabel = true;
+                        chart3.Series["Series1"].Points.DataBindXY(workers, salaries);
                         break;
                 }
             }   

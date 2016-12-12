@@ -34,6 +34,9 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.addWorker = new System.Windows.Forms.Button();
             this.addClient = new System.Windows.Forms.Button();
@@ -62,9 +65,11 @@
             this.chartsTab = new System.Windows.Forms.TabControl();
             this.positionsTab = new System.Windows.Forms.TabPage();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.salariesTab = new System.Windows.Forms.TabPage();
+            this.maxSalariesTab = new System.Windows.Forms.TabPage();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.emailTab = new System.Windows.Forms.TabPage();
+            this.minSalariesTab = new System.Windows.Forms.TabPage();
+            this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl.SuspendLayout();
             this.addDeleteTab.SuspendLayout();
             this.workerTab.SuspendLayout();
@@ -72,9 +77,11 @@
             this.chartsTab.SuspendLayout();
             this.positionsTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
-            this.salariesTab.SuspendLayout();
+            this.maxSalariesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.emailTab.SuspendLayout();
+            this.minSalariesTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
             this.SuspendLayout();
             // 
             // addWorker
@@ -340,7 +347,8 @@
             // chartsTab
             // 
             this.chartsTab.Controls.Add(this.positionsTab);
-            this.chartsTab.Controls.Add(this.salariesTab);
+            this.chartsTab.Controls.Add(this.maxSalariesTab);
+            this.chartsTab.Controls.Add(this.minSalariesTab);
             this.chartsTab.Location = new System.Drawing.Point(12, 16);
             this.chartsTab.Name = "chartsTab";
             this.chartsTab.SelectedIndex = 0;
@@ -374,16 +382,16 @@
             this.chart1.Size = new System.Drawing.Size(555, 258);
             this.chart1.TabIndex = 16;
             // 
-            // salariesTab
+            // maxSalariesTab
             // 
-            this.salariesTab.Controls.Add(this.chart2);
-            this.salariesTab.Location = new System.Drawing.Point(10, 47);
-            this.salariesTab.Name = "salariesTab";
-            this.salariesTab.Padding = new System.Windows.Forms.Padding(3);
-            this.salariesTab.Size = new System.Drawing.Size(567, 270);
-            this.salariesTab.TabIndex = 1;
-            this.salariesTab.Text = "Salaries";
-            this.salariesTab.UseVisualStyleBackColor = true;
+            this.maxSalariesTab.Controls.Add(this.chart2);
+            this.maxSalariesTab.Location = new System.Drawing.Point(10, 47);
+            this.maxSalariesTab.Name = "maxSalariesTab";
+            this.maxSalariesTab.Padding = new System.Windows.Forms.Padding(3);
+            this.maxSalariesTab.Size = new System.Drawing.Size(567, 270);
+            this.maxSalariesTab.TabIndex = 1;
+            this.maxSalariesTab.Text = "Highest salaries";
+            this.maxSalariesTab.UseVisualStyleBackColor = true;
             // 
             // chart2
             // 
@@ -411,6 +419,32 @@
             this.emailTab.Text = "Send e-mail";
             this.emailTab.UseVisualStyleBackColor = true;
             // 
+            // minSalariesTab
+            // 
+            this.minSalariesTab.Controls.Add(this.chart3);
+            this.minSalariesTab.Location = new System.Drawing.Point(10, 47);
+            this.minSalariesTab.Name = "minSalariesTab";
+            this.minSalariesTab.Padding = new System.Windows.Forms.Padding(3);
+            this.minSalariesTab.Size = new System.Drawing.Size(567, 270);
+            this.minSalariesTab.TabIndex = 2;
+            this.minSalariesTab.Text = "Lowest salaries";
+            this.minSalariesTab.UseVisualStyleBackColor = true;
+            // 
+            // chart3
+            // 
+            chartArea3.Name = "ChartArea1";
+            this.chart3.ChartAreas.Add(chartArea3);
+            legend3.Name = "Legend1";
+            this.chart3.Legends.Add(legend3);
+            this.chart3.Location = new System.Drawing.Point(6, 6);
+            this.chart3.Name = "chart3";
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart3.Series.Add(series3);
+            this.chart3.Size = new System.Drawing.Size(555, 258);
+            this.chart3.TabIndex = 17;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 29F);
@@ -435,9 +469,11 @@
             this.chartsTab.ResumeLayout(false);
             this.positionsTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
-            this.salariesTab.ResumeLayout(false);
+            this.maxSalariesTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.emailTab.ResumeLayout(false);
+            this.minSalariesTab.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chart3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -469,10 +505,12 @@
         private System.Windows.Forms.TabPage statisticsTab;
         private System.Windows.Forms.TabPage emailTab;
         private System.Windows.Forms.TabControl chartsTab;
-        private System.Windows.Forms.TabPage salariesTab;
+        private System.Windows.Forms.TabPage maxSalariesTab;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
         private System.Windows.Forms.TabPage positionsTab;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.TabPage minSalariesTab;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart3;
     }
 }
 
