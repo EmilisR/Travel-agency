@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
@@ -18,17 +13,16 @@ namespace Travel_Agency
 {
     public partial class MainForm : Form
     {
-        private bool isChartCreated { get; set; }
         public delegate void EmailSendEventHandler<T>(T sender, EmailSendEventArgs e);
         public MainForm()
         {
             InitializeComponent();
+            Task.Run(() => ReadBudgetValues());
             //LoginForm loginForm = new LoginForm();
             //loginForm.ShowDialog();
             Budget.Bankrupt += BankruptHandler;
             Font = new Font(Program.ReadSetting("Font name", "User.config"), Convert.ToInt32(Program.ReadSetting("Font size", "User.config")));
             StartThreadQuantityUpdate();
-            isChartCreated = false;
         }
 
         public async void StartThreadQuantityUpdate()
@@ -91,33 +85,25 @@ namespace Travel_Agency
             }
         }
 
-        private Task SaveObjectsTask<T>(List<T> objects, string filePath, string tag)
-        {
-            Task task = new Task(() => SaveObjects(objects, filePath, tag));
-            return task;
-        }
-
-        private void SaveObjects<T>(List<T> objects, string filePath, string tag)
-        {
-            Stream streamWriter = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
-            IFormatter formatter = new BinaryFormatter();
-            byte[] tagByte = Encoding.ASCII.GetBytes(tag);
-            streamWriter.Write(tagByte, 0, tag.Length);
-            foreach (T item in objects)
-            {
-                formatter.Serialize(streamWriter, item);
-            }
-            streamWriter.Close();
-        }
-
         private void GUI_FormClosed(object sender, FormClosedEventArgs e)
         {
-            new Thread(SaveBudgetValues).Start();
+            Task.Run(() => SaveBudgetValues());
+        }
+
+        private void ReadBudgetValues()
+        {
+            using (StreamReader file = new StreamReader(Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Program.ReadSetting("Budget file source", "App.config"), false))
+            {
+                Budget.Balance = double.Parse(file.ReadLine());
+                Budget.Income = double.Parse(file.ReadLine());
+                Budget.Outcome = double.Parse(file.ReadLine());
+                Budget.Profit = double.Parse(file.ReadLine());
+            }
         }
 
         private void SaveBudgetValues()
         {
-            using (StreamWriter file = new StreamWriter(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\" + Program.ReadSetting("Budget file source", "App.config"), false))
+            using (StreamWriter file = new StreamWriter(Path.GetDirectoryName(Application.ExecutablePath) + @"\" + Program.ReadSetting("Budget file source", "App.config"), false))
             {
                 file.WriteLine(Budget.Balance);
                 file.WriteLine(Budget.Income);
@@ -264,7 +250,7 @@ namespace Travel_Agency
                     ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Worker), this);
                     showObject.Text = "Pay out salary";
                     showObject.showButton.Text = "Pay out salary";
-                    showObject.showButton.Size = new Size(240, 23);
+                    showObject.showButton.Size = new Size(564, 51);
                     showObject.deleteButton.Visible = false;
                     showObject.ShowDialog();
                 }
@@ -324,7 +310,7 @@ namespace Travel_Agency
                     ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Order), this);
                     showObject.Text = "Show worker's orders";
                     showObject.showButton.Text = "Show worker's orders";
-                    showObject.showButton.Size = new Size(240, 23);
+                    showObject.showButton.Size = new Size(564, 51);
                     showObject.deleteButton.Visible = false;
                     showObject.ShowDialog();
                 }
@@ -346,10 +332,7 @@ namespace Travel_Agency
                     positionCount.Add(worker.Count());
                 }
                 chart1.Series[0].LegendText = "Number of workers";
-                chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-                chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-                chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-                chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+                RemoveGrid(chart1);
                 chart1.Series["Series1"].IsValueShownAsLabel = true;
                 chart1.Series["Series1"].Points.DataBindXY(positions, positionCount);
                 StartThreadQuantityUpdate();

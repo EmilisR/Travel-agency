@@ -73,4 +73,11 @@ namespace Travel_Agency
         public int WorkerNumber { get; set; }
         public virtual List<Order> WorkerOrders { get; set; }
     }
+    public static partial class Budget
+    {
+        public static double Balance { get; set; }
+        public static double Income { get; set; }
+        public static double Outcome { get; set; }
+        public static double Profit { get; set; }
+    }
 }

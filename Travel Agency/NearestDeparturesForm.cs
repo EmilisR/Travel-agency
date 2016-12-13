@@ -25,14 +25,14 @@ namespace Travel_Agency
                 nearestDeparturesListView.View = View.Details;
                 nearestDeparturesListView.GridLines = true;
                 nearestDeparturesListView.FullRowSelect = true;
-                nearestDeparturesListView.Columns.Add("No.", 30);
-                nearestDeparturesListView.Columns.Add("Travel destination", 140);
-                nearestDeparturesListView.Columns.Add("Worker", 120);
-                nearestDeparturesListView.Columns.Add("Client", 120);
-                nearestDeparturesListView.Columns.Add("Price", 60);
-                nearestDeparturesListView.Columns.Add("Order created", 80);
-                nearestDeparturesListView.Columns.Add("Travel start date", 90);
-                nearestDeparturesListView.Columns.Add("Travelers", 90);
+                nearestDeparturesListView.Columns.Add("No.", 40);
+                nearestDeparturesListView.Columns.Add("Travel destination", 360);
+                nearestDeparturesListView.Columns.Add("Worker", 240);
+                nearestDeparturesListView.Columns.Add("Client", 240);
+                nearestDeparturesListView.Columns.Add("Price", 120);
+                nearestDeparturesListView.Columns.Add("Order created", 170);
+                nearestDeparturesListView.Columns.Add("Travel start date", 200);
+                nearestDeparturesListView.Columns.Add("Travelers", 150);
                 if (_isWorkerOrders == false)
                 {
                     Order[] orders = new Order[db.Orders.Count()];

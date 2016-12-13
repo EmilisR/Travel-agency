@@ -70,11 +70,11 @@
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.maxSalariesTab = new System.Windows.Forms.TabPage();
             this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.emailTab = new System.Windows.Forms.TabPage();
             this.minSalariesTab = new System.Windows.Forms.TabPage();
             this.chart3 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.datesPricesTab = new System.Windows.Forms.TabPage();
             this.chart4 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.emailTab = new System.Windows.Forms.TabPage();
             this.tabControl.SuspendLayout();
             this.addDeleteTab.SuspendLayout();
             this.workerTab.SuspendLayout();
@@ -84,11 +84,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.maxSalariesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
-            this.emailTab.SuspendLayout();
             this.minSalariesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).BeginInit();
             this.datesPricesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart4)).BeginInit();
+            this.emailTab.SuspendLayout();
             this.SuspendLayout();
             // 
             // addWorker
@@ -125,30 +125,27 @@
             // 
             this.clientsQuantity.AutoSize = true;
             this.clientsQuantity.BackColor = System.Drawing.SystemColors.Control;
-            this.clientsQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.clientsQuantity.Location = new System.Drawing.Point(605, 96);
+            this.clientsQuantity.Location = new System.Drawing.Point(781, 89);
             this.clientsQuantity.Name = "clientsQuantity";
-            this.clientsQuantity.Size = new System.Drawing.Size(2, 31);
+            this.clientsQuantity.Size = new System.Drawing.Size(0, 29);
             this.clientsQuantity.TabIndex = 4;
             // 
             // offersQuantity
             // 
             this.offersQuantity.AutoSize = true;
             this.offersQuantity.BackColor = System.Drawing.SystemColors.Control;
-            this.offersQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.offersQuantity.Location = new System.Drawing.Point(605, 38);
+            this.offersQuantity.Location = new System.Drawing.Point(781, 31);
             this.offersQuantity.Name = "offersQuantity";
-            this.offersQuantity.Size = new System.Drawing.Size(2, 31);
+            this.offersQuantity.Size = new System.Drawing.Size(0, 29);
             this.offersQuantity.TabIndex = 5;
             // 
             // ordersQuantity
             // 
             this.ordersQuantity.AutoSize = true;
             this.ordersQuantity.BackColor = System.Drawing.SystemColors.Control;
-            this.ordersQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ordersQuantity.Location = new System.Drawing.Point(605, 67);
+            this.ordersQuantity.Location = new System.Drawing.Point(781, 60);
             this.ordersQuantity.Name = "ordersQuantity";
-            this.ordersQuantity.Size = new System.Drawing.Size(2, 31);
+            this.ordersQuantity.Size = new System.Drawing.Size(0, 29);
             this.ordersQuantity.TabIndex = 6;
             // 
             // addOffer
@@ -195,10 +192,9 @@
             // 
             this.activeOrders.AutoSize = true;
             this.activeOrders.BackColor = System.Drawing.SystemColors.Control;
-            this.activeOrders.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.activeOrders.Location = new System.Drawing.Point(605, 154);
+            this.activeOrders.Location = new System.Drawing.Point(781, 147);
             this.activeOrders.Name = "activeOrders";
-            this.activeOrders.Size = new System.Drawing.Size(2, 31);
+            this.activeOrders.Size = new System.Drawing.Size(0, 29);
             this.activeOrders.TabIndex = 11;
             // 
             // nearestReturnsButton
@@ -225,16 +221,15 @@
             // 
             this.workersQuantity.AutoSize = true;
             this.workersQuantity.BackColor = System.Drawing.SystemColors.Control;
-            this.workersQuantity.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.workersQuantity.Location = new System.Drawing.Point(605, 125);
+            this.workersQuantity.Location = new System.Drawing.Point(781, 118);
             this.workersQuantity.Name = "workersQuantity";
-            this.workersQuantity.Size = new System.Drawing.Size(2, 31);
+            this.workersQuantity.Size = new System.Drawing.Size(0, 29);
             this.workersQuantity.TabIndex = 13;
             // 
             // budgetBalance
             // 
             this.budgetBalance.AutoSize = true;
-            this.budgetBalance.Location = new System.Drawing.Point(605, 179);
+            this.budgetBalance.Location = new System.Drawing.Point(781, 172);
             this.budgetBalance.Name = "budgetBalance";
             this.budgetBalance.Size = new System.Drawing.Size(0, 29);
             this.budgetBalance.TabIndex = 14;
@@ -298,7 +293,7 @@
             this.tabControl.Location = new System.Drawing.Point(12, 12);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(763, 403);
+            this.tabControl.Size = new System.Drawing.Size(1074, 593);
             this.tabControl.TabIndex = 21;
             this.tabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             // 
@@ -346,7 +341,7 @@
             this.statisticsTab.Controls.Add(this.activeOrders);
             this.statisticsTab.Location = new System.Drawing.Point(10, 47);
             this.statisticsTab.Name = "statisticsTab";
-            this.statisticsTab.Size = new System.Drawing.Size(743, 346);
+            this.statisticsTab.Size = new System.Drawing.Size(1054, 536);
             this.statisticsTab.TabIndex = 2;
             this.statisticsTab.Text = "Statistics";
             this.statisticsTab.UseVisualStyleBackColor = true;
@@ -360,7 +355,7 @@
             this.chartsTab.Location = new System.Drawing.Point(12, 16);
             this.chartsTab.Name = "chartsTab";
             this.chartsTab.SelectedIndex = 0;
-            this.chartsTab.Size = new System.Drawing.Size(587, 327);
+            this.chartsTab.Size = new System.Drawing.Size(769, 517);
             this.chartsTab.TabIndex = 15;
             this.chartsTab.Selected += new System.Windows.Forms.TabControlEventHandler(this.chartsTab_Selected);
             // 
@@ -370,7 +365,7 @@
             this.positionsTab.Location = new System.Drawing.Point(10, 47);
             this.positionsTab.Name = "positionsTab";
             this.positionsTab.Padding = new System.Windows.Forms.Padding(3);
-            this.positionsTab.Size = new System.Drawing.Size(567, 270);
+            this.positionsTab.Size = new System.Drawing.Size(749, 460);
             this.positionsTab.TabIndex = 0;
             this.positionsTab.Text = "Positions";
             this.positionsTab.UseVisualStyleBackColor = true;
@@ -387,7 +382,7 @@
             series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(555, 258);
+            this.chart1.Size = new System.Drawing.Size(737, 454);
             this.chart1.TabIndex = 16;
             // 
             // maxSalariesTab
@@ -396,7 +391,7 @@
             this.maxSalariesTab.Location = new System.Drawing.Point(10, 47);
             this.maxSalariesTab.Name = "maxSalariesTab";
             this.maxSalariesTab.Padding = new System.Windows.Forms.Padding(3);
-            this.maxSalariesTab.Size = new System.Drawing.Size(567, 270);
+            this.maxSalariesTab.Size = new System.Drawing.Size(749, 460);
             this.maxSalariesTab.TabIndex = 1;
             this.maxSalariesTab.Text = "Highest salaries";
             this.maxSalariesTab.UseVisualStyleBackColor = true;
@@ -413,19 +408,9 @@
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this.chart2.Series.Add(series2);
-            this.chart2.Size = new System.Drawing.Size(555, 258);
+            this.chart2.Size = new System.Drawing.Size(737, 451);
             this.chart2.TabIndex = 17;
             this.chart2.Text = "chart2";
-            // 
-            // emailTab
-            // 
-            this.emailTab.Controls.Add(this.sendEmailButton);
-            this.emailTab.Location = new System.Drawing.Point(10, 47);
-            this.emailTab.Name = "emailTab";
-            this.emailTab.Size = new System.Drawing.Size(743, 346);
-            this.emailTab.TabIndex = 3;
-            this.emailTab.Text = "Send e-mail";
-            this.emailTab.UseVisualStyleBackColor = true;
             // 
             // minSalariesTab
             // 
@@ -433,7 +418,7 @@
             this.minSalariesTab.Location = new System.Drawing.Point(10, 47);
             this.minSalariesTab.Name = "minSalariesTab";
             this.minSalariesTab.Padding = new System.Windows.Forms.Padding(3);
-            this.minSalariesTab.Size = new System.Drawing.Size(567, 270);
+            this.minSalariesTab.Size = new System.Drawing.Size(749, 460);
             this.minSalariesTab.TabIndex = 2;
             this.minSalariesTab.Text = "Lowest salaries";
             this.minSalariesTab.UseVisualStyleBackColor = true;
@@ -450,7 +435,7 @@
             series3.Legend = "Legend1";
             series3.Name = "Series1";
             this.chart3.Series.Add(series3);
-            this.chart3.Size = new System.Drawing.Size(555, 258);
+            this.chart3.Size = new System.Drawing.Size(737, 451);
             this.chart3.TabIndex = 17;
             // 
             // datesPricesTab
@@ -458,7 +443,7 @@
             this.datesPricesTab.Controls.Add(this.chart4);
             this.datesPricesTab.Location = new System.Drawing.Point(10, 47);
             this.datesPricesTab.Name = "datesPricesTab";
-            this.datesPricesTab.Size = new System.Drawing.Size(567, 270);
+            this.datesPricesTab.Size = new System.Drawing.Size(749, 460);
             this.datesPricesTab.TabIndex = 3;
             this.datesPricesTab.Text = "Travel dates and prices";
             this.datesPricesTab.UseVisualStyleBackColor = true;
@@ -475,14 +460,24 @@
             series4.Legend = "Legend1";
             series4.Name = "Series1";
             this.chart4.Series.Add(series4);
-            this.chart4.Size = new System.Drawing.Size(555, 258);
+            this.chart4.Size = new System.Drawing.Size(740, 454);
             this.chart4.TabIndex = 17;
+            // 
+            // emailTab
+            // 
+            this.emailTab.Controls.Add(this.sendEmailButton);
+            this.emailTab.Location = new System.Drawing.Point(10, 47);
+            this.emailTab.Name = "emailTab";
+            this.emailTab.Size = new System.Drawing.Size(743, 346);
+            this.emailTab.TabIndex = 3;
+            this.emailTab.Text = "Send e-mail";
+            this.emailTab.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(787, 429);
+            this.ClientSize = new System.Drawing.Size(1095, 606);
             this.Controls.Add(this.tabControl);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
@@ -504,11 +499,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.maxSalariesTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
-            this.emailTab.ResumeLayout(false);
             this.minSalariesTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart3)).EndInit();
             this.datesPricesTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart4)).EndInit();
+            this.emailTab.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

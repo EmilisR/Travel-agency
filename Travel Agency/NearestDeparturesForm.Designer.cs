@@ -37,7 +37,7 @@
             this.nearestDeparturesListView.Location = new System.Drawing.Point(28, 27);
             this.nearestDeparturesListView.Margin = new System.Windows.Forms.Padding(7);
             this.nearestDeparturesListView.Name = "nearestDeparturesListView";
-            this.nearestDeparturesListView.Size = new System.Drawing.Size(1637, 524);
+            this.nearestDeparturesListView.Size = new System.Drawing.Size(1569, 524);
             this.nearestDeparturesListView.TabIndex = 0;
             this.nearestDeparturesListView.UseCompatibleStateImageBehavior = false;
             // 
@@ -45,7 +45,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1790, 582);
+            this.ClientSize = new System.Drawing.Size(1630, 582);
             this.Controls.Add(this.nearestDeparturesListView);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(7);

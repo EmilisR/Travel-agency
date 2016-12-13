@@ -3,13 +3,8 @@
 namespace Travel_Agency
 {
     [Serializable]
-    static class Budget
+    static partial class Budget
     {
-        public static double Balance { get; set; }
-        public static double Income { get; set; }
-        public static double Outcome { get; set; }
-        public static double Profit { get; set; }
-
         public static void AddToBudget(double amount)
         {
             Balance = Balance + amount;
@@ -24,11 +19,6 @@ namespace Travel_Agency
             Profit = Income - Outcome;
             IsBankrupt();
         }
-        public static bool IfBudgetPositive()
-        {
-            if (Balance > 0) return true;
-            else return false;
-        }
 
         public delegate void BankruptEventHandler(BankruptEventArgs e);
 
@@ -38,7 +28,7 @@ namespace Travel_Agency
         {
             if (Balance < Convert.ToInt32(Program.ReadSetting("Limit of bankrupt", "App.config")))
             {
-                if (Bankrupt != null) Bankrupt(new BankruptEventArgs(Balance));
+                Bankrupt(new BankruptEventArgs(Balance));
                 return true;
             }
             else

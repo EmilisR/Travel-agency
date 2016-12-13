@@ -37,16 +37,18 @@
             // objectBox
             // 
             this.objectBox.FormattingEnabled = true;
-            this.objectBox.Location = new System.Drawing.Point(12, 12);
+            this.objectBox.Location = new System.Drawing.Point(28, 27);
+            this.objectBox.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.objectBox.Name = "objectBox";
-            this.objectBox.Size = new System.Drawing.Size(244, 21);
+            this.objectBox.Size = new System.Drawing.Size(564, 37);
             this.objectBox.TabIndex = 16;
             // 
             // showButton
             // 
-            this.showButton.Location = new System.Drawing.Point(12, 46);
+            this.showButton.Location = new System.Drawing.Point(28, 103);
+            this.showButton.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.showButton.Name = "showButton";
-            this.showButton.Size = new System.Drawing.Size(115, 23);
+            this.showButton.Size = new System.Drawing.Size(268, 51);
             this.showButton.TabIndex = 17;
             this.showButton.Text = "Show information";
             this.showButton.UseVisualStyleBackColor = true;
@@ -54,9 +56,10 @@
             // 
             // deleteButton
             // 
-            this.deleteButton.Location = new System.Drawing.Point(144, 46);
+            this.deleteButton.Location = new System.Drawing.Point(336, 103);
+            this.deleteButton.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.deleteButton.Name = "deleteButton";
-            this.deleteButton.Size = new System.Drawing.Size(112, 23);
+            this.deleteButton.Size = new System.Drawing.Size(261, 51);
             this.deleteButton.TabIndex = 18;
             this.deleteButton.Text = "Delete";
             this.deleteButton.UseVisualStyleBackColor = true;
@@ -64,14 +67,15 @@
             // 
             // ShowObject
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(266, 81);
+            this.ClientSize = new System.Drawing.Size(621, 181);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.showButton);
             this.Controls.Add(this.objectBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.Name = "ShowObject";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "showObject";
