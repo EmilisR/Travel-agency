@@ -25,7 +25,7 @@ namespace Travel_Agency
                     ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Order));
                     showObject.Text = "Show orders";
                     showObject.showButton.Text = "Send information to E-mail";
-                    showObject.showButton.Size = new Size(240, 23);
+                    showObject.showButton.Size = new Size(564, 51);
                     showObject.deleteButton.Visible = false;
                     showObject.ShowDialog();
                 }
@@ -45,7 +45,7 @@ namespace Travel_Agency
                 {
                     order = item;
                 }
-                Task.Run(() => EmailSender.SendIt(order, order.OrderClient.Email, order.OrderRegisterDate, "Order information"));
+                EmailSender.SendIt(order, order.OrderClient.Email, order.OrderRegisterDate, "Order information");
                 MessageBox.Show("E-mail sent to " + order.OrderClient.Email, "E-mail sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 sender.Dispose();
             }
@@ -56,14 +56,10 @@ namespace Travel_Agency
             using (var db = new TravelAgencyContext())
             {
                 Client client = null;
-                var clientsQuery = from c in db.Clients
-                                  where c.ClientNumber == Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split(' ').Last().Remove(sender.objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1))
-                                   select c;
-                foreach (var item in clientsQuery)
-                {
-                    client = item;
-                }
-                EmailSender.SendIt(client, client.Email, client.RegisterDate, "Client information");
+                int number = Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split(' ').Last().Remove(sender.objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
+                client = db.Clients.Where(x => x.ClientNumber == number).First();
+
+                Task.Run(() => EmailSender.SendIt(client, client.Email, client.RegisterDate, "Client information"));
                 MessageBox.Show("E-mail sent to " + client.Email, "E-mail sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 sender.Dispose();
             }
@@ -79,7 +75,7 @@ namespace Travel_Agency
                     ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Client));
                     showObject.Text = "Show clients";
                     showObject.showButton.Text = "Send information to E-mail";
-                    showObject.showButton.Size = new Size(240, 23);
+                    showObject.showButton.Size = new Size(564, 51);
                     showObject.deleteButton.Visible = false;
                     showObject.ShowDialog();
                 }

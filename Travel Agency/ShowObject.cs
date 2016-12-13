@@ -71,13 +71,12 @@ namespace Travel_Agency
                 {
                     if (!deleteButton.Visible && type.Equals(typeof(Order)))
                     {
-                        Task task = new Task(() => SendInformationByEmailForm.SendEmailOrderHandler(this, null));
-                        task.RunSynchronously();
+                        SendInformationByEmailForm.SendEmailOrderHandler(this, null);
                     }
                     else if (!deleteButton.Visible && type.Equals(typeof(Client)))
                     {
-                        Task task = new Task(() => SendInformationByEmailForm.SendEmailClientHandler(this, null));
-                        task.RunSynchronously();
+                        SendInformationByEmailForm.SendEmailClientHandler(this, null);
+
                     }
                     else if (!deleteButton.Visible && type.Equals(typeof(Worker)))
                     {

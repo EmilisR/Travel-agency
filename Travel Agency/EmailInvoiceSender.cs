@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Travel_Agency
 {
@@ -6,7 +7,7 @@ namespace Travel_Agency
     {
         public void WriteToLog<T>(T obj, DateTime date, string eventType, string email = "")
         {
-            EmailSender.SendIt(obj, email, date, eventType);
+            Task.Run(() => EmailSender.SendIt(obj, email, date, eventType));
         }
     }
 }
