@@ -1804,10 +1804,6 @@ namespace Travel_Agency {
             
             private global::System.Data.DataColumn columnWorkingHoursPerWeek;
             
-            private global::System.Data.DataColumn columnStartingSalary;
-            
-            private global::System.Data.DataColumn columnStartingWorkingHoursPerWeek;
-            
             private global::System.Data.DataColumn columnPosition;
             
             private global::System.Data.DataColumn columnSalary;
@@ -1887,22 +1883,6 @@ namespace Travel_Agency {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn StartingSalaryColumn {
-                get {
-                    return this.columnStartingSalary;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn StartingWorkingHoursPerWeekColumn {
-                get {
-                    return this.columnStartingWorkingHoursPerWeek;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn PositionColumn {
                 get {
                     return this.columnPosition;
@@ -1954,7 +1934,7 @@ namespace Travel_Agency {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public WorkersRow AddWorkersRow(System.DateTime RegisterDate, string Name, string LastName, int WorkingHoursPerWeek, double StartingSalary, int StartingWorkingHoursPerWeek, string Position, double Salary) {
+            public WorkersRow AddWorkersRow(System.DateTime RegisterDate, string Name, string LastName, int WorkingHoursPerWeek, string Position, double Salary) {
                 WorkersRow rowWorkersRow = ((WorkersRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         null,
@@ -1962,8 +1942,6 @@ namespace Travel_Agency {
                         Name,
                         LastName,
                         WorkingHoursPerWeek,
-                        StartingSalary,
-                        StartingWorkingHoursPerWeek,
                         Position,
                         Salary};
                 rowWorkersRow.ItemArray = columnValuesArray;
@@ -2000,8 +1978,6 @@ namespace Travel_Agency {
                 this.columnName = base.Columns["Name"];
                 this.columnLastName = base.Columns["LastName"];
                 this.columnWorkingHoursPerWeek = base.Columns["WorkingHoursPerWeek"];
-                this.columnStartingSalary = base.Columns["StartingSalary"];
-                this.columnStartingWorkingHoursPerWeek = base.Columns["StartingWorkingHoursPerWeek"];
                 this.columnPosition = base.Columns["Position"];
                 this.columnSalary = base.Columns["Salary"];
             }
@@ -2019,10 +1995,6 @@ namespace Travel_Agency {
                 base.Columns.Add(this.columnLastName);
                 this.columnWorkingHoursPerWeek = new global::System.Data.DataColumn("WorkingHoursPerWeek", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnWorkingHoursPerWeek);
-                this.columnStartingSalary = new global::System.Data.DataColumn("StartingSalary", typeof(double), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnStartingSalary);
-                this.columnStartingWorkingHoursPerWeek = new global::System.Data.DataColumn("StartingWorkingHoursPerWeek", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnStartingWorkingHoursPerWeek);
                 this.columnPosition = new global::System.Data.DataColumn("Position", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPosition);
                 this.columnSalary = new global::System.Data.DataColumn("Salary", typeof(double), null, global::System.Data.MappingType.Element);
@@ -2039,8 +2011,6 @@ namespace Travel_Agency {
                 this.columnName.MaxLength = 2147483647;
                 this.columnLastName.MaxLength = 2147483647;
                 this.columnWorkingHoursPerWeek.AllowDBNull = false;
-                this.columnStartingSalary.AllowDBNull = false;
-                this.columnStartingWorkingHoursPerWeek.AllowDBNull = false;
                 this.columnPosition.MaxLength = 2147483647;
                 this.columnSalary.AllowDBNull = false;
             }
@@ -2794,28 +2764,6 @@ namespace Travel_Agency {
                 }
                 set {
                     this[this.tableWorkers.WorkingHoursPerWeekColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public double StartingSalary {
-                get {
-                    return ((double)(this[this.tableWorkers.StartingSalaryColumn]));
-                }
-                set {
-                    this[this.tableWorkers.StartingSalaryColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public int StartingWorkingHoursPerWeek {
-                get {
-                    return ((int)(this[this.tableWorkers.StartingWorkingHoursPerWeekColumn]));
-                }
-                set {
-                    this[this.tableWorkers.StartingWorkingHoursPerWeekColumn] = value;
                 }
             }
             
@@ -4735,52 +4683,44 @@ SELECT OrderNumber, OrderRegisterDate, TravelStartDate, OrderPrice, OrderClients
             tableMapping.ColumnMappings.Add("Name", "Name");
             tableMapping.ColumnMappings.Add("LastName", "LastName");
             tableMapping.ColumnMappings.Add("WorkingHoursPerWeek", "WorkingHoursPerWeek");
-            tableMapping.ColumnMappings.Add("StartingSalary", "StartingSalary");
-            tableMapping.ColumnMappings.Add("StartingWorkingHoursPerWeek", "StartingWorkingHoursPerWeek");
             tableMapping.ColumnMappings.Add("Position", "Position");
             tableMapping.ColumnMappings.Add("Salary", "Salary");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = @"DELETE FROM [dbo].[Workers] WHERE (([WorkerNumber] = @Original_WorkerNumber) AND ([RegisterDate] = @Original_RegisterDate) AND ([WorkingHoursPerWeek] = @Original_WorkingHoursPerWeek) AND ([StartingSalary] = @Original_StartingSalary) AND ([StartingWorkingHoursPerWeek] = @Original_StartingWorkingHoursPerWeek) AND ([Salary] = @Original_Salary))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Workers] WHERE (([WorkerNumber] = @Original_WorkerNumber) AND " +
+                "([RegisterDate] = @Original_RegisterDate) AND ([WorkingHoursPerWeek] = @Original" +
+                "_WorkingHoursPerWeek) AND ([Salary] = @Original_Salary))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_WorkerNumber", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WorkerNumber", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RegisterDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RegisterDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_WorkingHoursPerWeek", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WorkingHoursPerWeek", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_StartingSalary", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartingSalary", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_StartingWorkingHoursPerWeek", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartingWorkingHoursPerWeek", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Salary", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Salary", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[Workers] ([RegisterDate], [Name], [LastName], [WorkingHoursPerWeek], [StartingSalary], [StartingWorkingHoursPerWeek], [Position], [Salary]) VALUES (@RegisterDate, @Name, @LastName, @WorkingHoursPerWeek, @StartingSalary, @StartingWorkingHoursPerWeek, @Position, @Salary);
-SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, StartingSalary, StartingWorkingHoursPerWeek, Position, Salary FROM Workers WHERE (WorkerNumber = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [dbo].[Workers] ([RegisterDate], [Name], [LastName], [WorkingHoursPerWeek], [Position], [Salary]) VALUES (@RegisterDate, @Name, @LastName, @WorkingHoursPerWeek, @Position, @Salary);
+SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, Position, Salary FROM Workers WHERE (WorkerNumber = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RegisterDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RegisterDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LastName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@WorkingHoursPerWeek", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WorkingHoursPerWeek", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StartingSalary", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartingSalary", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StartingWorkingHoursPerWeek", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartingWorkingHoursPerWeek", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Position", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Position", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Salary", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Salary", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Workers] SET [RegisterDate] = @RegisterDate, [Name] = @Name, [LastName] = @LastName, [WorkingHoursPerWeek] = @WorkingHoursPerWeek, [StartingSalary] = @StartingSalary, [StartingWorkingHoursPerWeek] = @StartingWorkingHoursPerWeek, [Position] = @Position, [Salary] = @Salary WHERE (([WorkerNumber] = @Original_WorkerNumber) AND ([RegisterDate] = @Original_RegisterDate) AND ([WorkingHoursPerWeek] = @Original_WorkingHoursPerWeek) AND ([StartingSalary] = @Original_StartingSalary) AND ([StartingWorkingHoursPerWeek] = @Original_StartingWorkingHoursPerWeek) AND ([Salary] = @Original_Salary));
-SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, StartingSalary, StartingWorkingHoursPerWeek, Position, Salary FROM Workers WHERE (WorkerNumber = @WorkerNumber)";
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Workers] SET [RegisterDate] = @RegisterDate, [Name] = @Name, [LastName] = @LastName, [WorkingHoursPerWeek] = @WorkingHoursPerWeek, [Position] = @Position, [Salary] = @Salary WHERE (([WorkerNumber] = @Original_WorkerNumber) AND ([RegisterDate] = @Original_RegisterDate) AND ([WorkingHoursPerWeek] = @Original_WorkingHoursPerWeek) AND ([Salary] = @Original_Salary));
+SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, Position, Salary FROM Workers WHERE (WorkerNumber = @WorkerNumber)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RegisterDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RegisterDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@LastName", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "LastName", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@WorkingHoursPerWeek", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WorkingHoursPerWeek", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StartingSalary", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartingSalary", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StartingWorkingHoursPerWeek", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartingWorkingHoursPerWeek", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Position", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Position", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Salary", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Salary", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_WorkerNumber", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WorkerNumber", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_RegisterDate", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "RegisterDate", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_WorkingHoursPerWeek", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "WorkingHoursPerWeek", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_StartingSalary", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartingSalary", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_StartingWorkingHoursPerWeek", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "StartingWorkingHoursPerWeek", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Salary", global::System.Data.SqlDbType.Float, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Salary", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@WorkerNumber", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "WorkerNumber", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -4798,8 +4738,8 @@ SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, Starting
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, StartingS" +
-                "alary, StartingWorkingHoursPerWeek, Position, Salary FROM dbo.Workers";
+            this._commandCollection[0].CommandText = "SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, Position," +
+                " Salary FROM dbo.Workers";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -4860,13 +4800,11 @@ SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, Starting
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_WorkerNumber, System.DateTime Original_RegisterDate, int Original_WorkingHoursPerWeek, double Original_StartingSalary, int Original_StartingWorkingHoursPerWeek, double Original_Salary) {
+        public virtual int Delete(int Original_WorkerNumber, System.DateTime Original_RegisterDate, int Original_WorkingHoursPerWeek, double Original_Salary) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_WorkerNumber));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((System.DateTime)(Original_RegisterDate));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_WorkingHoursPerWeek));
-            this.Adapter.DeleteCommand.Parameters[3].Value = ((double)(Original_StartingSalary));
-            this.Adapter.DeleteCommand.Parameters[4].Value = ((int)(Original_StartingWorkingHoursPerWeek));
-            this.Adapter.DeleteCommand.Parameters[5].Value = ((double)(Original_Salary));
+            this.Adapter.DeleteCommand.Parameters[3].Value = ((double)(Original_Salary));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -4887,7 +4825,7 @@ SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, Starting
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(System.DateTime RegisterDate, string Name, string LastName, int WorkingHoursPerWeek, double StartingSalary, int StartingWorkingHoursPerWeek, string Position, double Salary) {
+        public virtual int Insert(System.DateTime RegisterDate, string Name, string LastName, int WorkingHoursPerWeek, string Position, double Salary) {
             this.Adapter.InsertCommand.Parameters[0].Value = ((System.DateTime)(RegisterDate));
             if ((Name == null)) {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -4902,15 +4840,13 @@ SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, Starting
                 this.Adapter.InsertCommand.Parameters[2].Value = ((string)(LastName));
             }
             this.Adapter.InsertCommand.Parameters[3].Value = ((int)(WorkingHoursPerWeek));
-            this.Adapter.InsertCommand.Parameters[4].Value = ((double)(StartingSalary));
-            this.Adapter.InsertCommand.Parameters[5].Value = ((int)(StartingWorkingHoursPerWeek));
             if ((Position == null)) {
-                this.Adapter.InsertCommand.Parameters[6].Value = global::System.DBNull.Value;
+                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.InsertCommand.Parameters[6].Value = ((string)(Position));
+                this.Adapter.InsertCommand.Parameters[4].Value = ((string)(Position));
             }
-            this.Adapter.InsertCommand.Parameters[7].Value = ((double)(Salary));
+            this.Adapter.InsertCommand.Parameters[5].Value = ((double)(Salary));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -4931,7 +4867,7 @@ SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, Starting
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(System.DateTime RegisterDate, string Name, string LastName, int WorkingHoursPerWeek, double StartingSalary, int StartingWorkingHoursPerWeek, string Position, double Salary, int Original_WorkerNumber, System.DateTime Original_RegisterDate, int Original_WorkingHoursPerWeek, double Original_StartingSalary, int Original_StartingWorkingHoursPerWeek, double Original_Salary, int WorkerNumber) {
+        public virtual int Update(System.DateTime RegisterDate, string Name, string LastName, int WorkingHoursPerWeek, string Position, double Salary, int Original_WorkerNumber, System.DateTime Original_RegisterDate, int Original_WorkingHoursPerWeek, double Original_Salary, int WorkerNumber) {
             this.Adapter.UpdateCommand.Parameters[0].Value = ((System.DateTime)(RegisterDate));
             if ((Name == null)) {
                 this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -4946,22 +4882,18 @@ SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, Starting
                 this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(LastName));
             }
             this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(WorkingHoursPerWeek));
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((double)(StartingSalary));
-            this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(StartingWorkingHoursPerWeek));
             if ((Position == null)) {
-                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.UpdateCommand.Parameters[6].Value = ((string)(Position));
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((string)(Position));
             }
-            this.Adapter.UpdateCommand.Parameters[7].Value = ((double)(Salary));
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(Original_WorkerNumber));
-            this.Adapter.UpdateCommand.Parameters[9].Value = ((System.DateTime)(Original_RegisterDate));
-            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Original_WorkingHoursPerWeek));
-            this.Adapter.UpdateCommand.Parameters[11].Value = ((double)(Original_StartingSalary));
-            this.Adapter.UpdateCommand.Parameters[12].Value = ((int)(Original_StartingWorkingHoursPerWeek));
-            this.Adapter.UpdateCommand.Parameters[13].Value = ((double)(Original_Salary));
-            this.Adapter.UpdateCommand.Parameters[14].Value = ((int)(WorkerNumber));
+            this.Adapter.UpdateCommand.Parameters[5].Value = ((double)(Salary));
+            this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_WorkerNumber));
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((System.DateTime)(Original_RegisterDate));
+            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(Original_WorkingHoursPerWeek));
+            this.Adapter.UpdateCommand.Parameters[9].Value = ((double)(Original_Salary));
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(WorkerNumber));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -4982,8 +4914,8 @@ SELECT WorkerNumber, RegisterDate, Name, LastName, WorkingHoursPerWeek, Starting
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(System.DateTime RegisterDate, string Name, string LastName, int WorkingHoursPerWeek, double StartingSalary, int StartingWorkingHoursPerWeek, string Position, double Salary, int Original_WorkerNumber, System.DateTime Original_RegisterDate, int Original_WorkingHoursPerWeek, double Original_StartingSalary, int Original_StartingWorkingHoursPerWeek, double Original_Salary) {
-            return this.Update(RegisterDate, Name, LastName, WorkingHoursPerWeek, StartingSalary, StartingWorkingHoursPerWeek, Position, Salary, Original_WorkerNumber, Original_RegisterDate, Original_WorkingHoursPerWeek, Original_StartingSalary, Original_StartingWorkingHoursPerWeek, Original_Salary, Original_WorkerNumber);
+        public virtual int Update(System.DateTime RegisterDate, string Name, string LastName, int WorkingHoursPerWeek, string Position, double Salary, int Original_WorkerNumber, System.DateTime Original_RegisterDate, int Original_WorkingHoursPerWeek, double Original_Salary) {
+            return this.Update(RegisterDate, Name, LastName, WorkingHoursPerWeek, Position, Salary, Original_WorkerNumber, Original_RegisterDate, Original_WorkingHoursPerWeek, Original_Salary, Original_WorkerNumber);
         }
     }
     

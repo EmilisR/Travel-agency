@@ -305,6 +305,15 @@
   <ItemGroup>
     <None Include="Resources\ic_mail_outline_black_48dp_2x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Travel_Agency.TravelAgencyContext.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Travel_Agency.TravelAgencyContext_log.ldf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <DependentUpon>Travel_Agency.TravelAgencyContext.mdf</DependentUpon>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
