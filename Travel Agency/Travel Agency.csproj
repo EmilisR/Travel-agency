@@ -198,6 +198,9 @@
     <EmbeddedResource Include="AddWorkerForm.resx">
       <DependentUpon>AddWorkerForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ChangeShiftForm.resx">
+      <DependentUpon>ChangeShiftForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>

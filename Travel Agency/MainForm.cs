@@ -266,7 +266,6 @@ namespace Travel_Agency
                 {
                     List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
                     ChangeShiftForm changeShiftForm = new ChangeShiftForm(new BindingSource(list, null));
-                    AddWorkerForm addWorker = new AddWorkerForm();
                     changeShiftForm.establishmentComboBox.Items.AddRange(new object[] {
                         "Operations manager",
                         "Quality control, safety, environmental manager",

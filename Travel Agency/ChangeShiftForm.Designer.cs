@@ -39,43 +39,48 @@
             // workersBox
             // 
             this.workersBox.FormattingEnabled = true;
-            this.workersBox.Location = new System.Drawing.Point(94, 12);
+            this.workersBox.Location = new System.Drawing.Point(219, 27);
+            this.workersBox.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.workersBox.Name = "workersBox";
-            this.workersBox.Size = new System.Drawing.Size(219, 21);
+            this.workersBox.Size = new System.Drawing.Size(506, 37);
             this.workersBox.TabIndex = 0;
             // 
             // establishmentComboBox
             // 
             this.establishmentComboBox.FormattingEnabled = true;
-            this.establishmentComboBox.Location = new System.Drawing.Point(94, 39);
+            this.establishmentComboBox.Location = new System.Drawing.Point(219, 87);
+            this.establishmentComboBox.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.establishmentComboBox.Name = "establishmentComboBox";
-            this.establishmentComboBox.Size = new System.Drawing.Size(219, 21);
+            this.establishmentComboBox.Size = new System.Drawing.Size(506, 37);
             this.establishmentComboBox.TabIndex = 1;
             // 
             // workerLabel
             // 
             this.workerLabel.AutoSize = true;
-            this.workerLabel.Location = new System.Drawing.Point(12, 15);
+            this.workerLabel.Location = new System.Drawing.Point(28, 33);
+            this.workerLabel.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.workerLabel.Name = "workerLabel";
-            this.workerLabel.Size = new System.Drawing.Size(45, 13);
+            this.workerLabel.Size = new System.Drawing.Size(97, 29);
             this.workerLabel.TabIndex = 2;
             this.workerLabel.Text = "Worker:";
             // 
             // establishmentLabel
             // 
             this.establishmentLabel.AutoSize = true;
-            this.establishmentLabel.Location = new System.Drawing.Point(12, 42);
+            this.establishmentLabel.Location = new System.Drawing.Point(28, 94);
+            this.establishmentLabel.Margin = new System.Windows.Forms.Padding(7, 0, 7, 0);
             this.establishmentLabel.Name = "establishmentLabel";
-            this.establishmentLabel.Size = new System.Drawing.Size(75, 13);
+            this.establishmentLabel.Size = new System.Drawing.Size(170, 29);
             this.establishmentLabel.TabIndex = 3;
             this.establishmentLabel.Text = "Establishment:";
             // 
             // change
             // 
             this.change.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
-            this.change.Location = new System.Drawing.Point(213, 66);
+            this.change.Location = new System.Drawing.Point(497, 147);
+            this.change.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.change.Name = "change";
-            this.change.Size = new System.Drawing.Size(100, 40);
+            this.change.Size = new System.Drawing.Size(233, 89);
             this.change.TabIndex = 11;
             this.change.Text = "Change";
             this.change.UseVisualStyleBackColor = true;
@@ -83,17 +88,19 @@
             // 
             // ChangeShiftForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(324, 113);
+            this.ClientSize = new System.Drawing.Size(756, 252);
             this.Controls.Add(this.change);
             this.Controls.Add(this.establishmentLabel);
             this.Controls.Add(this.workerLabel);
             this.Controls.Add(this.establishmentComboBox);
             this.Controls.Add(this.workersBox);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(7, 7, 7, 7);
             this.Name = "ChangeShiftForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Change worker\'s establishment";
+            this.Text = "Change worker\'s position";
             this.ResumeLayout(false);
             this.PerformLayout();
 
