@@ -126,6 +126,7 @@
     <Compile Include="BankruptEventArgs.cs" />
     <Compile Include="Budget.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="DatabaseMethods.cs" />
     <Compile Include="EmailInvoiceSender.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="EmailSendEventArgs.cs" />

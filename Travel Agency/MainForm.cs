@@ -57,18 +57,15 @@ namespace Travel_Agency
 
         private async Task SetLabelsAwait()
         {
-            using (var db = new TravelAgencyContext())
+            clientsQuantity.Text = (await GetLabelTextAsync(DatabaseMethods.SelectClients().Count, "Number of clients: "));
+            offersQuantity.Text = (await GetLabelTextAsync(DatabaseMethods.SelectClients().Count(), "Number of offers: "));
+            workersQuantity.Text = (await GetLabelTextAsync(DatabaseMethods.SelectClients().Count(), "Number of workers: "));
+            ordersQuantity.Text = (await GetLabelTextAsync(DatabaseMethods.SelectClients().Count(), "Number of orders: "));
+            activeOrders.Text = (await GetLabelTextAsync(CheckActiveOrders(), "Active orders: "));
+            if (!Budget.IsBankrupt())
             {
-                clientsQuantity.Text = (await GetLabelTextAsync(db.Clients.Count(), "Number of clients: "));
-                offersQuantity.Text = (await GetLabelTextAsync(db.Offers.Count(), "Number of offers: "));
-                workersQuantity.Text = (await GetLabelTextAsync(db.Workers.Count(), "Number of workers: "));
-                ordersQuantity.Text = (await GetLabelTextAsync(db.Orders.Count(), "Number of orders: "));
-                activeOrders.Text = (await GetLabelTextAsync(CheckActiveOrders(), "Active orders: "));
-                if (!Budget.IsBankrupt())
-                {
-                    budgetBalance.BackColor = DefaultBackColor;
-                    budgetBalance.Text = (await GetLabelTextAsync((int)Budget.Balance, "Budget balance: €"));
-                }
+                budgetBalance.BackColor = DefaultBackColor;
+                budgetBalance.Text = (await GetLabelTextAsync((int)Budget.Balance, "Budget balance: €"));
             }
         }
 
@@ -96,18 +93,16 @@ namespace Travel_Agency
 
         private int CheckActiveOrders()
         {
-            using (var db = new TravelAgencyContext())
+            int activeOrders = 0;
+            List<Order> list = DatabaseMethods.SelectOrders();
+            if (list.Count() > 0)
             {
-                int activeOrders = 0;
-                if (db.Orders.Count() > 0)
+                foreach (Order order in list)
                 {
-                    foreach (Order order in db.Orders)
-                    {
-                        if (order.TravelStartDate > DateTime.Today) activeOrders++;
-                    }
+                    if (order.TravelStartDate > DateTime.Today) activeOrders++;
                 }
-                return activeOrders;
             }
+            return activeOrders;
         }
 
         private void GUI_FormClosed(object sender, FormClosedEventArgs e)
@@ -163,47 +158,36 @@ namespace Travel_Agency
 
         private void ShowOffersButton_Click(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            List<Offer> offerList = DatabaseMethods.SelectOffers();
+            if (offerList.Count() > 0)
             {
-                if (db.Offers.Count() > 0)
-                {
-                    List<string> list = db.Offers.Select(i => i.OfferNumber + ". " + i.TravelDestination + ", " + i.HotelRanking + ", " + i.Feeding + ", €" + i.Price).ToList();
-                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Offer), this);
-                    showObject.Text = "Show offers";
-                    showObject.ShowDialog();
-                }
-                else MessageBox.Show("No offers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                List<string> list = offerList.Select(i => i.OfferNumber + ". " + i.TravelDestination + ", " + i.HotelRanking + ", " + i.Feeding + ", €" + i.Price).ToList();
+                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Offer), this);
+                showObject.Text = "Show offers";
+                showObject.ShowDialog();
             }
+            else MessageBox.Show("No offers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void ShowOrdersButton_Click(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            List<Order> orderList = DatabaseMethods.SelectOrders();
+            if (orderList.Count() > 0)
             {
-                if (db.Orders.Count() > 0)
-                {
-                    List<string> list = db.Orders.Select(i => i.OrderNumber + ". " + i.OrderClient.Name + " " + i.OrderClient.LastName + " " + i.TravelOffer.TravelDestination).ToList();
-                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Order), this);
-                    showObject.Text = "Show orders";
-                    showObject.ShowDialog();
-                }
-                else MessageBox.Show("No orders!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                List<string> list = orderList.Select(i => i.OrderNumber + ". " + i.OrderClient.Name + " " + i.OrderClient.LastName + " " + i.TravelOffer.TravelDestination).ToList();
+                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Order), this);
+                showObject.Text = "Show orders";
+                showObject.ShowDialog();
             }
+            else MessageBox.Show("No orders!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void ShowWorkersButton_Click(object sender, EventArgs e)
         {
-            int number;
-            using (var db = new TravelAgencyContext())
-            { number = db.Workers.Count(); }
-            if (number > 0)
+            List<Worker> workerList = DatabaseMethods.SelectWorkers();
+            if (workerList.Count() > 0)
             {
-                List<String> list;
-                using (var db = new TravelAgencyContext())
-                {
-                    list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                }
-
+                List<string> list = workerList.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
                 ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Worker), this);
                 showObject.Text = "Show workers";
                 showObject.ShowDialog();
@@ -213,17 +197,15 @@ namespace Travel_Agency
 
         private void ShowClientsButton_Click(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            List<Client> clientList = DatabaseMethods.SelectClients();
+            if (clientList.Count() > 0)
             {
-                if (db.Clients.Count() > 0)
-                {
-                    List<string> list = db.Clients.Select(i => i.Name + " " + i.LastName + " [Client number: " + i.ClientNumber + "]").ToList();
-                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Client), this);
-                    showObject.Text = "Show clients";
-                    showObject.ShowDialog();
-                }
-                else MessageBox.Show("No clients!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                List<string> list = clientList.Select(i => i.Name + " " + i.LastName + " [Client number: " + i.ClientNumber + "]").ToList();
+                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Client), this);
+                showObject.Text = "Show clients";
+                showObject.ShowDialog();
             }
+            else MessageBox.Show("No clients!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void NearestDeparturesButton_Click(object sender, EventArgs e)
@@ -245,11 +227,12 @@ namespace Travel_Agency
 
         public static void PayOutSalaryHandler(ShowObject sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            List<Worker> workerList = DatabaseMethods.SelectWorkers();
+            if (workerList.Count() > 0)
             {
                 Worker worker = null;
                 int number = Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split('.').First());
-                worker = db.Workers.Where(x => x.WorkerNumber == number).First();
+                worker = workerList.Where(x => x.WorkerNumber == number).First();
 
                 if (Budget.Balance - worker.Salary > Convert.ToDouble(Program.ReadSetting("Limit of bankrupt", "App.config")))
                 {
@@ -263,35 +246,33 @@ namespace Travel_Agency
                     sender.Dispose();
                 }
             }
+            else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void PayOutSalaryButton_Click(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            List<Worker> workerList = DatabaseMethods.SelectWorkers();
+            if (workerList.Count() > 0)
             {
-                if (db.Workers.Count() > 0)
-                {
-                    List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Worker), this);
-                    showObject.Text = "Pay out salary";
-                    showObject.showButton.Text = "Pay out salary";
-                    showObject.showButton.Size = new Size(564, 51);
-                    showObject.deleteButton.Visible = false;
-                    showObject.ShowDialog();
-                }
-                else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                List<string> list = workerList.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Worker), this);
+                showObject.Text = "Pay out salary";
+                showObject.showButton.Text = "Pay out salary";
+                showObject.showButton.Size = new Size(564, 51);
+                showObject.deleteButton.Visible = false;
+                showObject.ShowDialog();
             }
+            else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void ChangeWorkerPositionButton_Click(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            List<Worker> workerList = DatabaseMethods.SelectWorkers();
+            if (workerList.Count() > 0)
             {
-                if (db.Workers.Count() > 0)
-                {
-                    List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                    ChangeShiftForm changeShiftForm = new ChangeShiftForm(new BindingSource(list, null));
-                    changeShiftForm.establishmentComboBox.Items.AddRange(new object[] {
+                List<string> list = workerList.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                ChangeShiftForm changeShiftForm = new ChangeShiftForm(new BindingSource(list, null));
+                changeShiftForm.establishmentComboBox.Items.AddRange(new object[] {
                         "Operations manager",
                         "Quality control, safety, environmental manager",
                         "Accountant, bookkeeper, controller",
@@ -303,134 +284,121 @@ namespace Travel_Agency
                         "Shipping and receiving person or manager",
                         "Professional staff"
                     });
-                    changeShiftForm.establishmentLabel.Text = "Position: ";
-                    changeShiftForm.ShowDialog();
-                }
-                else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                changeShiftForm.establishmentLabel.Text = "Position: ";
+                changeShiftForm.ShowDialog();
             }
+            else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void RaiseCutSalaryButton_Click(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            List<Worker> workerList = DatabaseMethods.SelectWorkers();
+            if (workerList.Count() > 0)
             {
-                if (db.Workers.Count() > 0)
-                {
-                    List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                    RaiseCutSalaryForm raiseCutSalaryForm = new RaiseCutSalaryForm(new BindingSource(list, null));
-                    raiseCutSalaryForm.ShowDialog();
-                }
-                else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                List<string> list = workerList.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                RaiseCutSalaryForm raiseCutSalaryForm = new RaiseCutSalaryForm(new BindingSource(list, null));
+                raiseCutSalaryForm.ShowDialog();
             }
+            else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void ShowWorkerOrdersbutton_Click(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            List<Worker> workerList = DatabaseMethods.SelectWorkers();
+            if (workerList.Count() > 0)
             {
-                if (db.Workers.Count() > 0)
-                {
-                    List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                    ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Order), this);
-                    showObject.Text = "Show worker's orders";
-                    showObject.showButton.Text = "Show worker's orders";
-                    showObject.showButton.Size = new Size(564, 51);
-                    showObject.deleteButton.Visible = false;
-                    showObject.ShowDialog();
-                }
-                else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                List<string> list = workerList.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Order), this);
+                showObject.Text = "Show worker's orders";
+                showObject.showButton.Text = "Show worker's orders";
+                showObject.showButton.Size = new Size(564, 51);
+                showObject.deleteButton.Visible = false;
+                showObject.ShowDialog();
             }
+            else MessageBox.Show("No workers!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void tabControl_Selected(object sender, TabControlEventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            List<string> positions = new List<string>();
+            List<int> positionCount = new List<int>();
+            var empl = DatabaseMethods.SelectWorkers().GroupBy(emp => emp.Position);
+            foreach (var worker in empl)
             {
-                db.Workers.Load();
-                List<string> positions = new List<string>();
-                List<int> positionCount = new List<int>();
-                var empl = db.Workers.Local.GroupBy(emp => emp.Position);
-                foreach (var worker in empl)
-                {
-                    positions.Add(worker.Key);
-                    positionCount.Add(worker.Count());
-                }
-                chart1.Series[0].LegendText = "Number of workers";
-                RemoveGrid(chart1);
-                chart1.Series["Series1"].IsValueShownAsLabel = true;
-                chart1.Series["Series1"].Points.DataBindXY(positions, positionCount);
-                StartThreadQuantityUpdate();
+                positions.Add(worker.Key);
+                positionCount.Add(worker.Count());
             }
+            chart1.Series[0].LegendText = "Number of workers";
+            RemoveGrid(chart1);
+            chart1.Series["Series1"].IsValueShownAsLabel = true;
+            chart1.Series["Series1"].Points.DataBindXY(positions, positionCount);
+            StartThreadQuantityUpdate();
         }
 
         private void chartsTab_Selected(object sender, TabControlEventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            switch (e.TabPageIndex)
             {
-                db.Workers.Load();
-                switch (e.TabPageIndex)
-                {
-                    case 0:
-                        List<string> positions = new List<string>();
-                        List<int> positionCount = new List<int>();
-                        var empl = db.Workers.Local.GroupBy(emp => emp.Position);
-                        foreach(var worker in empl)
-                        {
-                            positions.Add(worker.Key);
-                            positionCount.Add(worker.Count());
-                        }
-                        chart1.Series[0].LegendText = "Number of workers";
-                        RemoveGrid(chart1);
-                        chart1.Series["Series1"].IsValueShownAsLabel = true;
-                        chart1.Series["Series1"].Points.DataBindXY(positions, positionCount);
-                        break;
-                    case 1:
-                        List<string> workers = new List<string>();
-                        List<double> salaries = new List<double>();
-                        foreach (Worker worker in db.Workers.Local.OrderByDescending(x => x.Salary).Take(5).ToList())
-                        {
-                            workers.Add(worker.Name + " " + worker.LastName);
-                            salaries.Add(db.Workers.Local.Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).Single().Salary);
-                        }
-                        chart2.Series[0].LegendText = "Salary per month in €";
-                        RemoveGrid(chart2);
-                        chart2.Series["Series1"].IsValueShownAsLabel = true;
-                        chart2.Series["Series1"].Points.DataBindXY(workers, salaries);
-                        break;
-                    case 2:
-                        workers = new List<string>();
-                        salaries = new List<double>();
-                        foreach (Worker worker in db.Workers.Local.OrderByDescending(x => x.Salary).Skip(db.Workers.Local.Count - 5).ToList())
-                        {
-                            workers.Add(worker.Name + " " + worker.LastName);
-                            salaries.Add(db.Workers.Local.Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).Single().Salary);
-                        }
-                        chart3.Series[0].LegendText = "Salary per month in €";
-                        RemoveGrid(chart3);
-                        chart3.Series["Series1"].IsValueShownAsLabel = true;
-                        chart3.Series["Series1"].Points.DataBindXY(workers, salaries);
-                        break;
-                    case 3:
-                        List<Order> orders = db.Orders.ToList();
-                        List<Offer> offers = db.Offers.ToList();
-                        var join = orders.OrderByDescending(order => order.TravelStartDate).Reverse().Join(offers,
-                                            ord => ord.TravelOffer.OfferNumber,
-                                            off => off.OfferNumber,
-                                            (ord, off) => new { ord.TravelStartDate, off.Price, ord.OrderClientsAmount}).GroupBy(grp => grp.TravelStartDate);
-                        List<string> dates = new List<string>();
-                        List<double> prices = new List<double>();
-                        foreach (var item in join)
-                        {
-                            dates.Add(item.Key.ToShortDateString());
-                            prices.Add(item.Select(price => price.Price * price.OrderClientsAmount).Sum());
-                        }
-                        chart4.Series[0].LegendText = "Total income for day in €";
-                        RemoveGrid(chart4);
-                        chart4.Series["Series1"].IsValueShownAsLabel = true;
-                        chart4.Series["Series1"].Points.DataBindXY(dates, prices);
-                        break;
-                }
-            }   
+                case 0:
+                    List<string> positions = new List<string>();
+                    List<int> positionCount = new List<int>();
+                    var empl = DatabaseMethods.SelectWorkers().GroupBy(emp => emp.Position);
+                    foreach(var worker in empl)
+                    {
+                        positions.Add(worker.Key);
+                        positionCount.Add(worker.Count());
+                    }
+                    chart1.Series[0].LegendText = "Number of workers";
+                    RemoveGrid(chart1);
+                    chart1.Series["Series1"].IsValueShownAsLabel = true;
+                    chart1.Series["Series1"].Points.DataBindXY(positions, positionCount);
+                    break;
+                case 1:
+                    List<string> workers = new List<string>();
+                    List<double> salaries = new List<double>();
+                    foreach (Worker worker in DatabaseMethods.SelectWorkers().OrderByDescending(x => x.Salary).Take(5).ToList())
+                    {
+                        workers.Add(worker.Name + " " + worker.LastName);
+                        salaries.Add(DatabaseMethods.SelectWorkers().Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).Single().Salary);
+                    }
+                    chart2.Series[0].LegendText = "Salary per month in €";
+                    RemoveGrid(chart2);
+                    chart2.Series["Series1"].IsValueShownAsLabel = true;
+                    chart2.Series["Series1"].Points.DataBindXY(workers, salaries);
+                    break;
+                case 2:
+                    workers = new List<string>();
+                    salaries = new List<double>();
+                    foreach (Worker worker in DatabaseMethods.SelectWorkers().OrderByDescending(x => x.Salary).Skip(DatabaseMethods.SelectWorkers().Count - 5).ToList())
+                    {
+                        workers.Add(worker.Name + " " + worker.LastName);
+                        salaries.Add(DatabaseMethods.SelectWorkers().Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).Single().Salary);
+                    }
+                    chart3.Series[0].LegendText = "Salary per month in €";
+                    RemoveGrid(chart3);
+                    chart3.Series["Series1"].IsValueShownAsLabel = true;
+                    chart3.Series["Series1"].Points.DataBindXY(workers, salaries);
+                    break;
+                case 3:
+                    List<Order> orders = DatabaseMethods.SelectOrders();
+                    List<Offer> offers = DatabaseMethods.SelectOffers();
+                    var join = orders.OrderByDescending(order => order.TravelStartDate).Reverse().Join(offers,
+                                        ord => ord.TravelOffer.OfferNumber,
+                                        off => off.OfferNumber,
+                                        (ord, off) => new { ord.TravelStartDate, off.Price, ord.OrderClientsAmount}).GroupBy(grp => grp.TravelStartDate);
+                    List<string> dates = new List<string>();
+                    List<double> prices = new List<double>();
+                    foreach (var item in join)
+                    {
+                        dates.Add(item.Key.ToShortDateString());
+                        prices.Add(item.Select(price => price.Price * price.OrderClientsAmount).Sum());
+                    }
+                    chart4.Series[0].LegendText = "Total income for day in €";
+                    RemoveGrid(chart4);
+                    chart4.Series["Series1"].IsValueShownAsLabel = true;
+                    chart4.Series["Series1"].Points.DataBindXY(dates, prices);
+                    break;
+            }
         }
         protected override CreateParams CreateParams
         {

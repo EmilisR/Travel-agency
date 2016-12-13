@@ -40,8 +40,7 @@ namespace Travel_Agency
                 Order order = null;
                 int number = Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split('.').First());
                 order = db.Orders.SqlQuery("SELECT * FROM Orders WHERE OrderNumber = '" + number.ToString() + "'").ToList().Single();
-
-                EmailSender.SendIt(order, order.OrderClient.Email, order.OrderRegisterDate, "Order information");
+                Task.Run(() => EmailSender.SendIt(order, order.OrderClient.Email, order.OrderRegisterDate, "Order information"));
                 MessageBox.Show("E-mail sent to " + order.OrderClient.Email, "E-mail sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 sender.Dispose();
             }
