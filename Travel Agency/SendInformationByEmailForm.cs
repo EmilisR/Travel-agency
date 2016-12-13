@@ -38,13 +38,9 @@ namespace Travel_Agency
             using (var db = new TravelAgencyContext())
             {
                 Order order = null;
-                var ordersQuery = from o in db.Orders
-                            where o.OrderNumber == Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split('.').First())
-                                  select o;
-                foreach (var item in ordersQuery)
-                {
-                    order = item;
-                }
+                int number = Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split('.').First());
+                order = db.Orders.SqlQuery("SELECT * FROM Orders WHERE OrderNumber = '" + number.ToString() + "'").ToList().Single();
+
                 EmailSender.SendIt(order, order.OrderClient.Email, order.OrderRegisterDate, "Order information");
                 MessageBox.Show("E-mail sent to " + order.OrderClient.Email, "E-mail sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 sender.Dispose();
@@ -57,8 +53,7 @@ namespace Travel_Agency
             {
                 Client client = null;
                 int number = Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split(' ').Last().Remove(sender.objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
-                client = db.Clients.Where(x => x.ClientNumber == number).First();
-
+                client = db.Clients.SqlQuery("SELECT * FROM Clients WHERE ClientNumber = '" + number.ToString() + "'").ToList().Single();
                 Task.Run(() => EmailSender.SendIt(client, client.Email, client.RegisterDate, "Client information"));
                 MessageBox.Show("E-mail sent to " + client.Email, "E-mail sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 sender.Dispose();

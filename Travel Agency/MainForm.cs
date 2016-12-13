@@ -413,7 +413,7 @@ namespace Travel_Agency
                     case 3:
                         List<Order> orders = db.Orders.ToList();
                         List<Offer> offers = db.Offers.ToList();
-                        var join = orders.Join(offers,
+                        var join = orders.OrderByDescending(order => order.TravelStartDate).Reverse().Join(offers,
                                             ord => ord.TravelOffer.OfferNumber,
                                             off => off.OfferNumber,
                                             (ord, off) => new { ord.TravelStartDate, off.Price, ord.OrderClientsAmount}).GroupBy(grp => grp.TravelStartDate);

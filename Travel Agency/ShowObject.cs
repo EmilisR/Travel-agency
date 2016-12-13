@@ -31,7 +31,7 @@ namespace Travel_Agency
         {
             using (var db = new TravelAgencyContext())
             {
-                if (type.Equals(typeof(Order)) && !deleteButton.Visible)
+                if (type.Equals(typeof(Order)) && !deleteButton.Visible && showButton.Text != "Send information to E-mail")
                 {
                     if (objectBox.SelectedIndex == -1)
                     {
