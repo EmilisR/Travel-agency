@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Travel_Agency
 {
@@ -372,10 +373,7 @@ namespace Travel_Agency
                             positionCount.Add(worker.Count());
                         }
                         chart1.Series[0].LegendText = "Number of workers";
-                        chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-                        chart1.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-                        chart1.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-                        chart1.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+                        RemoveGrid(chart1);
                         chart1.Series["Series1"].IsValueShownAsLabel = true;
                         chart1.Series["Series1"].Points.DataBindXY(positions, positionCount);
                         break;
@@ -388,11 +386,8 @@ namespace Travel_Agency
                             salaries.Add(db.Workers.Local.Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).Single().Salary);
                         }
                         chart2.Series[0].LegendText = "Salary per month in €";
+                        RemoveGrid(chart2);
                         chart2.Series["Series1"].IsValueShownAsLabel = true;
-                        chart2.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-                        chart2.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-                        chart2.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-                        chart2.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
                         chart2.Series["Series1"].Points.DataBindXY(workers, salaries);
                         break;
                     case 2:
@@ -404,10 +399,7 @@ namespace Travel_Agency
                             salaries.Add(db.Workers.Local.Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).Single().Salary);
                         }
                         chart3.Series[0].LegendText = "Salary per month in €";
-                        chart3.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-                        chart3.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-                        chart3.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-                        chart3.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+                        RemoveGrid(chart3);
                         chart3.Series["Series1"].IsValueShownAsLabel = true;
                         chart3.Series["Series1"].Points.DataBindXY(workers, salaries);
                         break;
@@ -426,10 +418,7 @@ namespace Travel_Agency
                             prices.Add(item.Select(price => price.Price * price.OrderClientsAmount).Sum());
                         }
                         chart4.Series[0].LegendText = "Total income for day in €";
-                        chart4.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
-                        chart4.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
-                        chart4.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
-                        chart4.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
+                        RemoveGrid(chart4);
                         chart4.Series["Series1"].IsValueShownAsLabel = true;
                         chart4.Series["Series1"].Points.DataBindXY(dates, prices);
                         break;
@@ -444,6 +433,13 @@ namespace Travel_Agency
                 cp.ExStyle |= 0x02000000;
                 return cp;
             }
+        }
+        private void RemoveGrid(Chart chart)
+        {
+            chart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            chart.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
+            chart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
+            chart.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
         }
     }
 }
