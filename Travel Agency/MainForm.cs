@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using Travel_Agency.Properties;
 
 namespace Travel_Agency
 {
@@ -17,14 +18,38 @@ namespace Travel_Agency
         public MainForm()
         {
             InitializeComponent();
+            Task.Run(() => SetButtonImages());
             Task.Run(() => ReadBudgetValues());
-            //LoginForm loginForm = new LoginForm();
-            //loginForm.ShowDialog();
+            LoginForm loginForm = new LoginForm();
+            loginForm.ShowDialog();
             Budget.Bankrupt += BankruptHandler;
             Font = new Font(Program.ReadSetting("Font name", "User.config"), Convert.ToInt32(Program.ReadSetting("Font size", "User.config")));
             StartThreadQuantityUpdate();
         }
 
+        private void SetButtonImages()
+        {
+            SetButtonProperties(addWorker, Resources.add);
+            SetButtonProperties(addOrder, Resources.add);
+            SetButtonProperties(addClient, Resources.add);
+            SetButtonProperties(addOffer, Resources.add);
+            SetButtonProperties(showWorkersButton, Resources.show);
+            SetButtonProperties(showOrdersButton, Resources.show);
+            SetButtonProperties(showClientsButton, Resources.show);
+            SetButtonProperties(showOffersButton, Resources.show);
+            SetButtonProperties(nearestReturnsButton, Resources.leave);
+            SetButtonProperties(payOutSalaryButton, Resources.salary);
+            SetButtonProperties(changeWorkerPositionButton, Resources.position);
+            SetButtonProperties(raiseCutSalaryButton, Resources.raise_cut);
+            SetButtonProperties(showWorkerOrdersbutton, Resources.orders);
+            SetButtonProperties(sendEmailButton, Resources.mail);
+        }
+        private void SetButtonProperties(Button button, Image image)
+        {
+            button.Image = image;
+            button.ImageAlign = ContentAlignment.MiddleLeft;
+            button.TextAlign = ContentAlignment.MiddleCenter;
+        }
         public async void StartThreadQuantityUpdate()
         {
             await SetLabelsAwait();

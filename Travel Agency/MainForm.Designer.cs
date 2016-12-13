@@ -93,7 +93,7 @@
             // 
             // addWorker
             // 
-            this.addWorker.Location = new System.Drawing.Point(6, 6);
+            this.addWorker.Location = new System.Drawing.Point(79, 53);
             this.addWorker.Name = "addWorker";
             this.addWorker.Size = new System.Drawing.Size(321, 55);
             this.addWorker.TabIndex = 1;
@@ -103,7 +103,7 @@
             // 
             // addClient
             // 
-            this.addClient.Location = new System.Drawing.Point(6, 128);
+            this.addClient.Location = new System.Drawing.Point(79, 255);
             this.addClient.Name = "addClient";
             this.addClient.Size = new System.Drawing.Size(321, 55);
             this.addClient.TabIndex = 3;
@@ -113,7 +113,7 @@
             // 
             // addOrder
             // 
-            this.addOrder.Location = new System.Drawing.Point(6, 67);
+            this.addOrder.Location = new System.Drawing.Point(79, 151);
             this.addOrder.Name = "addOrder";
             this.addOrder.Size = new System.Drawing.Size(321, 55);
             this.addOrder.TabIndex = 2;
@@ -150,7 +150,7 @@
             // 
             // addOffer
             // 
-            this.addOffer.Location = new System.Drawing.Point(6, 189);
+            this.addOffer.Location = new System.Drawing.Point(79, 351);
             this.addOffer.Name = "addOffer";
             this.addOffer.Size = new System.Drawing.Size(321, 55);
             this.addOffer.TabIndex = 4;
@@ -160,7 +160,7 @@
             // 
             // showWorkersButton
             // 
-            this.showWorkersButton.Location = new System.Drawing.Point(333, 6);
+            this.showWorkersButton.Location = new System.Drawing.Point(597, 53);
             this.showWorkersButton.Name = "showWorkersButton";
             this.showWorkersButton.Size = new System.Drawing.Size(404, 55);
             this.showWorkersButton.TabIndex = 5;
@@ -170,7 +170,7 @@
             // 
             // showOrdersButton
             // 
-            this.showOrdersButton.Location = new System.Drawing.Point(333, 67);
+            this.showOrdersButton.Location = new System.Drawing.Point(597, 151);
             this.showOrdersButton.Name = "showOrdersButton";
             this.showOrdersButton.Size = new System.Drawing.Size(404, 55);
             this.showOrdersButton.TabIndex = 6;
@@ -180,7 +180,7 @@
             // 
             // showClientsButton
             // 
-            this.showClientsButton.Location = new System.Drawing.Point(333, 127);
+            this.showClientsButton.Location = new System.Drawing.Point(597, 254);
             this.showClientsButton.Name = "showClientsButton";
             this.showClientsButton.Size = new System.Drawing.Size(404, 56);
             this.showClientsButton.TabIndex = 7;
@@ -199,9 +199,9 @@
             // 
             // nearestReturnsButton
             // 
-            this.nearestReturnsButton.Location = new System.Drawing.Point(6, 250);
+            this.nearestReturnsButton.Location = new System.Drawing.Point(228, 440);
             this.nearestReturnsButton.Name = "nearestReturnsButton";
-            this.nearestReturnsButton.Size = new System.Drawing.Size(731, 90);
+            this.nearestReturnsButton.Size = new System.Drawing.Size(565, 62);
             this.nearestReturnsButton.TabIndex = 9;
             this.nearestReturnsButton.Text = "Show nearest departures";
             this.nearestReturnsButton.UseVisualStyleBackColor = true;
@@ -209,7 +209,7 @@
             // 
             // showOffersButton
             // 
-            this.showOffersButton.Location = new System.Drawing.Point(333, 189);
+            this.showOffersButton.Location = new System.Drawing.Point(597, 351);
             this.showOffersButton.Name = "showOffersButton";
             this.showOffersButton.Size = new System.Drawing.Size(404, 55);
             this.showOffersButton.TabIndex = 8;
@@ -236,9 +236,9 @@
             // 
             // sendEmailButton
             // 
-            this.sendEmailButton.Location = new System.Drawing.Point(16, 12);
+            this.sendEmailButton.Location = new System.Drawing.Point(202, 159);
             this.sendEmailButton.Name = "sendEmailButton";
-            this.sendEmailButton.Size = new System.Drawing.Size(711, 315);
+            this.sendEmailButton.Size = new System.Drawing.Size(609, 217);
             this.sendEmailButton.TabIndex = 15;
             this.sendEmailButton.Text = "Send information by E-mail";
             this.sendEmailButton.UseVisualStyleBackColor = true;
@@ -246,9 +246,9 @@
             // 
             // payOutSalaryButton
             // 
-            this.payOutSalaryButton.Location = new System.Drawing.Point(6, 6);
+            this.payOutSalaryButton.Location = new System.Drawing.Point(218, 50);
             this.payOutSalaryButton.Name = "payOutSalaryButton";
-            this.payOutSalaryButton.Size = new System.Drawing.Size(731, 78);
+            this.payOutSalaryButton.Size = new System.Drawing.Size(611, 78);
             this.payOutSalaryButton.TabIndex = 16;
             this.payOutSalaryButton.Text = "Pay out salary to worker";
             this.payOutSalaryButton.UseVisualStyleBackColor = true;
@@ -256,9 +256,9 @@
             // 
             // changeWorkerPositionButton
             // 
-            this.changeWorkerPositionButton.Location = new System.Drawing.Point(6, 90);
+            this.changeWorkerPositionButton.Location = new System.Drawing.Point(218, 165);
             this.changeWorkerPositionButton.Name = "changeWorkerPositionButton";
-            this.changeWorkerPositionButton.Size = new System.Drawing.Size(731, 78);
+            this.changeWorkerPositionButton.Size = new System.Drawing.Size(611, 78);
             this.changeWorkerPositionButton.TabIndex = 18;
             this.changeWorkerPositionButton.Text = "Change worker\'s position";
             this.changeWorkerPositionButton.UseVisualStyleBackColor = true;
@@ -266,9 +266,9 @@
             // 
             // raiseCutSalaryButton
             // 
-            this.raiseCutSalaryButton.Location = new System.Drawing.Point(6, 174);
+            this.raiseCutSalaryButton.Location = new System.Drawing.Point(218, 290);
             this.raiseCutSalaryButton.Name = "raiseCutSalaryButton";
-            this.raiseCutSalaryButton.Size = new System.Drawing.Size(731, 78);
+            this.raiseCutSalaryButton.Size = new System.Drawing.Size(611, 78);
             this.raiseCutSalaryButton.TabIndex = 19;
             this.raiseCutSalaryButton.Text = "Raise/cut salary";
             this.raiseCutSalaryButton.UseVisualStyleBackColor = true;
@@ -276,9 +276,9 @@
             // 
             // showWorkerOrdersbutton
             // 
-            this.showWorkerOrdersbutton.Location = new System.Drawing.Point(6, 258);
+            this.showWorkerOrdersbutton.Location = new System.Drawing.Point(218, 418);
             this.showWorkerOrdersbutton.Name = "showWorkerOrdersbutton";
-            this.showWorkerOrdersbutton.Size = new System.Drawing.Size(731, 78);
+            this.showWorkerOrdersbutton.Size = new System.Drawing.Size(611, 78);
             this.showWorkerOrdersbutton.TabIndex = 20;
             this.showWorkerOrdersbutton.Text = "Show worker\'s orders";
             this.showWorkerOrdersbutton.UseVisualStyleBackColor = true;
@@ -311,7 +311,7 @@
             this.addDeleteTab.Location = new System.Drawing.Point(10, 47);
             this.addDeleteTab.Name = "addDeleteTab";
             this.addDeleteTab.Padding = new System.Windows.Forms.Padding(3);
-            this.addDeleteTab.Size = new System.Drawing.Size(743, 346);
+            this.addDeleteTab.Size = new System.Drawing.Size(1054, 536);
             this.addDeleteTab.TabIndex = 0;
             this.addDeleteTab.Text = "Add/show/delete";
             this.addDeleteTab.UseVisualStyleBackColor = true;
@@ -325,7 +325,7 @@
             this.workerTab.Location = new System.Drawing.Point(10, 47);
             this.workerTab.Name = "workerTab";
             this.workerTab.Padding = new System.Windows.Forms.Padding(3);
-            this.workerTab.Size = new System.Drawing.Size(743, 346);
+            this.workerTab.Size = new System.Drawing.Size(1054, 536);
             this.workerTab.TabIndex = 1;
             this.workerTab.Text = "Worker\'s management";
             this.workerTab.UseVisualStyleBackColor = true;
@@ -468,7 +468,7 @@
             this.emailTab.Controls.Add(this.sendEmailButton);
             this.emailTab.Location = new System.Drawing.Point(10, 47);
             this.emailTab.Name = "emailTab";
-            this.emailTab.Size = new System.Drawing.Size(743, 346);
+            this.emailTab.Size = new System.Drawing.Size(1054, 536);
             this.emailTab.TabIndex = 3;
             this.emailTab.Text = "Send e-mail";
             this.emailTab.UseVisualStyleBackColor = true;
