@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -120,21 +121,14 @@ namespace Travel_Agency
 
         private void DeleteButton_Click(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            if (objectBox.SelectedIndex != -1)
             {
-                if (objectBox.SelectedIndex != -1)
+                if (type.Equals(typeof(Offer)))
                 {
-                    if (type.Equals(typeof(Offer)))
+                    int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                    try
                     {
-                        int size = db.Offers.Count();
-
-                        Offer offer = null;
-                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
-                        offer = db.Offers.Where(x => x.OfferNumber == number).First();
-
-                        db.Offers.Remove(offer);
-                        db.SaveChanges();
-                        if (db.Offers.Count() + 1 == size)
+                        if (DatabaseMethods.DeleteOffer(number))
                         {
                             MessageBox.Show("Offer was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             _mainForm.StartThreadQuantityUpdate();
@@ -142,17 +136,17 @@ namespace Travel_Agency
                         }
                         else MessageBox.Show("Offer was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    if (type.Equals(typeof(Order)))
+                    catch (DbUpdateException)
                     {
-                        int size = db.Orders.Count();
-
-                        Order order = null;
-                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
-                        order = db.Orders.Where(x => x.OrderNumber == number).First();
-
-                        db.Orders.Remove(order);
-                        db.SaveChanges();
-                        if (db.Orders.Count() + 1 == size)
+                        MessageBox.Show("Cannot delete because of reference to order!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                if (type.Equals(typeof(Order)))
+                {
+                    int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                    try
+                    {
+                        if (DatabaseMethods.DeleteOrder(number))
                         {
                             MessageBox.Show("Order was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             _mainForm.StartThreadQuantityUpdate();
@@ -160,17 +154,17 @@ namespace Travel_Agency
                         }
                         else MessageBox.Show("Order was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    if (type.Equals(typeof(Client)))
+                    catch (DbUpdateException)
                     {
-                        int size = db.Clients.Count();
-
-                        Client client = null;
-                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
-                        client = db.Clients.Where(x => x.ClientNumber == number).First();
-
-                        db.Clients.Remove(client);
-                        db.SaveChanges();
-                        if (db.Clients.Count() + 1 == size)
+                        MessageBox.Show("Cannot delete because of reference to order!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                if (type.Equals(typeof(Client)))
+                {
+                    int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
+                    try
+                    {
+                        if (DatabaseMethods.DeleteClient(number))
                         {
                             MessageBox.Show("Client was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             _mainForm.StartThreadQuantityUpdate();
@@ -178,17 +172,17 @@ namespace Travel_Agency
                         }
                         else MessageBox.Show("Client was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    if (type.Equals(typeof(Worker)))
+                    catch (DbUpdateException)
                     {
-                        int size = db.Workers.Count();
-
-                        Worker worker = null;
-                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
-                        worker = db.Workers.Where(x => x.WorkerNumber == number).First();
-                        
-                        db.Workers.Remove(worker);
-                        db.SaveChanges();
-                        if (db.Workers.Count() + 1 == size)
+                        MessageBox.Show("Cannot delete because of reference to order!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                if (type.Equals(typeof(Worker)))
+                {
+                    int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                    try
+                    {
+                        if (DatabaseMethods.DeleteWorker(number))
                         {
                             MessageBox.Show("Worker was deleted", "Confirmation", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             _mainForm.StartThreadQuantityUpdate();
@@ -196,9 +190,13 @@ namespace Travel_Agency
                         }
                         else MessageBox.Show("Worker was not deleted!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    catch (DbUpdateException)
+                    {
+                        MessageBox.Show("Cannot delete because of reference to order!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else MessageBox.Show("Not selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else MessageBox.Show("Not selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

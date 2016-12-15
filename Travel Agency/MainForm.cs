@@ -58,9 +58,9 @@ namespace Travel_Agency
         private async Task SetLabelsAwait()
         {
             clientsQuantity.Text = (await GetLabelTextAsync(DatabaseMethods.SelectClients().Count, "Number of clients: "));
-            offersQuantity.Text = (await GetLabelTextAsync(DatabaseMethods.SelectClients().Count(), "Number of offers: "));
-            workersQuantity.Text = (await GetLabelTextAsync(DatabaseMethods.SelectClients().Count(), "Number of workers: "));
-            ordersQuantity.Text = (await GetLabelTextAsync(DatabaseMethods.SelectClients().Count(), "Number of orders: "));
+            offersQuantity.Text = (await GetLabelTextAsync(DatabaseMethods.SelectOffers().Count(), "Number of offers: "));
+            workersQuantity.Text = (await GetLabelTextAsync(DatabaseMethods.SelectWorkers().Count(), "Number of workers: "));
+            ordersQuantity.Text = (await GetLabelTextAsync(DatabaseMethods.SelectOrders().Count(), "Number of orders: "));
             activeOrders.Text = (await GetLabelTextAsync(CheckActiveOrders(), "Active orders: "));
             if (!Budget.IsBankrupt())
             {
