@@ -122,32 +122,23 @@ namespace Travel_Agency
 
         private void ClientsBox_DropDown(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
-            {
-                List<string> list = db.Clients.Select(i => i.Name + " " + i.LastName + " [Client number: " + i.ClientNumber + "]").ToList();
-                list.Insert(0, "Add new client...");
-                clientsBox.DataSource = new BindingSource(list, null);
-            }
+            List<string> list = DatabaseMethods.SelectClients().Select(i => i.Name + " " + i.LastName + " [Client number: " + i.ClientNumber + "]").ToList();
+            list.Insert(0, "Add new client...");
+            clientsBox.DataSource = new BindingSource(list, null);
         }
 
         private void OfferBox_DropDown(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
-            {
-                List<string> list = db.Offers.Select(i => i.OfferNumber + ". " + i.TravelDestination + ", " + i.HotelRanking + ", " + i.Feeding + ", €" + i.Price).ToList();
-                list.Insert(0, "Add new offer...");
-                offerBox.DataSource = new BindingSource(list, null);
-            }
+            List<string> list = DatabaseMethods.SelectOffers().Select(i => i.OfferNumber + ". " + i.TravelDestination + ", " + i.HotelRanking + ", " + i.Feeding + ", €" + i.Price).ToList();
+            list.Insert(0, "Add new offer...");
+            offerBox.DataSource = new BindingSource(list, null);
         }
 
         private void WorkerComboBox_DropDown(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
-            {
-                List<string> list = db.Workers.Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
-                list.Insert(0, "Add new worker...");
-                workerComboBox.DataSource = new BindingSource(list, null);
-            }
+            List<string> list = DatabaseMethods.SelectWorkers().Select(i => i.WorkerNumber + ". " + i.Name + " " + i.LastName + ", " + i.Position).ToList();
+            list.Insert(0, "Add new worker...");
+            workerComboBox.DataSource = new BindingSource(list, null);
         }
 
         private void TravellersAmountTrackBar_ValueChanged(object sender, EventArgs e)
