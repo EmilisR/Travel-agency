@@ -45,25 +45,32 @@ namespace Travel_Agency
                     int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
                     worker = workers.Where(x => x.WorkerNumber == number).First();
                     List<Order> list = orders.Where(x => x.ServiceWorker.WorkerNumber == worker.WorkerNumber).ToList();
-                    foreach (Order order in list)
+                    if (list.Count > 0)
                     {
-                        if (order.IsActive())
+                        foreach (Order order in list)
                         {
-                            string[] arr = new string[8];
-                            arr[0] = order.OrderNumber.ToString();
-                            arr[1] = order.TravelOffer.TravelDestination;
-                            arr[2] = order.ServiceWorker.Name + " " + order.ServiceWorker.LastName;
-                            arr[3] = order.OrderClient.Name + " " + order.OrderClient.LastName;
-                            arr[4] = "€" + string.Format("{0:F2}", order.OrderPrice);
-                            arr[5] = order.OrderRegisterDate.ToShortDateString();
-                            arr[6] = order.TravelStartDate.ToShortDateString();
-                            arr[7] = order.OrderClientsAmount.ToString();
-                            ListViewItem itm = new ListViewItem(arr);
-                            ordersView.nearestDeparturesListView.Items.Add(itm);
+                            if (order.IsActive())
+                            {
+                                string[] arr = new string[8];
+                                arr[0] = order.OrderNumber.ToString();
+                                arr[1] = order.TravelOffer.TravelDestination;
+                                arr[2] = order.ServiceWorker.Name + " " + order.ServiceWorker.LastName;
+                                arr[3] = order.OrderClient.Name + " " + order.OrderClient.LastName;
+                                arr[4] = "€" + string.Format("{0:F2}", order.OrderPrice);
+                                arr[5] = order.OrderRegisterDate.ToShortDateString();
+                                arr[6] = order.TravelStartDate.ToShortDateString();
+                                arr[7] = order.OrderClientsAmount.ToString();
+                                ListViewItem itm = new ListViewItem(arr);
+                                ordersView.nearestDeparturesListView.Items.Add(itm);
+                            }
                         }
+                        ordersView.Text = worker.Name + " " + worker.LastName + " orders";
+                        ordersView.ShowDialog();
                     }
-                    ordersView.Text = worker.Name + " " + worker.LastName + " orders";
-                    ordersView.ShowDialog();
+                    else
+                    {
+                        MessageBox.Show("No orders!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                     Dispose();
                 }
             }

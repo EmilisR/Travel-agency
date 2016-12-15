@@ -217,7 +217,7 @@ namespace Travel_Agency
             }
             else
             {
-                else MessageBox.Show("No departures!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No departures!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
