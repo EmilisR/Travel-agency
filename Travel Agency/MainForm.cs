@@ -210,8 +210,15 @@ namespace Travel_Agency
 
         private void NearestDeparturesButton_Click(object sender, EventArgs e)
         {
-            NearestDeparturesForm nearestDeparturesForm = new NearestDeparturesForm();
-            nearestDeparturesForm.ShowDialog();
+            if (CheckActiveOrders() > 0)
+            {
+                NearestDeparturesForm nearestDeparturesForm = new NearestDeparturesForm();
+                nearestDeparturesForm.ShowDialog();
+            }
+            else
+            {
+                else MessageBox.Show("No departures!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void GUI_Load(object sender, EventArgs e)

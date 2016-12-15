@@ -30,93 +30,95 @@ namespace Travel_Agency
 
         public void ShowButton_Click(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            if (type.Equals(typeof(Order)) && !deleteButton.Visible && showButton.Text != "Send information to E-mail")
             {
-                if (type.Equals(typeof(Order)) && !deleteButton.Visible && showButton.Text != "Send information to E-mail")
+                if (objectBox.SelectedIndex == -1)
                 {
-                    if (objectBox.SelectedIndex == -1)
+                    objectBox.BackColor = Color.Salmon;
+                }
+                else
+                {
+                    NearestDeparturesForm ordersView = new NearestDeparturesForm(true);
+                    List<Worker> workers = DatabaseMethods.SelectWorkers();
+                    List<Order> orders = DatabaseMethods.SelectOrders();
+                    Worker worker = null;
+                    int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                    worker = workers.Where(x => x.WorkerNumber == number).First();
+                    List<Order> list = orders.Where(x => x.ServiceWorker.WorkerNumber == worker.WorkerNumber).ToList();
+                    foreach (Order order in list)
                     {
-                        objectBox.BackColor = Color.Salmon;
+                        if (order.IsActive())
+                        {
+                            string[] arr = new string[8];
+                            arr[0] = order.OrderNumber.ToString();
+                            arr[1] = order.TravelOffer.TravelDestination;
+                            arr[2] = order.ServiceWorker.Name + " " + order.ServiceWorker.LastName;
+                            arr[3] = order.OrderClient.Name + " " + order.OrderClient.LastName;
+                            arr[4] = "€" + string.Format("{0:F2}", order.OrderPrice);
+                            arr[5] = order.OrderRegisterDate.ToShortDateString();
+                            arr[6] = order.TravelStartDate.ToShortDateString();
+                            arr[7] = order.OrderClientsAmount.ToString();
+                            ListViewItem itm = new ListViewItem(arr);
+                            ordersView.nearestDeparturesListView.Items.Add(itm);
+                        }
                     }
-                    else
+                    ordersView.Text = worker.Name + " " + worker.LastName + " orders";
+                    ordersView.ShowDialog();
+                    Dispose();
+                }
+            }
+            else if (objectBox.SelectedIndex != -1)
+            {
+                if (!deleteButton.Visible && type.Equals(typeof(Order)))
+                {
+                    SendInformationByEmailForm.SendEmailOrderHandler(this, null);
+                }
+                else if (!deleteButton.Visible && type.Equals(typeof(Client)))
+                {
+                    SendInformationByEmailForm.SendEmailClientHandler(this, null);
+
+                }
+                else if (!deleteButton.Visible && type.Equals(typeof(Worker)))
+                {
+                    MainForm.PayOutSalaryHandler(this, null);
+                }
+                else
+                {
+                    if (type.Equals(typeof(Offer)))
                     {
-                        NearestDeparturesForm ordersView = new NearestDeparturesForm(true);
-                        
+                        List<Offer> offers = DatabaseMethods.SelectOffers();
+                        Offer offer = null;
+                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                        offer = offers.Where(x => x.OfferNumber == number).First();
+                        MessageBox.Show(offer.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    if (type.Equals(typeof(Order)))
+                    {
+                        List<Order> orders = DatabaseMethods.SelectOrders();
+                        Order order = null;
+                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
+                        order = orders.Where(x => x.OrderNumber == number).First();
+                        MessageBox.Show(order.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    if (type.Equals(typeof(Client)))
+                    {
+                        List<Client> clients = DatabaseMethods.SelectClients();
+                        Client client = null;
+                        int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
+                        client = clients.Where(x => x.ClientNumber == number).First();
+                        MessageBox.Show(client.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    if (type.Equals(typeof(Worker)))
+                    {
+                        List<Worker> workers = DatabaseMethods.SelectWorkers();
                         Worker worker = null;
                         int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
-                        worker = db.Workers.Where(x => x.WorkerNumber == number).First();
-                        List<Order> list = db.Orders.Where(x => x.ServiceWorker.WorkerNumber == worker.WorkerNumber).ToList();
-                        foreach (Order order in list)
-                        {
-                            if (order.IsActive())
-                            {
-                                string[] arr = new string[8];
-                                arr[0] = order.OrderNumber.ToString();
-                                arr[1] = order.TravelOffer.TravelDestination;
-                                arr[2] = order.ServiceWorker.Name + " " + order.ServiceWorker.LastName;
-                                arr[3] = order.OrderClient.Name + " " + order.OrderClient.LastName;
-                                arr[4] = "€" + string.Format("{0:F2}", order.OrderPrice);
-                                arr[5] = order.OrderRegisterDate.ToShortDateString();
-                                arr[6] = order.TravelStartDate.ToShortDateString();
-                                arr[7] = order.OrderClientsAmount.ToString();
-                                ListViewItem itm = new ListViewItem(arr);
-                                ordersView.nearestDeparturesListView.Items.Add(itm);
-                            }
-                        }
-                        ordersView.Text = worker.Name + " " + worker.LastName + " orders";
-                        ordersView.ShowDialog();
-                        Dispose();
+                        worker = workers.Where(x => x.WorkerNumber == number).First();
+                        MessageBox.Show(worker.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                else if (objectBox.SelectedIndex != -1)
-                {
-                    if (!deleteButton.Visible && type.Equals(typeof(Order)))
-                    {
-                        SendInformationByEmailForm.SendEmailOrderHandler(this, null);
-                    }
-                    else if (!deleteButton.Visible && type.Equals(typeof(Client)))
-                    {
-                        SendInformationByEmailForm.SendEmailClientHandler(this, null);
-
-                    }
-                    else if (!deleteButton.Visible && type.Equals(typeof(Worker)))
-                    {
-                        MainForm.PayOutSalaryHandler(this, null);
-                    }
-                    else
-                    {
-                        if (type.Equals(typeof(Offer)))
-                        {
-                            Offer offer = null;
-                            int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
-                            offer = db.Offers.Where(x => x.OfferNumber == number).First();
-                            MessageBox.Show(offer.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        if (type.Equals(typeof(Order)))
-                        {
-                            Order order = null;
-                            int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
-                            order = db.Orders.Where(x => x.OrderNumber == number).First();
-                            MessageBox.Show(order.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        if (type.Equals(typeof(Client)))
-                        {
-                            Client client = null;
-                            int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split(' ').Last().Remove(objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
-                            client = db.Clients.Where(x => x.ClientNumber == number).First();
-                            MessageBox.Show(client.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        if (type.Equals(typeof(Worker)))
-                        {
-                            Worker worker = null;
-                            int number = Convert.ToInt32(objectBox.SelectedItem.ToString().Split('.').First());
-                            worker = db.Workers.Where(x => x.WorkerNumber == number).First();
-                            MessageBox.Show(worker.ToString(), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                }
-                else MessageBox.Show("Not selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            else MessageBox.Show("Not selected!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void DeleteButton_Click(object sender, EventArgs e)

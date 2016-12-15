@@ -25,7 +25,7 @@ namespace Travel_Agency
                 nearestDeparturesListView.View = View.Details;
                 nearestDeparturesListView.GridLines = true;
                 nearestDeparturesListView.FullRowSelect = true;
-                nearestDeparturesListView.Columns.Add("No.", 40);
+                nearestDeparturesListView.Columns.Add("No.", 50);
                 nearestDeparturesListView.Columns.Add("Travel destination", 360);
                 nearestDeparturesListView.Columns.Add("Worker", 240);
                 nearestDeparturesListView.Columns.Add("Client", 240);
