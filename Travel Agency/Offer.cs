@@ -11,24 +11,22 @@ namespace Travel_Agency
         public Offer() { }
         public Offer(string travelDestination, string feeding, int price, int travelTime, string hotelRanking, ILogger loggerBox, ILogger loggerFile)
         {
-            using (var db = new TravelAgencyContext())
+            TravelDestination = travelDestination;
+            Feeding = feeding;
+            Price = price;
+            TravelTime = travelTime;
+            HotelRanking = hotelRanking;
+            List<Offer> list = DatabaseMethods.SelectOffers();
+            if (list.Count() > 0)
             {
-                TravelDestination = travelDestination;
-                Feeding = feeding;
-                Price = price;
-                TravelTime = travelTime;
-                HotelRanking = hotelRanking;
-                if (db.Offers.Count() > 0)
-                {
-                    OfferNumber = (from o in db.Offers
-                                    select o.OfferNumber).Max() + 1;
-                }
-                else OfferNumber = 1;
-                if (loggerBox != null)
-                    loggerBox.WriteToLog(this, DateTime.Now, "Created offer");
-                if (loggerFile != null)
-                    loggerFile.WriteToLog(this, DateTime.Now, "Created offer");
+                OfferNumber = (from o in list
+                               select o.OfferNumber).Max() + 1;
             }
+            else OfferNumber = 1;
+            if (loggerBox != null)
+                loggerBox.WriteToLog(this, DateTime.Now, "Created offer");
+            if (loggerFile != null)
+                loggerFile.WriteToLog(this, DateTime.Now, "Created offer");
         }
 
         public override string ToString()

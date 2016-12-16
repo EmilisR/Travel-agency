@@ -12,30 +12,28 @@ namespace Travel_Agency
         public Worker() { }
         public Worker(string name, string lastName, string position, int salary, int workingHoursPerWeek, ILogger loggerBox, ILogger loggerFile)
         {
-            using (var db = new TravelAgencyContext())
+            Name = name;
+            LastName = lastName;
+            WorkingHoursPerWeek = workingHoursPerWeek;
+            Salary = salary;
+            Position = position;
+            RegisterDate = DateTime.Now;
+            List<Worker> list = DatabaseMethods.SelectWorkers();
+            if (list.Count() > 0)
             {
-                Name = name;
-                LastName = lastName;
-                WorkingHoursPerWeek = workingHoursPerWeek;
-                Salary = salary;
-                Position = position;
-                RegisterDate = DateTime.Now;
-                if (db.Workers.Count() > 0)
-                {
-                    WorkerNumber = (from w in db.Workers
-                                 select w.WorkerNumber).Max() + 1;
-                }
-                else WorkerNumber = 1;
-                if (loggerBox != null)
-                    loggerBox.WriteToLog(this, RegisterDate, "Created worker");
-                if (loggerFile != null)
-                    loggerFile.WriteToLog(this, RegisterDate, "Created worker");
-            } 
+                WorkerNumber = (from w in list
+                                select w.WorkerNumber).Max() + 1;
+            }
+            else WorkerNumber = 1;
+            if (loggerBox != null)
+                loggerBox.WriteToLog(this, RegisterDate, "Created worker");
+            if (loggerFile != null)
+                loggerFile.WriteToLog(this, RegisterDate, "Created worker");
         }
 
         public void AssignOrderToWorker(Order order)
         {
-            WorkerOrders.Add(order);
+            DatabaseMethods.InsertWorkerOrder(order, this);
         }
 
         public void PaySalary()
@@ -55,7 +53,8 @@ namespace Travel_Agency
 
         public override string ToString()
         {
-            string workerOrdersAmount = WorkerOrders == null ? "0" : WorkerOrders.Count.ToString();
+            List<Order> list = DatabaseMethods.SelectWorkerOrders(this);
+            string workerOrdersAmount = list == null ? "0" : list.Count.ToString();
                 return "Worker number: " + WorkerNumber + Environment.NewLine + 
                         "Name: " + Name + Environment.NewLine + 
                         "Last name: " + LastName + Environment.NewLine + 

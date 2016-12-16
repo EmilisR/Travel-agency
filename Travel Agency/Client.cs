@@ -11,28 +11,26 @@ namespace Travel_Agency
         public Client() { }
         public Client(string name, string lastName, string email, string mobileNumber, ILogger loggerBox = null, ILogger loggerFile = null, ILogger loggerMail = null)
         {
-            using (var db = new TravelAgencyContext())
+            Name = name;
+            LastName = lastName;
+            Email = email;
+            MobileNumber = mobileNumber;
+            RegisterDate = DateTime.Now;
+            List<Client> list = DatabaseMethods.SelectClients();
+            if (list.Count > 0)
             {
-                Name = name;
-                LastName = lastName;
-                Email = email;
-                MobileNumber = mobileNumber;
-                RegisterDate = DateTime.Now;
-                if (db.Clients.Count() > 0)
-                {
-                    ClientNumber = (from c in db.Clients
-                                    select c.ClientNumber).Max() + 1;
-                }
-                else ClientNumber = 1;
-                if (loggerBox != null)
-                    loggerBox.WriteToLog(this, RegisterDate, "Created client", Email);
-                if (loggerFile != null)
-                    loggerFile.WriteToLog(this, RegisterDate, "Created client", Email);
-                if (loggerMail != null)
-                {
-                    EmailSend?.Invoke(this, new EmailSendEventArgs(Email, "Created client", RegisterDate, loggerMail));
-                }
-            } 
+                ClientNumber = (from c in list
+                                select c.ClientNumber).Max() + 1;
+            }
+            else ClientNumber = 1;
+            if (loggerBox != null)
+                loggerBox.WriteToLog(this, RegisterDate, "Created client", Email);
+            if (loggerFile != null)
+                loggerFile.WriteToLog(this, RegisterDate, "Created client", Email);
+            if (loggerMail != null)
+            {
+                EmailSend?.Invoke(this, new EmailSendEventArgs(Email, "Created client", RegisterDate, loggerMail));
+            }
         }
         public static event MainForm.EmailSendEventHandler<Client> EmailSend;
         public override string ToString()

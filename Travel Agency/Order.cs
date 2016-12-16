@@ -13,31 +13,29 @@ namespace Travel_Agency
         public Order() { }
         public Order(int offerNumber, int clientNumber, int workerNumber, int orderClientsAmount, DateTime travelStartDate, ILogger loggerBox, ILogger loggerFile, ILogger loggerMail)
         {
-            using (var db = new TravelAgencyContext())
+            TravelOfferNumber = offerNumber;
+            ServiceWorkerNumber = workerNumber;
+            OrderClientNumber = clientNumber;
+            OrderRegisterDate = DateTime.Now;
+            TravelStartDate = travelStartDate;
+            List<Order> list = DatabaseMethods.SelectOrders();
+            if (list.Count > 0)
             {
-                TravelOfferNumber = offerNumber;
-                ServiceWorkerNumber = workerNumber;
-                OrderClientNumber = clientNumber;
-                OrderRegisterDate = DateTime.Now;
-                TravelStartDate = travelStartDate;
-                if (db.Orders.Count() > 0)
-                {
-                    OrderNumber = (from o in db.Orders
-                                   select o.OrderNumber).Max() + 1;
-                }
-                else OrderNumber = 1;
-                OrderClientsAmount = orderClientsAmount;
-                OrderPrice = db.Offers.Where(x => x.OfferNumber == TravelOfferNumber).First().Price * orderClientsAmount;
-                AddOrderPriceToBudget(OrderPrice);
-                string email = db.Clients.Where(x => x.ClientNumber == OrderClientNumber).First().Email;
-                if (loggerBox != null)
-                    loggerBox.WriteToLog(this, OrderRegisterDate, "Created order", email);
-                if (loggerFile != null)
-                    loggerFile.WriteToLog(this, OrderRegisterDate, "Created order", email);
-                if (loggerMail != null)
-                {
-                    EmailSend?.Invoke(this, new EmailSendEventArgs(email, "Created order", OrderRegisterDate, loggerMail));
-                }
+                OrderNumber = (from o in list
+                               select o.OrderNumber).Max() + 1;
+            }
+            else OrderNumber = 1;
+            OrderClientsAmount = orderClientsAmount;
+            OrderPrice = DatabaseMethods.SelectOffers().Where(x => x.OfferNumber == TravelOfferNumber).First().Price * orderClientsAmount;
+            AddOrderPriceToBudget(OrderPrice);
+            string email = DatabaseMethods.SelectClients().Where(x => x.ClientNumber == OrderClientNumber).First().Email;
+            if (loggerBox != null)
+                loggerBox.WriteToLog(this, OrderRegisterDate, "Created order", email);
+            if (loggerFile != null)
+                loggerFile.WriteToLog(this, OrderRegisterDate, "Created order", email);
+            if (loggerMail != null)
+            {
+                EmailSend?.Invoke(this, new EmailSendEventArgs(email, "Created order", OrderRegisterDate, loggerMail));
             }
         }
 

@@ -78,12 +78,11 @@ namespace Travel_Agency
             {
                 if (!deleteButton.Visible && type.Equals(typeof(Order)))
                 {
-                    SendInformationByEmailForm.SendEmailOrderHandler(this, null);
+                    MainForm.SendEmailOrderHandler(this, null);
                 }
                 else if (!deleteButton.Visible && type.Equals(typeof(Client)))
                 {
-                    SendInformationByEmailForm.SendEmailClientHandler(this, null);
-
+                    MainForm.SendEmailClientHandler(this, null);
                 }
                 else if (!deleteButton.Visible && type.Equals(typeof(Worker)))
                 {

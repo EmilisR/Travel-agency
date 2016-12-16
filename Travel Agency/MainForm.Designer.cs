@@ -56,7 +56,6 @@
             this.showOffersButton = new System.Windows.Forms.Button();
             this.workersQuantity = new System.Windows.Forms.Label();
             this.budgetBalance = new System.Windows.Forms.Label();
-            this.sendEmailButton = new System.Windows.Forms.Button();
             this.payOutSalaryButton = new System.Windows.Forms.Button();
             this.changeWorkerPositionButton = new System.Windows.Forms.Button();
             this.raiseCutSalaryButton = new System.Windows.Forms.Button();
@@ -75,6 +74,8 @@
             this.datesPricesTab = new System.Windows.Forms.TabPage();
             this.chart4 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.emailTab = new System.Windows.Forms.TabPage();
+            this.aboutOrderButton = new System.Windows.Forms.Button();
+            this.aboutClientButton = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.addDeleteTab.SuspendLayout();
             this.workerTab.SuspendLayout();
@@ -233,16 +234,6 @@
             this.budgetBalance.Name = "budgetBalance";
             this.budgetBalance.Size = new System.Drawing.Size(0, 29);
             this.budgetBalance.TabIndex = 14;
-            // 
-            // sendEmailButton
-            // 
-            this.sendEmailButton.Location = new System.Drawing.Point(202, 159);
-            this.sendEmailButton.Name = "sendEmailButton";
-            this.sendEmailButton.Size = new System.Drawing.Size(609, 217);
-            this.sendEmailButton.TabIndex = 15;
-            this.sendEmailButton.Text = "Send information by E-mail";
-            this.sendEmailButton.UseVisualStyleBackColor = true;
-            this.sendEmailButton.Click += new System.EventHandler(this.SendEmailButton_Click);
             // 
             // payOutSalaryButton
             // 
@@ -465,13 +456,36 @@
             // 
             // emailTab
             // 
-            this.emailTab.Controls.Add(this.sendEmailButton);
+            this.emailTab.Controls.Add(this.aboutClientButton);
+            this.emailTab.Controls.Add(this.aboutOrderButton);
             this.emailTab.Location = new System.Drawing.Point(10, 47);
             this.emailTab.Name = "emailTab";
-            this.emailTab.Size = new System.Drawing.Size(1054, 536);
+            this.emailTab.Size = new System.Drawing.Size(1101, 536);
             this.emailTab.TabIndex = 3;
             this.emailTab.Text = "Send e-mail";
             this.emailTab.UseVisualStyleBackColor = true;
+            // 
+            // aboutOrderButton
+            // 
+            this.aboutOrderButton.Location = new System.Drawing.Point(102, 191);
+            this.aboutOrderButton.Margin = new System.Windows.Forms.Padding(7);
+            this.aboutOrderButton.Name = "aboutOrderButton";
+            this.aboutOrderButton.Size = new System.Drawing.Size(357, 96);
+            this.aboutOrderButton.TabIndex = 16;
+            this.aboutOrderButton.Text = "About order";
+            this.aboutOrderButton.UseVisualStyleBackColor = true;
+            this.aboutOrderButton.Click += new System.EventHandler(this.AboutOrderButton_Click);
+            // 
+            // aboutClientButton
+            // 
+            this.aboutClientButton.Location = new System.Drawing.Point(659, 191);
+            this.aboutClientButton.Margin = new System.Windows.Forms.Padding(7);
+            this.aboutClientButton.Name = "aboutClientButton";
+            this.aboutClientButton.Size = new System.Drawing.Size(359, 96);
+            this.aboutClientButton.TabIndex = 17;
+            this.aboutClientButton.Text = "About client";
+            this.aboutClientButton.UseVisualStyleBackColor = true;
+            this.aboutClientButton.Click += new System.EventHandler(this.AboutClientButton_Click);
             // 
             // MainForm
             // 
@@ -524,7 +538,6 @@
         private System.Windows.Forms.Button showOffersButton;
         private System.Windows.Forms.Label workersQuantity;
         private System.Windows.Forms.Label budgetBalance;
-        private System.Windows.Forms.Button sendEmailButton;
         private System.Windows.Forms.Button payOutSalaryButton;
         private System.Windows.Forms.Button changeWorkerPositionButton;
         private System.Windows.Forms.Button raiseCutSalaryButton;
@@ -543,6 +556,8 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart3;
         private System.Windows.Forms.TabPage datesPricesTab;
         private System.Windows.Forms.DataVisualization.Charting.Chart chart4;
+        private System.Windows.Forms.Button aboutOrderButton;
+        private System.Windows.Forms.Button aboutClientButton;
     }
 }
 

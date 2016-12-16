@@ -42,7 +42,8 @@ namespace Travel_Agency
             SetButtonProperties(changeWorkerPositionButton, Resources.position);
             SetButtonProperties(raiseCutSalaryButton, Resources.raise_cut);
             SetButtonProperties(showWorkerOrdersbutton, Resources.orders);
-            SetButtonProperties(sendEmailButton, Resources.mail);
+            SetButtonProperties(aboutClientButton, Resources.mail);
+            SetButtonProperties(aboutOrderButton, Resources.mail);
         }
         private void SetButtonProperties(Button button, Image image)
         {
@@ -225,12 +226,60 @@ namespace Travel_Agency
         {
             BackgroundImage = new Bitmap(Properties.Resources.image);
         }
-
-        private void SendEmailButton_Click(object sender, EventArgs e)
+        private void AboutOrderButton_Click(object sender, EventArgs e)
         {
-            SendInformationByEmailForm sendByEmail = new SendInformationByEmailForm();
-            sendByEmail.ShowDialog();
+            List<Order> orderList = DatabaseMethods.SelectOrders();
+            if (orderList.Count > 0)
+            {
+                List<string> list = orderList.Select(i => i.OrderNumber + ". " + DatabaseMethods.SelectClients().Where(x => x.ClientNumber == i.OrderClientNumber).First().Name + " " + DatabaseMethods.SelectClients().Where(x => x.ClientNumber == i.OrderClientNumber).First().LastName + " " + DatabaseMethods.SelectOffers().Where(x => x.OfferNumber == i.TravelOfferNumber).First().TravelDestination).ToList();
+                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Order));
+                showObject.Text = "Show orders";
+                showObject.showButton.Text = "Send information to E-mail";
+                showObject.showButton.Size = new Size(564, 51);
+                showObject.deleteButton.Visible = false;
+                showObject.ShowDialog();
+            }
+            else MessageBox.Show("No orders!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        public static void SendEmailOrderHandler(ShowObject sender, EventArgs e)
+        {
+            Order order = null;
+            int number = Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split('.').First());
+            order = DatabaseMethods.SelectOrderFromQuery("SELECT * FROM Orders WHERE OrderNumber = '" + number.ToString() + "'");
+            string email = DatabaseMethods.SelectClients().Where(x => x.ClientNumber == order.OrderClientNumber).First().Email;
+            Task.Run(() => EmailSender.SendIt(order, email, order.OrderRegisterDate, "Order information"));
+            MessageBox.Show("E-mail sent to " + email, "E-mail sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            sender.Dispose();
+        }
+
+        public static void SendEmailClientHandler(ShowObject sender, EventArgs e)
+        {
+            Client client = null;
+            int number = Convert.ToInt32(sender.objectBox.SelectedItem.ToString().Split(' ').Last().Remove(sender.objectBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
+            client = DatabaseMethods.SelectClientFromQuery("SELECT * FROM Clients WHERE ClientNumber = '" + number.ToString() + "'");
+            Task.Run(() => EmailSender.SendIt(client, client.Email, client.RegisterDate, "Client information"));
+            MessageBox.Show("E-mail sent to " + client.Email, "E-mail sent", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            sender.Dispose();
+        }
+
+        private void AboutClientButton_Click(object sender, EventArgs e)
+        {
+            List<Client> clientList = DatabaseMethods.SelectClients();
+            if (clientList.Count() > 0)
+            {
+                List<string> list = clientList.Select(i => i.Name + " " + i.LastName + " [Client number: " + i.ClientNumber + "]").ToList();
+                ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Client));
+                showObject.Text = "Show clients";
+                showObject.showButton.Text = "Send information to E-mail";
+                showObject.showButton.Size = new Size(564, 51);
+                showObject.deleteButton.Visible = false;
+                showObject.ShowDialog();
+            }
+            else MessageBox.Show("No clients!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+
 
         public static void PayOutSalaryHandler(ShowObject sender, EventArgs e)
         {

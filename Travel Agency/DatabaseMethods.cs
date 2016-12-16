@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Windows.Forms;
 
 namespace Travel_Agency
 {
@@ -18,7 +19,7 @@ namespace Travel_Agency
             {
                 if (db.Workers.Count() > 0)
                 {
-                    list = db.Workers.Include(x => x.WorkerOrders).ToList();
+                    list = db.Workers.ToList();
                 }
             }
             return list;
@@ -59,6 +60,18 @@ namespace Travel_Agency
             }
             return list;
         }
+        public static List<Order> SelectWorkerOrders(Worker worker)
+        {
+            List<Order> list = new List<Order>();
+            using (var db = new TravelAgencyContext())
+            {
+                if (db.Workers.Where(x => x.WorkerNumber == worker.WorkerNumber).First().WorkerOrders.Count() > 0)
+                {
+                    list = db.Workers.Where(x => x.WorkerNumber == worker.WorkerNumber).First().WorkerOrders.ToList();
+                }
+            }
+            return list;
+        }
         public static bool InsertOrder(Order order)
         {
             using (var db = new TravelAgencyContext())
@@ -67,6 +80,74 @@ namespace Travel_Agency
                 db.Orders.Add(order);
                 db.SaveChanges();
                 if (count + 1 == db.Orders.Count())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        public static bool InsertWorker(Worker worker)
+        {
+            using (var db = new TravelAgencyContext())
+            {
+                int count = db.Workers.Count();
+                db.Workers.Add(worker);
+                db.SaveChanges();
+                if (count + 1 == db.Workers.Count())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        public static bool InsertOffer(Offer offer)
+        {
+            using (var db = new TravelAgencyContext())
+            {
+                int count = db.Offers.Count();
+                db.Offers.Add(offer);
+                db.SaveChanges();
+                if (count + 1 == db.Offers.Count())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        public static bool InsertClient(Client client)
+        {
+            using (var db = new TravelAgencyContext())
+            {
+                int count = db.Clients.Count();
+                db.Clients.Add(client);
+                db.SaveChanges();
+                if (count + 1 == db.Clients.Count())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        public static bool InsertWorkerOrder(Order order, Worker worker)
+        {
+            using (var db = new TravelAgencyContext())
+            {
+                int count = db.Workers.Where(x => x.WorkerNumber == worker.WorkerNumber).First().WorkerOrders.Count;
+                db.Workers.Where(x => x.WorkerNumber == worker.WorkerNumber).First().WorkerOrders.Add(order);
+                db.SaveChanges();
+                if (count + 1 == db.Workers.Where(x => x.WorkerNumber == worker.WorkerNumber).First().WorkerOrders.Count)
                 {
                     return true;
                 }

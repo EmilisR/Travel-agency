@@ -159,12 +159,6 @@
       <DependentUpon>RaiseCutSalaryForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ScreenObjectInfoWritter.cs" />
-    <Compile Include="SendInformationByEmailForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SendInformationByEmailForm.Designer.cs">
-      <DependentUpon>SendInformationByEmailForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="ShowObject.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,9 +217,6 @@
     </Compile>
     <EmbeddedResource Include="RaiseCutSalaryForm.resx">
       <DependentUpon>RaiseCutSalaryForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SendInformationByEmailForm.resx">
-      <DependentUpon>SendInformationByEmailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ShowObject.resx">
       <DependentUpon>ShowObject.cs</DependentUpon>

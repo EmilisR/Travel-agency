@@ -42,18 +42,14 @@ namespace Travel_Agency
 
             if (nameBox.BackColor == Color.LightGreen && lastNameBox.BackColor == Color.LightGreen && telNumberBox.BackColor == Color.LightGreen && emailBox.BackColor == Color.LightGreen)
             {
-                using (var db = new TravelAgencyContext())
+                if (DatabaseMethods.SelectClients().Select(x => x.Email).ToList().Contains(emailBox.Text)) MessageBox.Show("This email address exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
                 {
-                    if (db.Clients.Select(x => x.Email).ToList().Contains(emailBox.Text)) MessageBox.Show("This email address exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    else
-                    {
-                        Client.EmailSend += EmailSendHandler;
-                        Client client = new Client(nameBox.Text, lastNameBox.Text, emailBox.Text, telNumberBox.Text, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
-                        db.Clients.Add(client);
-                        db.SaveChanges();
-                        _mainForm.StartThreadQuantityUpdate();
-                        Dispose();
-                    }
+                    Client.EmailSend += EmailSendHandler;
+                    Client client = new Client(nameBox.Text, lastNameBox.Text, emailBox.Text, telNumberBox.Text, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
+                    DatabaseMethods.InsertClient(client);
+                    _mainForm.StartThreadQuantityUpdate();
+                    Dispose();
                 }
             }
         }
