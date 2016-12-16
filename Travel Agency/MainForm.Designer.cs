@@ -293,7 +293,7 @@
             this.tabControl.Location = new System.Drawing.Point(12, 12);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1074, 593);
+            this.tabControl.Size = new System.Drawing.Size(1121, 593);
             this.tabControl.TabIndex = 21;
             this.tabControl.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControl_Selected);
             // 
@@ -341,7 +341,7 @@
             this.statisticsTab.Controls.Add(this.activeOrders);
             this.statisticsTab.Location = new System.Drawing.Point(10, 47);
             this.statisticsTab.Name = "statisticsTab";
-            this.statisticsTab.Size = new System.Drawing.Size(1054, 536);
+            this.statisticsTab.Size = new System.Drawing.Size(1101, 536);
             this.statisticsTab.TabIndex = 2;
             this.statisticsTab.Text = "Statistics";
             this.statisticsTab.UseVisualStyleBackColor = true;
@@ -477,7 +477,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1095, 606);
+            this.ClientSize = new System.Drawing.Size(1145, 606);
             this.Controls.Add(this.tabControl);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
             this.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;

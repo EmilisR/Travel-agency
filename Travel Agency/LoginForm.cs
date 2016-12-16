@@ -41,7 +41,11 @@ namespace Travel_Agency
                 EmailSender.Password = ConvertToSecureString(passwordBox.Text);
                 Dispose();
             }
-            else MessageBox.Show("Wrong e-mail and/or password!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+            {
+                passwordBox.Text = "";
+                MessageBox.Show("Wrong e-mail and/or password!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoginForm_FormClosed(object sender, FormClosedEventArgs e)

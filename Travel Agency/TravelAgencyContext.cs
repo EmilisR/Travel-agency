@@ -41,9 +41,9 @@ namespace Travel_Agency
 
     public partial class Order
     {
-        public virtual Offer TravelOffer { get; set; }
-        public virtual Client OrderClient { get; set; }
-        public virtual Worker ServiceWorker { get; set; }
+        public int TravelOfferNumber { get; set; }
+        public int OrderClientNumber { get; set; }
+        public int ServiceWorkerNumber { get; set; }
         public DateTime OrderRegisterDate { get; set; }
         public DateTime TravelStartDate { get; set; }
         [Key]

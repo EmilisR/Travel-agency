@@ -174,7 +174,7 @@ namespace Travel_Agency
             List<Order> orderList = DatabaseMethods.SelectOrders();
             if (orderList.Count() > 0)
             {
-                List<string> list = orderList.Select(i => i.OrderNumber + ". " + i.OrderClient.Name + " " + i.OrderClient.LastName + " " + i.TravelOffer.TravelDestination).ToList();
+                List<string> list = orderList.Select(i => i.OrderNumber + ". " + DatabaseMethods.SelectClients().Where(x => x.ClientNumber == i.OrderClientNumber).First().Name + " " + DatabaseMethods.SelectClients().Where(x => x.ClientNumber == i.OrderClientNumber).First().LastName + " " + DatabaseMethods.SelectOffers().Where(x => x.OfferNumber == i.TravelOfferNumber).First().TravelDestination).ToList();
                 ShowObject showObject = new ShowObject(new BindingSource(list, null), typeof(Order), this);
                 showObject.Text = "Show orders";
                 showObject.ShowDialog();
@@ -366,7 +366,7 @@ namespace Travel_Agency
                     foreach (Worker worker in DatabaseMethods.SelectWorkers().OrderByDescending(x => x.Salary).Take(5).ToList())
                     {
                         workers.Add(worker.Name + " " + worker.LastName);
-                        salaries.Add(DatabaseMethods.SelectWorkers().Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).Single().Salary);
+                        salaries.Add(DatabaseMethods.SelectWorkers().Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).First().Salary);
                     }
                     chart2.Series[0].LegendText = "Salary per month in €";
                     RemoveGrid(chart2);
@@ -379,7 +379,7 @@ namespace Travel_Agency
                     foreach (Worker worker in DatabaseMethods.SelectWorkers().OrderByDescending(x => x.Salary).Skip(DatabaseMethods.SelectWorkers().Count - 5).ToList())
                     {
                         workers.Add(worker.Name + " " + worker.LastName);
-                        salaries.Add(DatabaseMethods.SelectWorkers().Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).Single().Salary);
+                        salaries.Add(DatabaseMethods.SelectWorkers().Where(x => x.Name + " " + x.LastName == worker.Name + " " + worker.LastName).First().Salary);
                     }
                     chart3.Series[0].LegendText = "Salary per month in €";
                     RemoveGrid(chart3);
@@ -390,7 +390,7 @@ namespace Travel_Agency
                     List<Order> orders = DatabaseMethods.SelectOrders();
                     List<Offer> offers = DatabaseMethods.SelectOffers();
                     var join = orders.OrderByDescending(order => order.TravelStartDate).Reverse().Join(offers,
-                                        ord => ord.TravelOffer.OfferNumber,
+                                        ord => ord.TravelOfferNumber,
                                         off => off.OfferNumber,
                                         (ord, off) => new { ord.TravelStartDate, off.Price, ord.OrderClientsAmount}).GroupBy(grp => grp.TravelStartDate);
                     List<string> dates = new List<string>();

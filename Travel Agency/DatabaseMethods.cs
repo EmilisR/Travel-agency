@@ -30,7 +30,7 @@ namespace Travel_Agency
             {
                 if (db.Orders.Count() > 0)
                 {
-                    list = db.Orders.Include(x => x.TravelOffer).Include(y => y.ServiceWorker).Include(z => z.OrderClient).ToList();
+                    list = db.Orders.ToList();
                 }
             }
             return list;
@@ -59,18 +59,29 @@ namespace Travel_Agency
             }
             return list;
         }
-        public static void Insert()
+        public static bool InsertOrder(Order order)
         {
             using (var db = new TravelAgencyContext())
             {
-
+                int count = db.Orders.Count();
+                db.Orders.Add(order);
+                db.SaveChanges();
+                if (count + 1 == db.Orders.Count())
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
-        public static void Update()
+        public static void UpdateWorker(Worker worker)
         {
             using (var db = new TravelAgencyContext())
             {
-
+                db.Entry(worker).State = EntityState.Modified;
+                db.SaveChanges();
             }
         }
 
@@ -177,6 +188,30 @@ namespace Travel_Agency
                     return false;
                 }
             }
+        }
+        public static Client SelectClientFromQuery(string query)
+        {
+            Client client = null;
+            using (var db = new TravelAgencyContext())
+            {
+                if (db.Clients.Count() > 0)
+                {
+                    client = db.Clients.SqlQuery(query).ToList().First();
+                }
+            }
+            return client;
+        }
+        public static Order SelectOrderFromQuery(string query)
+        {
+            Order order = null;
+            using (var db = new TravelAgencyContext())
+            {
+                if (db.Orders.Count() > 0)
+                {
+                    order = db.Orders.SqlQuery(query).ToList().First();
+                }
+            }
+            return order;
         }
     }
 }

@@ -11,13 +11,13 @@ namespace Travel_Agency
         public static event MainForm.EmailSendEventHandler<Order> EmailSend;
 
         public Order() { }
-        public Order(Offer offer, Client client, Worker worker, int orderClientsAmount, DateTime travelStartDate, ILogger loggerBox, ILogger loggerFile, ILogger loggerMail)
+        public Order(int offerNumber, int clientNumber, int workerNumber, int orderClientsAmount, DateTime travelStartDate, ILogger loggerBox, ILogger loggerFile, ILogger loggerMail)
         {
             using (var db = new TravelAgencyContext())
             {
-                TravelOffer = offer;
-                ServiceWorker = worker;
-                OrderClient = client;
+                TravelOfferNumber = offerNumber;
+                ServiceWorkerNumber = workerNumber;
+                OrderClientNumber = clientNumber;
                 OrderRegisterDate = DateTime.Now;
                 TravelStartDate = travelStartDate;
                 if (db.Orders.Count() > 0)
@@ -27,15 +27,16 @@ namespace Travel_Agency
                 }
                 else OrderNumber = 1;
                 OrderClientsAmount = orderClientsAmount;
-                OrderPrice = offer.Price * orderClientsAmount;
+                OrderPrice = db.Offers.Where(x => x.OfferNumber == TravelOfferNumber).First().Price * orderClientsAmount;
                 AddOrderPriceToBudget(OrderPrice);
+                string email = db.Clients.Where(x => x.ClientNumber == OrderClientNumber).First().Email;
                 if (loggerBox != null)
-                    loggerBox.WriteToLog(this, OrderRegisterDate, "Created order", OrderClient.Email);
+                    loggerBox.WriteToLog(this, OrderRegisterDate, "Created order", email);
                 if (loggerFile != null)
-                    loggerFile.WriteToLog(this, OrderRegisterDate, "Created order", OrderClient.Email);
+                    loggerFile.WriteToLog(this, OrderRegisterDate, "Created order", email);
                 if (loggerMail != null)
                 {
-                    EmailSend?.Invoke(this, new EmailSendEventArgs(OrderClient.Email, "Created order", OrderRegisterDate, loggerMail));
+                    EmailSend?.Invoke(this, new EmailSendEventArgs(email, "Created order", OrderRegisterDate, loggerMail));
                 }
             }
         }
@@ -65,7 +66,14 @@ namespace Travel_Agency
 
         public override string ToString()
         {
-            return "Order number: " + OrderNumber.ToString() + Environment.NewLine + "" + TravelOffer.ToString() + Environment.NewLine + "Client: " + OrderClient.Name + " " + OrderClient.LastName + Environment.NewLine + "Worker: " + ServiceWorker.Name + " " + ServiceWorker.LastName + Environment.NewLine + "Order price: €" + OrderPrice.ToString() + Environment.NewLine + "Travelers amount: " + OrderClientsAmount.ToString() + Environment.NewLine + "Travel start date: " + TravelStartDate.ToShortDateString() + Environment.NewLine + "Order registered on: " + OrderRegisterDate.ToShortDateString();
+            return "Order number: " + OrderNumber.ToString() + Environment.NewLine + "" + 
+                    DatabaseMethods.SelectOffers().Where(x => x.OfferNumber == TravelOfferNumber).First().ToString() + Environment.NewLine + 
+                    "Client: " + DatabaseMethods.SelectClients().Where(x => x.ClientNumber == OrderClientNumber).First().Name + " " + DatabaseMethods.SelectClients().Where(x => x.ClientNumber == OrderClientNumber).First().LastName + Environment.NewLine + 
+                    "Worker: " + DatabaseMethods.SelectWorkers().Where(x => x.WorkerNumber == ServiceWorkerNumber).First().Name + " " + DatabaseMethods.SelectWorkers().Where(x => x.WorkerNumber == ServiceWorkerNumber).First().LastName + Environment.NewLine + 
+                    "Order price: €" + OrderPrice.ToString() + Environment.NewLine + 
+                    "Travelers amount: " + OrderClientsAmount.ToString() + Environment.NewLine + 
+                    "Travel start date: " + TravelStartDate.ToShortDateString() + Environment.NewLine + 
+                    "Order registered on: " + OrderRegisterDate.ToShortDateString();
         }
     }
 }

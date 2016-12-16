@@ -87,28 +87,31 @@ namespace Travel_Agency
                         }
                         if (clientsBox.BackColor == Color.LightGreen && offerBox.BackColor == Color.LightGreen && workerComboBox.BackColor == Color.LightGreen && travellersAmountTrackBar.BackColor == Color.LightGreen)
                         {
-                            using (var db = new TravelAgencyContext())
+                            Worker worker = null;
+                            int workerNumber = Convert.ToInt32(workerComboBox.SelectedItem.ToString().Split('.').First());
+                            worker = DatabaseMethods.SelectWorkers().Where(x => x.WorkerNumber == workerNumber).First();
+
+                            Offer offer = null;
+                            int offerNumber = Convert.ToInt32(offerBox.SelectedItem.ToString().Split('.').First());
+                            offer = DatabaseMethods.SelectOffers().Where(x => x.OfferNumber == offerNumber).First();
+
+                            Client client = null;
+                            int clientNumber = Convert.ToInt32(clientsBox.SelectedItem.ToString().Split(' ').Last().Remove(clientsBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
+                            client = DatabaseMethods.SelectClients().Where(x => x.ClientNumber == clientNumber).First();
+
+                            Order.EmailSend += EmailSendHandler;
+                            Order order = new Order(offer.OfferNumber, client.ClientNumber, worker.WorkerNumber, travellersAmountTrackBar.Value, monthCalendar.SelectionStart, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
+                            worker.AssignOrderToWorker(order);
+                            DatabaseMethods.UpdateWorker(worker);
+                            if (DatabaseMethods.InsertOrder(order))
                             {
-                                Worker worker = null;
-                                int workerNumber = Convert.ToInt32(workerComboBox.SelectedItem.ToString().Split('.').First());
-                                worker = db.Workers.Where(x => x.WorkerNumber == workerNumber).First();
-
-                                Offer offer = null;
-                                int offerNumber = Convert.ToInt32(offerBox.SelectedItem.ToString().Split('.').First());
-                                offer = db.Offers.Where(x => x.OfferNumber == offerNumber).First();
-
-                                Client client = null;
-                                int clientNumber = Convert.ToInt32(clientsBox.SelectedItem.ToString().Split(' ').Last().Remove(clientsBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
-                                client = db.Clients.Where(x => x.ClientNumber == clientNumber).First();
-
-                                Order.EmailSend += EmailSendHandler;
-                                Order order = new Order(offer, client, worker, travellersAmountTrackBar.Value, monthCalendar.SelectionStart, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
-                                worker.AssignOrderToWorker(order);
-                                db.Orders.Add(order);
-                                db.SaveChanges();
                                 _mainForm.StartThreadQuantityUpdate();
-                                Dispose();
                             }
+                            else
+                            {
+                                MessageBox.Show("Cannot add order!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                            Dispose();
                         }
                     }
                 }

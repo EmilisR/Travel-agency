@@ -50,9 +50,9 @@ namespace Travel_Agency
                         {
                             string[] arr = new string[7];
                             arr[0] = order.OrderNumber.ToString();
-                            arr[1] = order.TravelOffer.TravelDestination;
-                            arr[2] = order.OrderClient.Name + " " + order.OrderClient.LastName;
-                            arr[3] = order.ServiceWorker.Name + " " + order.ServiceWorker.LastName;
+                            arr[1] = DatabaseMethods.SelectOffers().Where(x => x.OfferNumber == order.TravelOfferNumber).First().TravelDestination;
+                            arr[2] = DatabaseMethods.SelectClients().Where(x => x.ClientNumber == order.OrderClientNumber).First().Name + " " + DatabaseMethods.SelectClients().Where(x => x.ClientNumber == order.OrderClientNumber).First().LastName;
+                            arr[3] = DatabaseMethods.SelectWorkers().Where(x => x.WorkerNumber == order.ServiceWorkerNumber).First().Name + " " + DatabaseMethods.SelectWorkers().Where(x => x.WorkerNumber == order.ServiceWorkerNumber).First().LastName;
                             arr[4] = "€" + string.Format("{0:F2}", order.OrderPrice);
                             arr[5] = order.OrderRegisterDate.ToShortDateString();
                             arr[6] = order.TravelStartDate.ToShortDateString();
