@@ -72,6 +72,30 @@ namespace Travel_Agency
             }
             return list;
         }
+        public static Client SelectClientFromQuery(string query)
+        {
+            Client client = null;
+            using (var db = new TravelAgencyContext())
+            {
+                if (db.Clients.Count() > 0)
+                {
+                    client = db.Clients.SqlQuery(query).ToList().First();
+                }
+            }
+            return client;
+        }
+        public static Order SelectOrderFromQuery(string query)
+        {
+            Order order = null;
+            using (var db = new TravelAgencyContext())
+            {
+                if (db.Orders.Count() > 0)
+                {
+                    order = db.Orders.SqlQuery(query).ToList().First();
+                }
+            }
+            return order;
+        }
         public static bool InsertOrder(Order order)
         {
             using (var db = new TravelAgencyContext())
@@ -165,7 +189,6 @@ namespace Travel_Agency
                 db.SaveChanges();
             }
         }
-
         public static bool DeleteWorker(int number)
         {
             using (var db = new TravelAgencyContext())
@@ -269,30 +292,6 @@ namespace Travel_Agency
                     return false;
                 }
             }
-        }
-        public static Client SelectClientFromQuery(string query)
-        {
-            Client client = null;
-            using (var db = new TravelAgencyContext())
-            {
-                if (db.Clients.Count() > 0)
-                {
-                    client = db.Clients.SqlQuery(query).ToList().First();
-                }
-            }
-            return client;
-        }
-        public static Order SelectOrderFromQuery(string query)
-        {
-            Order order = null;
-            using (var db = new TravelAgencyContext())
-            {
-                if (db.Orders.Count() > 0)
-                {
-                    order = db.Orders.SqlQuery(query).ToList().First();
-                }
-            }
-            return order;
         }
     }
 }

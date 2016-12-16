@@ -35,16 +35,14 @@ namespace Travel_Agency
                 }
                 if (establishmentComboBox.SelectedIndex != -1 && workersBox.SelectedIndex != 1)
                 {
-                    using (var db = new TravelAgencyContext())
-                    {
-                        Worker worker = null;
-                        int workerNumber = Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First());
-                        worker = db.Workers.Where(x => x.WorkerNumber == workerNumber).First();
-                        string oldPosition = worker.Position;
-                        worker.Position = establishmentComboBox.SelectedItem.ToString();
-                        MessageBox.Show("Old position: " + oldPosition + Environment.NewLine + "New position: " + worker.Position, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Dispose();
-                    }
+                    Worker worker = null;
+                    int workerNumber = Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First());
+                    worker = DatabaseMethods.SelectWorkers().Where(x => x.WorkerNumber == workerNumber).First();
+                    string oldPosition = worker.Position;
+                    worker.Position = establishmentComboBox.SelectedItem.ToString();
+                    DatabaseMethods.UpdateWorker(worker);
+                    MessageBox.Show("Old position: " + oldPosition + Environment.NewLine + "New position: " + worker.Position, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Dispose();
                 }
             }
         }

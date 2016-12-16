@@ -15,82 +15,70 @@ namespace Travel_Agency
 
         private void RaiseButton_Click(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            if (workersBox.SelectedIndex != -1)
             {
-                if (workersBox.SelectedIndex != -1)
-                {
-                    workersBox.BackColor = Color.LightGreen;
-                }
-                else
-                {
-                    workersBox.BackColor = Color.Salmon;
-                }
-                if (moneyTrackBar.Value > 0)
-                {
-                    moneyTrackBar.BackColor = Color.LightGreen;
-                }
-                else
-                {
-                    moneyTrackBar.BackColor = Color.Salmon;
-                }
-                if (workersBox.BackColor == Color.LightGreen && moneyTrackBar.BackColor == Color.LightGreen)
-                {
-                    Worker worker = null;
-                    int number = Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First());
-                    worker = db.Workers.Where(x => x.WorkerNumber == number).First();
-                    double oldSalary = worker.Salary;
-                    worker.RaiseSalary(moneyTrackBar.Value);
-                    db.Workers.Attach(worker);
-                    var entry = db.Entry(worker);
-                    entry.Property(x => x.Salary).IsModified = true;
-                    db.SaveChanges();
-                    MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Dispose();
-                }
+                workersBox.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                workersBox.BackColor = Color.Salmon;
+            }
+            if (moneyTrackBar.Value > 0)
+            {
+                moneyTrackBar.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                moneyTrackBar.BackColor = Color.Salmon;
+            }
+            if (workersBox.BackColor == Color.LightGreen && moneyTrackBar.BackColor == Color.LightGreen)
+            {
+                Worker worker = null;
+                int number = Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First());
+                worker = DatabaseMethods.SelectWorkers().Where(x => x.WorkerNumber == number).First();
+                double oldSalary = worker.Salary;
+                worker.RaiseSalary(moneyTrackBar.Value);
+                DatabaseMethods.UpdateWorker(worker);
+                MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Dispose();
             }
         }
 
         private void CutButton_Click(object sender, EventArgs e)
         {
-            using (var db = new TravelAgencyContext())
+            if (workersBox.SelectedIndex != -1)
             {
-                if (workersBox.SelectedIndex != -1)
-                {
-                    workersBox.BackColor = Color.LightGreen;
-                }
-                else
-                {
-                    workersBox.BackColor = Color.Salmon;
-                }
-                if (moneyTrackBar.Value > 0)
-                {
-                    moneyTrackBar.BackColor = Color.LightGreen;
-                }
-                else
+                workersBox.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                workersBox.BackColor = Color.Salmon;
+            }
+            if (moneyTrackBar.Value > 0)
+            {
+                moneyTrackBar.BackColor = Color.LightGreen;
+            }
+            else
+            {
+                moneyTrackBar.BackColor = Color.Salmon;
+            }
+            if (workersBox.BackColor == Color.LightGreen && moneyTrackBar.BackColor == Color.LightGreen)
+            {
+                Worker worker = null;
+                int number = Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First());
+                worker = DatabaseMethods.SelectWorkers().Where(x => x.WorkerNumber == number).First();
+                double oldSalary = worker.Salary;
+                if (oldSalary - moneyTrackBar.Value < 0)
                 {
                     moneyTrackBar.BackColor = Color.Salmon;
+                    MessageBox.Show("Salary cannot be negative! Try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                if (workersBox.BackColor == Color.LightGreen && moneyTrackBar.BackColor == Color.LightGreen)
+                else
                 {
-                    Worker worker = null;
-                    int number = Convert.ToInt32(workersBox.SelectedItem.ToString().Split('.').First());
-                    worker = db.Workers.Where(x => x.WorkerNumber == number).First();
-                    double oldSalary = worker.Salary;
-                    if (oldSalary - moneyTrackBar.Value < 0)
-                    {
-                        moneyTrackBar.BackColor = Color.Salmon;
-                        MessageBox.Show("Salary cannot be negative! Try again", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        worker.CutSalary(moneyTrackBar.Value);
-                        db.Workers.Attach(worker);
-                        var entry = db.Entry(worker);
-                        entry.Property(x => x.Salary).IsModified = true;
-                        db.SaveChanges();
-                        MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        Dispose();
-                    }
+                    worker.CutSalary(moneyTrackBar.Value);
+                    DatabaseMethods.UpdateWorker(worker);
+                    MessageBox.Show("Old salary: €" + oldSalary + "\nNew salary: €" + worker.Salary, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Dispose();
                 }
             }
         }
