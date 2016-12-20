@@ -33,5 +33,16 @@ namespace Travel_Agency.Properties {
                 return ((string)(this["Travel_Agency_TravelAgencyContextConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\Users\\emili\\Desktop\\Travel" +
+            "_Agency.TravelAgencyContext.mdf;Integrated Security=True;Connect Timeout=30")]
+        public string Travel_Agency_TravelAgencyContextConnectionString1 {
+            get {
+                return ((string)(this["Travel_Agency_TravelAgencyContextConnectionString1"]));
+            }
+        }
     }
 }

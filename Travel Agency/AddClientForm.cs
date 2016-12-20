@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -45,8 +46,7 @@ namespace Travel_Agency
                 if (DatabaseMethods.SelectClients().Select(x => x.Email).ToList().Contains(emailBox.Text)) MessageBox.Show("This email address exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
                 {
-                    Client.EmailSend += EmailSendHandler;
-                    Client client = new Client(nameBox.Text, lastNameBox.Text, emailBox.Text, telNumberBox.Text, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
+                    Client client = new Client(nameBox.Text, lastNameBox.Text, emailBox.Text, telNumberBox.Text, new List<ILogger> { new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null });
                     DatabaseMethods.InsertClient(client);
                     _mainForm.StartThreadQuantityUpdate();
                     Dispose();

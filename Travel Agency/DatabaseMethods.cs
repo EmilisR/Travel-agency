@@ -19,7 +19,7 @@ namespace Travel_Agency
             {
                 if (db.Workers.Count() > 0)
                 {
-                    list = db.Workers.ToList();
+                    list = db.Workers.Include(x => x.WorkerOrders).ToList();
                 }
             }
             return list;
@@ -31,7 +31,7 @@ namespace Travel_Agency
             {
                 if (db.Orders.Count() > 0)
                 {
-                    list = db.Orders.ToList();
+                    list = db.Orders.Include(x => x.ServiceWorker).ToList();
                 }
             }
             return list;
@@ -65,12 +65,31 @@ namespace Travel_Agency
             List<Order> list = new List<Order>();
             using (var db = new TravelAgencyContext())
             {
-                if (db.Workers.Where(x => x.WorkerNumber == worker.WorkerNumber).First().WorkerOrders.Count() > 0)
+                try
                 {
-                    list = db.Workers.Where(x => x.WorkerNumber == worker.WorkerNumber).First().WorkerOrders.ToList();
+                    if (db.Workers.Where(x => x.WorkerNumber == worker.WorkerNumber).First().WorkerOrders.Count() > 0)
+                    {
+                        list = db.Workers.Where(x => x.WorkerNumber == worker.WorkerNumber).First().WorkerOrders.ToList();
+                    }
+                }
+                catch (InvalidOperationException)
+                {
+                    return list;
                 }
             }
             return list;
+        }
+        public static Worker SelectServiceWorker(Order order)
+        {
+            Worker worker = null;
+            using (var db = new TravelAgencyContext())
+            {
+                if (db.Orders.Count() > 0)
+                {
+                    worker = db.Orders.Where(x => x.OrderNumber == order.OrderNumber).First().ServiceWorker;
+                }
+            }
+            return worker;
         }
         public static Client SelectClientFromQuery(string query)
         {
@@ -101,6 +120,7 @@ namespace Travel_Agency
             using (var db = new TravelAgencyContext())
             {
                 int count = db.Orders.Count();
+                db.Entry(order.ServiceWorker).State = EntityState.Unchanged;
                 db.Orders.Add(order);
                 db.SaveChanges();
                 if (count + 1 == db.Orders.Count())

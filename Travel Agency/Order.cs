@@ -8,45 +8,33 @@ namespace Travel_Agency
 {
     public partial class Order : IComparable<Order>
     {
-        public static event MainForm.EmailSendEventHandler<Order> EmailSend;
-
         public Order() { }
-        public Order(int offerNumber, int clientNumber, int workerNumber, int orderClientsAmount, DateTime travelStartDate, ILogger loggerBox, ILogger loggerFile, ILogger loggerMail)
+        public Order(int offerNumber, int clientNumber, Worker worker, int orderClientsAmount, DateTime travelStartDate, List<ILogger> logs)
         {
             TravelOfferNumber = offerNumber;
-            ServiceWorkerNumber = workerNumber;
+            ServiceWorker = worker;
             OrderClientNumber = clientNumber;
             OrderRegisterDate = DateTime.Now;
             TravelStartDate = travelStartDate;
             List<Order> list = DatabaseMethods.SelectOrders();
             if (list.Count > 0)
             {
-                OrderNumber = (from o in list
-                               select o.OrderNumber).Max() + 1;
+                OrderNumber = list.Select(x => x.OrderNumber).Max() + 1;
             }
             else OrderNumber = 1;
             OrderClientsAmount = orderClientsAmount;
             OrderPrice = DatabaseMethods.SelectOffers().Where(x => x.OfferNumber == TravelOfferNumber).First().Price * orderClientsAmount;
             AddOrderPriceToBudget(OrderPrice);
             string email = DatabaseMethods.SelectClients().Where(x => x.ClientNumber == OrderClientNumber).First().Email;
-            if (loggerBox != null)
-                loggerBox.WriteToLog(this, OrderRegisterDate, "Created order", email);
-            if (loggerFile != null)
-                loggerFile.WriteToLog(this, OrderRegisterDate, "Created order", email);
-            if (loggerMail != null)
+            foreach (ILogger log in logs)
             {
-                EmailSend?.Invoke(this, new EmailSendEventArgs(email, "Created order", OrderRegisterDate, loggerMail));
+                if (log != null) log.WriteToLog(this, OrderRegisterDate, "Created order", email);
             }
         }
 
         public void AddOrderPriceToBudget(int orderPrice)
         {
             Budget.AddToBudget(orderPrice);
-        }
-
-        public void ReduceOrderPriceFromBudget(int orderPrice)
-        {
-            Budget.ReduceFromBudget(orderPrice);
         }
 
         public int CompareTo(Order other)
@@ -67,7 +55,7 @@ namespace Travel_Agency
             return "Order number: " + OrderNumber.ToString() + Environment.NewLine + "" + 
                     DatabaseMethods.SelectOffers().Where(x => x.OfferNumber == TravelOfferNumber).First().ToString() + Environment.NewLine + 
                     "Client: " + DatabaseMethods.SelectClients().Where(x => x.ClientNumber == OrderClientNumber).First().Name + " " + DatabaseMethods.SelectClients().Where(x => x.ClientNumber == OrderClientNumber).First().LastName + Environment.NewLine + 
-                    "Worker: " + DatabaseMethods.SelectWorkers().Where(x => x.WorkerNumber == ServiceWorkerNumber).First().Name + " " + DatabaseMethods.SelectWorkers().Where(x => x.WorkerNumber == ServiceWorkerNumber).First().LastName + Environment.NewLine + 
+                    "Worker: " + ServiceWorker.Name + " " + ServiceWorker.LastName + Environment.NewLine + 
                     "Order price: €" + OrderPrice.ToString() + Environment.NewLine + 
                     "Travelers amount: " + OrderClientsAmount.ToString() + Environment.NewLine + 
                     "Travel start date: " + TravelStartDate.ToShortDateString() + Environment.NewLine + 

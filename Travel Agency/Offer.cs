@@ -9,7 +9,7 @@ namespace Travel_Agency
     public partial class Offer
     {
         public Offer() { }
-        public Offer(string travelDestination, string feeding, int price, int travelTime, string hotelRanking, ILogger loggerBox, ILogger loggerFile)
+        public Offer(string travelDestination, string feeding, int price, int travelTime, string hotelRanking, List<ILogger> logs)
         {
             TravelDestination = travelDestination;
             Feeding = feeding;
@@ -23,10 +23,10 @@ namespace Travel_Agency
                                select o.OfferNumber).Max() + 1;
             }
             else OfferNumber = 1;
-            if (loggerBox != null)
-                loggerBox.WriteToLog(this, DateTime.Now, "Created offer");
-            if (loggerFile != null)
-                loggerFile.WriteToLog(this, DateTime.Now, "Created offer");
+            foreach (ILogger log in logs)
+            {
+                if (log != null) log.WriteToLog(this, DateTime.Now, "Created offer");
+            }
         }
 
         public override string ToString()

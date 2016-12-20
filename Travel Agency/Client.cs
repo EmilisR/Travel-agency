@@ -9,7 +9,7 @@ namespace Travel_Agency
     public partial class Client
     {
         public Client() { }
-        public Client(string name, string lastName, string email, string mobileNumber, ILogger loggerBox = null, ILogger loggerFile = null, ILogger loggerMail = null)
+        public Client(string name, string lastName, string email, string mobileNumber, List<ILogger> logs)
         {
             Name = name;
             LastName = lastName;
@@ -23,16 +23,11 @@ namespace Travel_Agency
                                 select c.ClientNumber).Max() + 1;
             }
             else ClientNumber = 1;
-            if (loggerBox != null)
-                loggerBox.WriteToLog(this, RegisterDate, "Created client", Email);
-            if (loggerFile != null)
-                loggerFile.WriteToLog(this, RegisterDate, "Created client", Email);
-            if (loggerMail != null)
+            foreach (ILogger log in logs)
             {
-                EmailSend?.Invoke(this, new EmailSendEventArgs(Email, "Created client", RegisterDate, loggerMail));
+                if (log != null) log.WriteToLog(this, RegisterDate, "Created client", Email);
             }
         }
-        public static event MainForm.EmailSendEventHandler<Client> EmailSend;
         public override string ToString()
         {
             return "Client number: " + ClientNumber + Environment.NewLine + "Name: " + Name + Environment.NewLine + "Last name: " + LastName + Environment.NewLine + "E-mail: " + Email + Environment.NewLine + "Mobile number: " + MobileNumber + Environment.NewLine + "Registered on: " + RegisterDate.ToShortDateString();

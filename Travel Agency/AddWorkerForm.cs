@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -74,7 +75,7 @@ namespace Travel_Agency
             }
             if (nameTextBox.BackColor == Color.LightGreen && lastNameTextBox.BackColor == Color.LightGreen && positionComboBox.BackColor == Color.LightGreen && salaryTrackBar.BackColor == Color.LightGreen && workingHoursTrackBar.BackColor == Color.LightGreen)
             {
-                Worker worker = new Worker(nameTextBox.Text, lastNameTextBox.Text, positionComboBox.SelectedItem.ToString(), salaryTrackBar.Value, workingHoursTrackBar.Value, new LogFileWritter(), new ScreenObjectInfoWritter());
+                Worker worker = new Worker(nameTextBox.Text, lastNameTextBox.Text, positionComboBox.SelectedItem.ToString(), salaryTrackBar.Value, workingHoursTrackBar.Value, new List<ILogger> { new LogFileWritter(), new ScreenObjectInfoWritter()});
                 DatabaseMethods.InsertWorker(worker);
                 _mainForm.StartThreadQuantityUpdate();
                 Dispose();

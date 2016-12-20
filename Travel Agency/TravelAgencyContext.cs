@@ -26,6 +26,14 @@ namespace Travel_Agency
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Worker> Workers { get; set; }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //one-to-many 
+            modelBuilder.Entity<Order>()
+                        .HasRequired(w => w.ServiceWorker)
+                        .WithMany(w => w.WorkerOrders); 
+
+        }
     }
 
     public partial class Client
@@ -43,13 +51,13 @@ namespace Travel_Agency
     {
         public int TravelOfferNumber { get; set; }
         public int OrderClientNumber { get; set; }
-        public int ServiceWorkerNumber { get; set; }
         public DateTime OrderRegisterDate { get; set; }
         public DateTime TravelStartDate { get; set; }
         [Key]
         public int OrderNumber { get; private set; }
         public int OrderPrice { get; set; }
         public int OrderClientsAmount { get; set; }
+        public virtual Worker ServiceWorker { get; set; }
     }
     public partial class Offer
     {

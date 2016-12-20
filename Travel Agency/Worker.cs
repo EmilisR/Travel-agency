@@ -9,8 +9,11 @@ namespace Travel_Agency
 {
     public partial class Worker
     {
-        public Worker() { }
-        public Worker(string name, string lastName, string position, int salary, int workingHoursPerWeek, ILogger loggerBox, ILogger loggerFile)
+        public Worker()
+        {
+            WorkerOrders = new List<Order>();
+        }
+        public Worker(string name, string lastName, string position, int salary, int workingHoursPerWeek, List<ILogger> logs)
         {
             Name = name;
             LastName = lastName;
@@ -25,15 +28,10 @@ namespace Travel_Agency
                                 select w.WorkerNumber).Max() + 1;
             }
             else WorkerNumber = 1;
-            if (loggerBox != null)
-                loggerBox.WriteToLog(this, RegisterDate, "Created worker");
-            if (loggerFile != null)
-                loggerFile.WriteToLog(this, RegisterDate, "Created worker");
-        }
-
-        public void AssignOrderToWorker(Order order)
-        {
-            DatabaseMethods.InsertWorkerOrder(order, this);
+            foreach (ILogger log in logs)
+            {
+                if (log != null) log.WriteToLog(this, RegisterDate, "Created worker");
+            }
         }
 
         public void PaySalary()

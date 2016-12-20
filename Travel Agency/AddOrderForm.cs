@@ -99,9 +99,7 @@ namespace Travel_Agency
                             int clientNumber = Convert.ToInt32(clientsBox.SelectedItem.ToString().Split(' ').Last().Remove(clientsBox.SelectedItem.ToString().Split(' ').Last().Length - 1));
                             client = DatabaseMethods.SelectClients().Where(x => x.ClientNumber == clientNumber).First();
 
-                            Order.EmailSend += EmailSendHandler;
-                            Order order = new Order(offer.OfferNumber, client.ClientNumber, worker.WorkerNumber, travellersAmountTrackBar.Value, monthCalendar.SelectionStart, new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null);
-                            worker.AssignOrderToWorker(order);
+                            Order order = new Order(offer.OfferNumber, client.ClientNumber, worker, travellersAmountTrackBar.Value, monthCalendar.SelectionStart, new List<ILogger> { new LogFileWritter(), new ScreenObjectInfoWritter(), emailConfirmationCheckBox.Checked ? new EmailInvoiceSender() : null });
                             DatabaseMethods.UpdateWorker(worker);
                             if (DatabaseMethods.InsertOrder(order))
                             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -76,7 +77,7 @@ namespace Travel_Agency
             }
             if (priceTrackBar.BackColor == Color.LightGreen && locationTextBox.BackColor == Color.LightGreen && rankingComboBox.BackColor == Color.LightGreen && feedingComboBox.BackColor == Color.LightGreen && countriesComboBox.BackColor == Color.LightGreen && daysTrackBar.BackColor == Color.LightGreen)
             {
-                Offer offer = new Offer(countriesComboBox.SelectedItem.ToString() + ", " + locationTextBox.Text, feedingComboBox.SelectedItem.ToString(), priceTrackBar.Value, daysTrackBar.Value, rankingComboBox.SelectedItem.ToString(), new LogFileWritter(), new ScreenObjectInfoWritter());
+                Offer offer = new Offer(countriesComboBox.SelectedItem.ToString() + ", " + locationTextBox.Text, feedingComboBox.SelectedItem.ToString(), priceTrackBar.Value, daysTrackBar.Value, rankingComboBox.SelectedItem.ToString(), new List<ILogger> { new LogFileWritter(), new ScreenObjectInfoWritter() });
                 DatabaseMethods.InsertOffer(offer);
                 _mainForm.StartThreadQuantityUpdate();
                 Dispose();
